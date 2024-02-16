@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CVAS-AudioEngine\CVAS-AudioEngine.csproj" />
     <ProjectReference Include="..\CVAS-DataStructure\CVAS-DataStructure.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,6 @@
-﻿namespace CVAS.DataStructure
+﻿using CVAS.AudioEngine;
+
+namespace CVAS.DataStructure
 {
     public class Phrase
     {

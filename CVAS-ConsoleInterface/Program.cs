@@ -1,4 +1,5 @@
 ﻿using CVAS.DataStructure;
+using CVAS.AudioEngine;
 
 // Phrase algorithm test
 List<Phrase> Phrases = new List<Phrase>
@@ -17,7 +18,7 @@ List<Phrase> Phrases = new List<Phrase>
 
 Library library = new(Phrases.ToArray());
 
-Phrase[] subPhrases = new Phrase("the train on platform one goes to central first stop strathfield then redfern and central").FindSubPhrases(library);
+Phrase[] subPhrases = new Phrase("the train on platform one goes to strathfield first stop central then redfern and strathfield").FindSubPhrases(library);
 
 Console.Write("Result: ");
 foreach (Phrase subPhrase in subPhrases)
@@ -27,7 +28,7 @@ foreach (Phrase subPhrase in subPhrases)
 
 Console.ReadKey();
 
-Playlist playlist = new(subPhrases.Select(x => x.linkedAudio).ToArray());
+Playlist playlist = new Playlist(AudioPlayer.instance.WaveFormat, subPhrases.Select(x => x.linkedAudio).ToArray());
 Console.WriteLine("Playing:");
 
 foreach (AudioFile audioFile in playlist.audioFiles)
@@ -38,8 +39,7 @@ AudioPlayer.instance.Play(playlist);
 
 Console.ReadKey();
 
-playlist.Dispose();
-playlist = new(subPhrases.Select(x => x.linkedAudio).ToArray());
+playlist = new(AudioPlayer.instance.WaveFormat, subPhrases.Select(x => x.linkedAudio).ToArray());
 
 AudioPlayer.instance.Play(playlist);
 

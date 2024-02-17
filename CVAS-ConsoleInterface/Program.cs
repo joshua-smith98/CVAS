@@ -18,7 +18,7 @@ List<Phrase> Phrases = new List<Phrase>
 
 Library library = new(Phrases.ToArray());
 
-Phrase[] subPhrases = new Phrase("the train on platform one goes to strathfield first stop central then redfern and strathfield").FindSubPhrases(library);
+Phrase[] subPhrases = new Phrase("The train on platform | one goes to Strathfield. First stop Central, then Redfern, Central, and Strathfield").FindSubPhrases(library);
 
 Console.Write("Result: ");
 foreach (Phrase subPhrase in subPhrases)
@@ -28,18 +28,21 @@ foreach (Phrase subPhrase in subPhrases)
 
 Console.ReadKey();
 
-Playlist playlist = new Playlist(AudioPlayer.instance.WaveFormat, subPhrases.Select(x => x.linkedAudio).ToArray());
+Playlist playlist = new Playlist(subPhrases.Select(x => x.linkedAudio).ToArray());
 Console.WriteLine("Playing:");
 
-foreach (AudioFile audioFile in playlist.audioFiles)
+foreach (IAudioClip audioClip in playlist.audioClips)
 {
-    Console.WriteLine(audioFile.path);
+    if (audioClip is AudioFile)
+        Console.WriteLine(((AudioFile)audioClip).path);
+    else if (audioClip is Delay)
+        Console.WriteLine(((Delay)audioClip).milliseconds);
 }
 AudioPlayer.instance.Play(playlist);
 
 Console.ReadKey();
 
-playlist = new(AudioPlayer.instance.WaveFormat, subPhrases.Select(x => x.linkedAudio).ToArray());
+playlist = new(subPhrases.Select(x => x.linkedAudio).ToArray());
 
 AudioPlayer.instance.Play(playlist);
 

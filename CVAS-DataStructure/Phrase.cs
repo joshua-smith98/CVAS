@@ -2,11 +2,11 @@
 
 namespace CVAS.DataStructure
 {
-    public class Phrase
+    public partial class Phrase
     {
         public string str { get; }
         public string[] words { get; }
-        public AudioFile? linkedAudio { get; }
+        public IAudioClip? linkedAudio { get; }
         
         public Phrase (string str)
         {
@@ -14,7 +14,7 @@ namespace CVAS.DataStructure
             this.words = _getWords(str);
         }
 
-        public Phrase(string str, AudioFile linkedAudio)
+        public Phrase(string str, IAudioClip linkedAudio)
         {
             this.str = str;
             this.words = _getWords(str);
@@ -48,10 +48,17 @@ namespace CVAS.DataStructure
                 // Case whitespace: add word to list and clear
                 if (char.IsSeparator(character))
                 {
-                    words.Add(word);
+                    if (word != "") words.Add(word); // Only add the word if there is a word to add (there might not be if there are two seperator chars in a row)
                     word = "";
                 }
-                // Case not whitespace: add char to word
+                // Case Special Phrases/Punctuation: add word & char to list and clear
+                else if (SPECIAL_PHRASES.Values.Contains(character))
+                {
+                    if (word != "") words.Add(word); // Ditto
+                    words.Add(character.ToString());
+                    word = "";
+                }
+                // Case not whitespace or special phrase: add char to word
                 else word += character;
             }
 

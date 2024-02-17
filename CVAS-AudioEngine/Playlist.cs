@@ -7,23 +7,24 @@ namespace CVAS.AudioEngine
     {
         public WaveFormat WaveFormat { get; }
 
-        public AudioFile[] audioFiles { get; }
+        public IAudioClip[] audioClips { get; }
 
-        public Playlist(WaveFormat waveFormat, params AudioFile[] audioFiles)
+        public Playlist(params IAudioClip[] audioClips)
         {
-            WaveFormat = waveFormat;
-            this.audioFiles = audioFiles;
+            this.audioClips = audioClips;
+
+            WaveFormat = AudioPlayer.instance.WaveFormat;
         }
 
         public IWaveProvider toWaveProvider()
         {
             ConcatenatingSampleProvider sampleProvider;
-            IWaveProvider[] waveProviders = new IWaveProvider[audioFiles.Length];
+            IWaveProvider[] waveProviders = new IWaveProvider[audioClips.Length];
 
-            for (int i = 0; i < audioFiles.Length; i++)
+            for (int i = 0; i < audioClips.Length; i++)
             {
-                // Open audio file & convert to DisposingWaveProvider
-                IWaveProvider waveProvider = new DisposingWaveProvider(new AudioFileReader(audioFiles[i].path));
+                // Initialise waveProvider
+                IWaveProvider waveProvider = audioClips[i].toWaveProvider();
 
                 // Check for resampling
                 if (!waveProvider.WaveFormat.Equals(WaveFormat))

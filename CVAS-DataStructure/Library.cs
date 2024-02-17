@@ -1,8 +1,8 @@
 ﻿namespace CVAS.DataStructure
 {
-    public class Library
+    public partial class Library
     {
-        private List<Phrase> _phrases = new List<Phrase>();
+        private List<Phrase> _phrases = DEFAULT_PHRASES.ToList();
         public Phrase[] phrases => _phrases.ToArray(); //public get only
 
         public Library(Phrase[] phrases)

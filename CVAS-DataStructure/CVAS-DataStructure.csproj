@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CVAS-AudioEngine\CVAS-AudioEngine.csproj" />
-    <ProjectReference Include="..\NAudioFixes\NAudioExtensions.csproj" />
   </ItemGroup>
 
 </Project>

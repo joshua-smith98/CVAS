@@ -22,9 +22,6 @@ namespace CVAS.AudioEngine
             _waveOutEvent = new WaveOutEvent();
             _waveOutEvent.Init(_sampleProvider);
             _waveOutEvent.Play();
-
-            // Use MixerInputEnded event to remove mixer inputs when no longer needed
-            _sampleProvider.MixerInputEnded += (object? sender, SampleProviderEventArgs e) => _sampleProvider.RemoveMixerInput(e.SampleProvider);
         }
 
         public void Play(IAudioClip audioClip)

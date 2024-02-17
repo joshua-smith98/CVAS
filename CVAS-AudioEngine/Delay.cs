@@ -5,7 +5,7 @@ namespace CVAS.AudioEngine
 {
     public class Delay : IAudioClip
     {
-        public WaveFormat WaveFormat => throw new NotImplementedException();
+        public WaveFormat WaveFormat => AudioPlayer.instance.WaveFormat;
 
         public int milliseconds { get; }
 

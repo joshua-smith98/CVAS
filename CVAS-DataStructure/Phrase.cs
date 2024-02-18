@@ -78,11 +78,6 @@ namespace CVAS.DataStructure
             foreach (string word in words)
             {
                 testPhrase.Add(word.ToLower());
-                foreach (string phr in testPhrase)
-                {
-                    Console.Write($"[{phr}] ");
-                }
-                Console.WriteLine();
 
                 // Find matching phrase
                 Phrase? tempSubPhrase = inLibrary.phrases.ToList().Find(libPhrase => libPhrase.words.Select(x => x.ToLower()).SequenceEqual(testPhrase));
@@ -90,7 +85,6 @@ namespace CVAS.DataStructure
                 // Case: there is a match
                 if (tempSubPhrase is not null)
                 {
-                    Console.WriteLine(" " + tempSubPhrase.str);
                     subPhrase = tempSubPhrase;
                 }
                 // Case: there is no match

@@ -8,7 +8,7 @@ namespace CVAS.AudioEngine
     /// </summary>
     public class Delay : IAudioClip
     {
-        public WaveFormat WaveFormat => AudioPlayer.instance.WaveFormat;
+        public WaveFormat WaveFormat => AudioPlayer.instance.WaveFormat; // Just automatically set this to the global WaveFormat
 
         public int milliseconds { get; }
 

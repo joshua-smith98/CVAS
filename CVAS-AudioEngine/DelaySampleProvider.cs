@@ -3,7 +3,7 @@
 namespace CVAS.AudioEngine
 {
     /// <summary>
-    /// A sample provider that provides a given number of milliseconds of silence.
+    /// A sample provider that provides a given number of milliseconds of silence. Only playable once.
     /// </summary>
     internal class DelaySampleProvider : ISampleProvider
     {
@@ -20,8 +20,10 @@ namespace CVAS.AudioEngine
 
         public int Read(float[] buffer, int offset, int count)
         {
+            // Calculate the number of samples remaining
             long samplesRemaining = _numSamples - _sampleCounter;
             
+            // Case: intermediate reads
             if (samplesRemaining >= count)
             {
                 for (int i = offset; i < count; i++)
@@ -29,6 +31,7 @@ namespace CVAS.AudioEngine
                 _sampleCounter += count;
                 return count;
             }
+            // Case: last read (and any subsequent)
             else // if (samplesRemaining < count)
             {
                 for (int i = offset; i < samplesRemaining; i++)

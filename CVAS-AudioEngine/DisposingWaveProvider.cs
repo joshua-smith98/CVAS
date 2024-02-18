@@ -19,10 +19,11 @@ namespace CVAS.AudioEngine
 
         public int Read(byte[] buffer, int offset, int count)
         {
-            if (_disposed) return 0;
+            if (_disposed) return 0; // In case this is called after EOF
             
             var bytesRead = _waveStream.Read(buffer, offset, count);
             
+            // Case: EOF
             if (bytesRead == 0)
             {
                 _waveStream.Dispose();

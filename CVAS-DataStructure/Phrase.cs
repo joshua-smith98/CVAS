@@ -2,6 +2,9 @@
 
 namespace CVAS.DataStructure
 {
+    /// <summary>
+    /// Represents a string, made up of a set of words and punctuation. Can also contain a linked <see cref="IAudioClip"/>.
+    /// </summary>
     public partial class Phrase
     {
         public string str { get; }
@@ -21,11 +24,18 @@ namespace CVAS.DataStructure
             this.linkedAudio = linkedAudio;
         }
 
+        /// <summary>
+        /// Finds the collection of Phrases from a given <see cref="Library"/> that can be concatenated to create this Phrase.
+        /// </summary>
+        /// <param name="inLibrary">The Library to search for sub-phrases.</param>
+        /// <returns></returns>
         public Phrase[] FindSubPhrases(Library inLibrary)
         {
             List<string> tempWords = words.ToList();
             List<Phrase> subPhrases = new List<Phrase>();
 
+            // Finds the longest beginning subphrase and adds to our list, then subtracts that subphrase from this phrase's words.
+            // Repeats until there are no more words remaining, or no more subphrases can be found.
             while (tempWords.Count > 0)
             {
                 Phrase? subPhrase = _findLargestSubphrase(tempWords.ToArray(), inLibrary);
@@ -38,6 +48,11 @@ namespace CVAS.DataStructure
             return subPhrases.ToArray();
         }
 
+        /// <summary>
+        /// Splits a given string up into words and some special phrases (punctuation) using whitespace.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         private static string[] _getWords(string str)
         {
             List<string> words = new List<string>();
@@ -68,6 +83,12 @@ namespace CVAS.DataStructure
             return words.ToArray();
         }
 
+        /// <summary>
+        /// Finds the longest phrase in a given <see cref="Library"/> that matches some first of the given words, or null.
+        /// </summary>
+        /// <param name="words"></param>
+        /// <param name="inLibrary">The Library to search.</param>
+        /// <returns>The longest <see cref="Phrase"/>, or <see cref="null"/>.</returns>
         private static Phrase? _findLargestSubphrase(string[] words, Library inLibrary)
         {
             // Iterates through words to find the largest subphrase of those words, or null

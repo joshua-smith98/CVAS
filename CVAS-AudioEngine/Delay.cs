@@ -3,6 +3,9 @@ using NAudio.Wave.SampleProviders;
 
 namespace CVAS.AudioEngine
 {
+    /// <summary>
+    /// A playable piece of silent audio, with a given length in milliseconds.
+    /// </summary>
     public class Delay : IAudioClip
     {
         public WaveFormat WaveFormat => AudioPlayer.instance.WaveFormat;

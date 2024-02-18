@@ -3,6 +3,9 @@ using NAudio.Wave.SampleProviders;
 
 namespace CVAS.AudioEngine
 {
+    /// <summary>
+    /// Governs all audio mixing and playback. Non-constructable - use the static <see cref="AudioPlayer.instance"/> to access.
+    /// </summary>
     public class AudioPlayer : IDisposable
     {
         public static AudioPlayer instance { get; } = new AudioPlayer();
@@ -24,6 +27,10 @@ namespace CVAS.AudioEngine
             _waveOutEvent.Play();
         }
 
+        /// <summary>
+        /// Plays the given <see cref="IAudioClip"/>, with automatic resampling.
+        /// </summary>
+        /// <param name="audioClip"></param>
         public void Play(IAudioClip audioClip)
         {
             MediaFoundationResampler resampler = new MediaFoundationResampler(audioClip.toWaveProvider(), WaveFormat);

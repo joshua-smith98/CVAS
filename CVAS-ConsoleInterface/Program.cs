@@ -26,6 +26,7 @@ foreach (Phrase subPhrase in subPhrases)
     Console.Write($"[{subPhrase.str}] ");
 }
 
+// Audio engine test
 Console.ReadKey();
 
 Playlist playlist = new Playlist(subPhrases.Select(x => x.linkedAudio).ToArray());
@@ -42,7 +43,7 @@ AudioPlayer.instance.Play(playlist);
 
 Console.ReadKey();
 
-playlist = new(subPhrases.Select(x => x.linkedAudio).ToArray());
+playlist = new(subPhrases.Select(x => x.linkedAudio).ToArray()); // Playing it a second time to test overlapping audio
 
 AudioPlayer.instance.Play(playlist);
 

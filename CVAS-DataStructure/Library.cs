@@ -1,5 +1,8 @@
 ﻿namespace CVAS.DataStructure
 {
+    /// <summary>
+    /// A collection of <see cref="Phrase"/>s, including some default punctuation.
+    /// </summary>
     public partial class Library
     {
         private List<Phrase> _phrases = DEFAULT_PHRASES.ToList();
@@ -11,7 +14,7 @@
         }
 
         /// <summary>
-        /// Finds the <see cref="Phrase"/> in this library that contains <paramref name="str"/>.
+        /// Finds the <see cref="Phrase"/> in this library that contains <paramref name="str"/>, or null.
         /// </summary>
         /// <param name="str"></param>
         /// <returns>The specified <see cref="Phrase"/> or null if unsuccessful.</returns>

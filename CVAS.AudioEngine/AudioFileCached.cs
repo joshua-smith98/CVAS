@@ -2,12 +2,18 @@
 
 namespace CVAS.AudioEngine
 {
+    /// <summary>
+    /// A playable piece of audio from a file, that has been cached in memory.
+    /// </summary>
     public class AudioFileCached : IAudioFile
     {
         public WaveFormat WaveFormat { get; }
 
+        /// <summary>
+        /// Path to the originating file.
+        /// </summary>
         public string path { get; }
-        public long offset { get; }
+        public long offset { get; } // See: AudioFileStreaming
         public long length { get; }
 
         private MemoryStream _masterCache;

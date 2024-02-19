@@ -3,7 +3,7 @@
 namespace CVAS.AudioEngine
 {
     /// <summary>
-    /// A playable piece of audio originating from an audio file.
+    /// A playable piece of audio from a file, that is streamed directly from the disk.
     /// </summary>
     public class AudioFileStreaming : IAudioFile
     {

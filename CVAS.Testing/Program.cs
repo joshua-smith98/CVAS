@@ -4,16 +4,16 @@ using CVAS.AudioEngine;
 // Phrase algorithm test
 List<Phrase> Phrases = new List<Phrase>
 {
-    new("the train on platform", new AudioFileStreaming("sounds/the train on platform.mp3")),
-    new("one", new AudioFileStreaming("sounds/one.mp3")),
-    new("goes to", new AudioFileStreaming("sounds/goes to.mp3")),
-    new("the train on platform one", new AudioFileStreaming("sounds/the train on platform one.mp3")),
-    new("central", new AudioFileStreaming("sounds/central.mp3")),
-    new("first stop", new AudioFileStreaming("sounds/first stop.mp3")),
-    new("strathfield", new AudioFileStreaming("sounds/strathfield.mp3")),
-    new("then", new AudioFileStreaming("sounds/then.mp3")),
-    new("redfern", new AudioFileStreaming("sounds/redfern.mp3")),
-    new("and", new AudioFileStreaming("sounds/and.mp3")),
+    new("the train on platform", new AudioFileCached("sounds/the train on platform.mp3")),
+    new("one", new AudioFileCached("sounds/one.mp3")),
+    new("goes to", new AudioFileCached("sounds/goes to.mp3")),
+    new("the train on platform one", new AudioFileCached("sounds/the train on platform one.mp3")),
+    new("central", new AudioFileCached("sounds/central.mp3")),
+    new("first stop", new AudioFileCached("sounds/first stop.mp3")),
+    new("strathfield", new AudioFileCached("sounds/strathfield.mp3")),
+    new("then", new AudioFileCached("sounds/then.mp3")),
+    new("redfern", new AudioFileCached("sounds/redfern.mp3")),
+    new("and", new AudioFileCached("sounds/and.mp3")),
 };
 
 Library library = new(Phrases.ToArray());

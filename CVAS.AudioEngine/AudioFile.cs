@@ -5,7 +5,7 @@ namespace CVAS.AudioEngine
     /// <summary>
     /// A playable piece of audio originating from an audio file.
     /// </summary>
-    public class AudioFile : IAudioClip
+    public class AudioFileStreaming : IAudioClip
     {
         public WaveFormat WaveFormat { get; }
 
@@ -16,7 +16,7 @@ namespace CVAS.AudioEngine
         public long offset { get; } // These two properties are for future plans to access WaveStreams embedded somewhere in a file block (will need a refactor))
         public long length { get; }
 
-        public AudioFile(string path)
+        public AudioFileStreaming(string path)
         {
             this.path = path;
             using (var tempAudioFileReader = new AudioFileReader(path)) // Briefly opening file to get the WaveFormat

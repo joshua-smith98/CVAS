@@ -34,8 +34,8 @@ Console.WriteLine("Playing:");
 
 foreach (IAudioClip audioClip in playlist.audioClips)
 {
-    if (audioClip is AudioFileStreaming)
-        Console.WriteLine(((AudioFileStreaming)audioClip).path);
+    if (audioClip is IAudioFile)
+        Console.WriteLine(((IAudioFile)audioClip).path);
     else if (audioClip is Delay)
         Console.WriteLine(((Delay)audioClip).milliseconds);
 }

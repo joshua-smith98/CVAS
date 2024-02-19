@@ -10,7 +10,7 @@ namespace CVAS.AudioEngine
         public long offset { get; }
         public long length { get; }
 
-        private RawSourceWaveStream _masterCache;
+        private MemoryStream _masterCache;
 
         public AudioFileCached(string path)
         {
@@ -24,7 +24,10 @@ namespace CVAS.AudioEngine
                 WaveFormat = tempAudioFileReader.WaveFormat;
                 length = tempAudioFileReader.Length;
 
-                _masterCache = new RawSourceWaveStream(tempAudioFileReader, WaveFormat);
+                _masterCache = new MemoryStream();
+                _masterCache.SetLength(tempAudioFileReader.Length);
+                tempAudioFileReader.CopyTo(_masterCache);
+                _masterCache.Flush();
             }
         }
 

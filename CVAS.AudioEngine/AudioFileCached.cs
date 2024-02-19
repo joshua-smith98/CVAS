@@ -33,11 +33,15 @@ namespace CVAS.AudioEngine
 
         public IWaveProvider toWaveProvider()
         {
-            var newStream = new DisposingWaveProvider(new RawSourceWaveStream(_masterCache, WaveFormat));
-            
-            _masterCache.Position = 0; // Just in case...
+            // Copy audio data from master cache to new cache
+            var newStream = new MemoryStream();
+            newStream.SetLength(_masterCache.Length);
+            _masterCache.Position = 0;
+            _masterCache.CopyTo(newStream);
+            newStream.Flush();
+            newStream.Position = 0;
 
-            return newStream;
+            return new DisposingWaveProvider(new RawSourceWaveStream(newStream, WaveFormat));
         }
 
         public void Dispose()

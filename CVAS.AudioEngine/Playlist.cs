@@ -43,5 +43,13 @@ namespace CVAS.AudioEngine
             sampleProvider = new ConcatenatingSampleProvider(waveProviders.Select(x => x.ToSampleProvider()));
             return sampleProvider.ToWaveProvider();
         }
+
+        public void Dispose()
+        {
+            foreach (IAudioClip audioClip in audioClips)
+            {
+                audioClip.Dispose();
+            }
+        }
     }
 }

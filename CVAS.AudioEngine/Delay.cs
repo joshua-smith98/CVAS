@@ -20,5 +20,10 @@ namespace CVAS.AudioEngine
         {
             return new DelaySampleProvider(AudioPlayer.instance.WaveFormat, milliseconds).ToWaveProvider();
         }
+
+        public void Dispose()
+        {
+            // Nothing to dispose of
+        }
     }
 }

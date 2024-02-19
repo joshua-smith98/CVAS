@@ -27,5 +27,10 @@ namespace CVAS.AudioEngine
         {
             return new DisposingWaveProvider(new AudioFileReader(path));
         }
+
+        public void Dispose()
+        {
+            // Nothing to dispose of.
+        }
     }
 }

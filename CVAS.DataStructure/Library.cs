@@ -35,21 +35,7 @@
         /// <returns></returns>
         public Phrase[] FindSubPhrases(Phrase phrase)
         {
-            List<string> tempWords = phrase.words.ToList();
-            List<Phrase> subPhrases = new List<Phrase>();
-
-            // Finds the longest beginning subphrase and adds to our list, then subtracts that subphrase from this phrase's words.
-            // Repeats until there are no more words remaining, or no more subphrases can be found.
-            while (tempWords.Count > 0)
-            {
-                Phrase? subPhrase = _findLargestSubphrase(tempWords.ToArray());
-                if (subPhrase is null) break;
-
-                subPhrases.Add(subPhrase);
-                tempWords.RemoveRange(0, subPhrase.words.Length);
-            }
-
-            return subPhrases.ToArray();
+            return _findSubPhrases(phrase.words);
         }
 
         public Sentence GetSentence(string str)
@@ -58,6 +44,26 @@
 
             // Copy paste from FindSubPhrases(), but with a big difference: we are calculating inflections here!
 
+            Phrase[] subPhrases = _findSubPhrases(words);
+
+            SpokenPhrase[] spokenPhrases = new SpokenPhrase[subPhrases.Length];
+
+            // Finds any phrases that come before a Period, and assigns the End inflection to them - otherwise, Middle.
+            for (int i = 0; i < spokenPhrases.Length; i++)
+            {
+                // Case: This is not the last phrase, and the next phrase is a period.
+                if (i < spokenPhrases.Length - 1 && subPhrases[i + 1].str == Phrase.SPECIAL_PHRASES["PERIOD"].ToString())
+                {
+                    spokenPhrases[i] = subPhrases[i].GetSpoken(Inflection.End);
+                }
+                else spokenPhrases[i] = subPhrases[i].GetSpoken(Inflection.Middle);
+            }
+
+            return new Sentence(str, words, spokenPhrases);
+        }
+
+        private Phrase[] _findSubPhrases(string[] words)
+        {
             List<string> tempWords = words.ToList();
             List<Phrase> subPhrases = new List<Phrase>();
 
@@ -72,20 +78,7 @@
                 tempWords.RemoveRange(0, subPhrase.words.Length);
             }
 
-            SpokenPhrase[] spokenPhrases = new SpokenPhrase[subPhrases.Count];
-
-            // Finds any phrases that come before a Period, and assigns the End inflection to them - otherwise, Middle.
-            for (int i = 0; i < spokenPhrases.Length; i++)
-            {
-                // Case: This is not the last phrase, and the next phrase is a period.
-                if (i < spokenPhrases.Length - 1 && subPhrases[i + 1].str == Phrase.SPECIAL_PHRASES["PERIOD"].ToString())
-                {
-                    spokenPhrases[i] = subPhrases[i].GetSpoken(Inflection.End);
-                }
-                else spokenPhrases[i] = subPhrases[i].GetSpoken(Inflection.Middle);
-            }
-
-            return new Sentence(str, words, spokenPhrases);
+            return subPhrases.ToArray();
         }
 
         /// <summary>

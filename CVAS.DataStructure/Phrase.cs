@@ -5,11 +5,12 @@ namespace CVAS.DataStructure
     /// <summary>
     /// Represents a string, made up of a set of words and punctuation. Can also contain a linked <see cref="IAudioClip"/>.
     /// </summary>
-    public partial class Phrase
+    public partial class Phrase : IPhrase
     {
         public string str { get; }
         public string[] words { get; }
-        public IAudioClip? linkedAudio { get; }
+
+        private Dictionary<Inflection, IAudioClip> _audioClips = new();
         
         public Phrase (string str)
         {
@@ -17,11 +18,19 @@ namespace CVAS.DataStructure
             this.words = _getWords(str);
         }
 
-        public Phrase(string str, IAudioClip linkedAudio)
+        public Phrase(string str, IAudioClip audioClip, Inflection audioClipInflection = Inflection.End)
         {
             this.str = str;
             this.words = _getWords(str);
-            this.linkedAudio = linkedAudio;
+            _audioClips.Add(audioClipInflection, audioClip);
+        }
+
+        public Phrase(string str, IAudioClip audioClip_End, IAudioClip audioClip_Middle)
+        {
+            this.str = str;
+            this.words = _getWords(str);
+            _audioClips.Add(Inflection.Middle, audioClip_Middle);
+            _audioClips.Add(Inflection.End, audioClip_End);
         }
 
         /// <summary>
@@ -46,6 +55,28 @@ namespace CVAS.DataStructure
             }
 
             return subPhrases.ToArray();
+        }
+
+        public IAudioClip GetAudioClip()
+        {
+            if (_audioClips.Keys.Contains(Inflection.End))
+            {
+                return _audioClips[Inflection.End];
+            }
+            else if (_audioClips.Keys.Contains(Inflection.Middle))
+            {
+                return _audioClips[Inflection.Middle];
+            }
+            else return new Silence(0);
+        }
+
+        public IAudioClip GetAudioClip(Inflection inflection)
+        {
+            if (_audioClips.Keys.Contains(inflection))
+            {
+                return _audioClips[inflection];
+            }
+            else return GetAudioClip();
         }
 
         /// <summary>

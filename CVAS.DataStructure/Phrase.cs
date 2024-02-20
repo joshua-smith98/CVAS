@@ -65,7 +65,7 @@ namespace CVAS.DataStructure
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        private static string[] _getWords(string str)
+        internal static string[] getWords(string str)
         {
             List<string> words = new List<string>();
 

@@ -52,6 +52,42 @@
             return subPhrases.ToArray();
         }
 
+        public Sentence GetSentence(string str)
+        {
+            string[] words = Phrase.getWords(str); // TODO? Fix dependency on Phrase here
+
+            // Copy paste from FindSubPhrases(), but with a big difference: we are calculating inflections here!
+
+            List<string> tempWords = words.ToList();
+            List<Phrase> subPhrases = new List<Phrase>();
+
+            // Finds the longest beginning subphrase and adds to our list, then subtracts that subphrase from this phrase's words.
+            // Repeats until there are no more words remaining, or no more subphrases can be found.
+            while (tempWords.Count > 0)
+            {
+                Phrase? subPhrase = _findLargestSubphrase(tempWords.ToArray());
+                if (subPhrase is null) break;
+
+                subPhrases.Add(subPhrase);
+                tempWords.RemoveRange(0, subPhrase.words.Length);
+            }
+
+            SpokenPhrase[] spokenPhrases = new SpokenPhrase[subPhrases.Count];
+
+            // Finds any phrases that come before a Period, and assigns the End inflection to them - otherwise, Middle.
+            for (int i = 0; i < spokenPhrases.Length; i++)
+            {
+                // Case: This is not the last phrase, and the next phrase is a period.
+                if (i < spokenPhrases.Length - 1 && subPhrases[i + 1].str == Phrase.SPECIAL_PHRASES["PERIOD"].ToString())
+                {
+                    spokenPhrases[i] = subPhrases[i].GetSpoken(Inflection.End);
+                }
+                else spokenPhrases[i] = subPhrases[i].GetSpoken(Inflection.Middle);
+            }
+
+            return new Sentence(str, words, spokenPhrases);
+        }
+
         /// <summary>
         /// Finds the longest phrase in this Library that matches the first n of the given words, or null.
         /// </summary>

@@ -18,9 +18,12 @@ List<Phrase> Phrases = new List<Phrase>
 
 Library library = new(Phrases.ToArray());
 
-Sentence testSentence = library.GetSentence("The train on platform | one goes to Strathfield. First stop Central, then Redfern, Central, and Strathfield.");
+string testStr = "The train on platform one goes to Strathfield. First stop Central, then Redfern, Central, and Strathfield.";
+Sentence testSentence = library.GetSentence(testStr);
 
-Console.Write("Result: ");
+Console.WriteLine($"Attempting to say: {testStr}");
+Console.WriteLine();
+Console.Write("Sentence decoded as: ");
 foreach (IPhrase subPhrase in testSentence.spokenPhrases)
 {
     Console.Write($"[{subPhrase.str}] ");
@@ -30,7 +33,7 @@ foreach (IPhrase subPhrase in testSentence.spokenPhrases)
 Console.ReadKey();
 
 Playlist playlist = (Playlist)testSentence.GetAudioClip();
-Console.WriteLine("Playing:");
+Console.WriteLine("Playing IAudioClips:");
 
 foreach (IAudioClip audioClip in playlist.audioClips)
 {

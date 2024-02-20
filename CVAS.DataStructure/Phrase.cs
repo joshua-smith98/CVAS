@@ -33,30 +33,6 @@ namespace CVAS.DataStructure
             _audioClips.Add(Inflection.End, audioClip_End);
         }
 
-        /// <summary>
-        /// Finds the collection of Phrases from a given <see cref="Library"/> that can be concatenated to create this Phrase.
-        /// </summary>
-        /// <param name="inLibrary">The Library to search for sub-phrases.</param>
-        /// <returns></returns>
-        public Phrase[] FindSubPhrases(Library inLibrary)
-        {
-            List<string> tempWords = words.ToList();
-            List<Phrase> subPhrases = new List<Phrase>();
-
-            // Finds the longest beginning subphrase and adds to our list, then subtracts that subphrase from this phrase's words.
-            // Repeats until there are no more words remaining, or no more subphrases can be found.
-            while (tempWords.Count > 0)
-            {
-                Phrase? subPhrase = _findLargestSubphrase(tempWords.ToArray(), inLibrary);
-                if (subPhrase is null) break;
-
-                subPhrases.Add(subPhrase);
-                tempWords.RemoveRange(0, subPhrase.words.Length);
-            }
-
-            return subPhrases.ToArray();
-        }
-
         public IAudioClip GetAudioClip()
         {
             if (_audioClips.Keys.Contains(Inflection.End))
@@ -117,38 +93,6 @@ namespace CVAS.DataStructure
             if (word != "") words.Add(word);
 
             return words.ToArray();
-        }
-
-        /// <summary>
-        /// Finds the longest phrase in a given <see cref="Library"/> that matches some first of the given words, or null.
-        /// </summary>
-        /// <param name="words"></param>
-        /// <param name="inLibrary">The Library to search.</param>
-        /// <returns>The longest <see cref="Phrase"/>, or <see cref="null"/>.</returns>
-        private static Phrase? _findLargestSubphrase(string[] words, Library inLibrary)
-        {
-            // Iterates through words to find the largest subphrase of those words, or null
-
-            List<string> testPhrase = new List<string>(); // List of words that will be used to test for a possible subphrase
-            Phrase? subPhrase = null;
-
-            foreach (string word in words)
-            {
-                testPhrase.Add(word.ToLower());
-
-                // Find matching phrase
-                Phrase? tempSubPhrase = inLibrary.phrases.ToList().Find(libPhrase => libPhrase.words.Select(x => x.ToLower()).SequenceEqual(testPhrase));
-
-                // Case: there is a match
-                if (tempSubPhrase is not null)
-                {
-                    subPhrase = tempSubPhrase;
-                }
-                // Case: there is no match
-                    // Do nothing
-            }
-
-            return subPhrase;
         }
     }
 }

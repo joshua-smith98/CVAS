@@ -16,7 +16,7 @@ namespace CVAS.DataStructure
             this.spokenPhrases = spokenPhrases;
         }
 
-        public IAudioClip GetAudioClip()
+        public Playlist GetAudioClip()
         {
             return new Playlist(spokenPhrases.Select(x => x.GetAudioClip()).ToArray());
         }

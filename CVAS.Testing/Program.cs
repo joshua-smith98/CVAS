@@ -29,7 +29,7 @@ foreach (IPhrase subPhrase in testSentence.spokenPhrases)
 // Audio engine test
 Console.ReadKey();
 
-Playlist playlist = testSentence.GetAudioClip();
+Playlist playlist = (Playlist)testSentence.GetAudioClip();
 Console.WriteLine("Playing:");
 
 foreach (IAudioClip audioClip in playlist.audioClips)

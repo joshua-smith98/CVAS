@@ -15,20 +15,20 @@ namespace CVAS.DataStructure
         public Phrase (string str)
         {
             this.str = str;
-            this.words = _getWords(str);
+            this.words = getWords(str);
         }
 
         public Phrase(string str, IAudioClip audioClip, Inflection audioClipInflection = Inflection.End)
         {
             this.str = str;
-            this.words = _getWords(str);
+            this.words = getWords(str);
             _audioClips.Add(audioClipInflection, audioClip);
         }
 
         public Phrase(string str, IAudioClip audioClip_End, IAudioClip audioClip_Middle)
         {
             this.str = str;
-            this.words = _getWords(str);
+            this.words = getWords(str);
             _audioClips.Add(Inflection.Middle, audioClip_Middle);
             _audioClips.Add(Inflection.End, audioClip_End);
         }

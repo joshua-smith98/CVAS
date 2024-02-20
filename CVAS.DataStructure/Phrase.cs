@@ -79,6 +79,11 @@ namespace CVAS.DataStructure
             else return GetAudioClip();
         }
 
+        public SpokenPhrase GetSpoken(Inflection inflection)
+        {
+            return new SpokenPhrase(str, words, GetAudioClip(inflection));
+        }
+
         /// <summary>
         /// Splits a given string up into words and some special phrases (punctuation) using whitespace.
         /// </summary>

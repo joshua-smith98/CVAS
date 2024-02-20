@@ -90,7 +90,7 @@ namespace CVAS.DataStructure
         /// <returns></returns>
         public SpokenPhrase GetSpoken(Inflection inflection)
         {
-            return new SpokenPhrase(str, words, GetAudioClip(inflection));
+            return new SpokenPhrase(str, words, GetAudioClip(inflection), inflection);
         }
 
         /// <summary>

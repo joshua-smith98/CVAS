@@ -9,13 +9,19 @@ namespace CVAS.DataStructure
     {
         public string str { get; }
         public string[] words { get; }
-        
+
+        /// <summary>
+        /// The <see cref="Inflection"/> associated with this SpokenPhrase.
+        /// </summary>
+        public Inflection inflection { get; }
+
         private IAudioClip _audioClip { get; }
 
-        internal SpokenPhrase(string str, string[] words, IAudioClip audioClip)
+        internal SpokenPhrase(string str, string[] words, IAudioClip audioClip, Inflection inflection)
         {
             this.str = str;
             this.words = words;
+            this.inflection = inflection;
             _audioClip = audioClip;
         }
 

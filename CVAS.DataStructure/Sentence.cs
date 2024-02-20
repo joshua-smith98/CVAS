@@ -7,18 +7,18 @@ namespace CVAS.DataStructure
         public string str { get; }
         public string[] words { get; }
 
-        private SpokenPhrase[] _spokenPhrases;
+        public SpokenPhrase[] spokenPhrases { get; }
 
         internal Sentence(string str, string[] words, SpokenPhrase[] spokenPhrases)
         {
             this.str = str;
             this.words = words;
-            this._spokenPhrases = spokenPhrases;
+            this.spokenPhrases = spokenPhrases;
         }
 
         public IAudioClip GetAudioClip()
         {
-            return new Playlist(_spokenPhrases.Select(x => x.GetAudioClip()).ToArray());
+            return new Playlist(spokenPhrases.Select(x => x.GetAudioClip()).ToArray());
         }
     }
 }

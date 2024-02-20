@@ -2,6 +2,9 @@
 
 namespace CVAS.DataStructure
 {
+    /// <summary>
+    /// Represents a speakable phrase positioned within a sentence, with a single associated <see cref="Inflection"/>.
+    /// </summary>
     public class SpokenPhrase : IPhrase
     {
         public string str { get; }
@@ -16,6 +19,10 @@ namespace CVAS.DataStructure
             _audioClip = audioClip;
         }
 
+        /// <summary>
+        /// Gets the associated <see cref="IAudioClip"/> for this SpokenPhrase.
+        /// </summary>
+        /// <returns></returns>
         public IAudioClip GetAudioClip() => _audioClip;
     }
 }

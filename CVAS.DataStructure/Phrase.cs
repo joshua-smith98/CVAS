@@ -10,14 +10,27 @@ namespace CVAS.DataStructure
         public string str { get; }
         public string[] words { get; }
 
+        /// <summary>
+        /// The collection of <see cref="IAudioClip"/>s associated with this phrase, mapped to their inflections.
+        /// </summary>
         private Dictionary<Inflection, IAudioClip> _audioClips = new();
         
+        /// <summary>
+        /// Constructs a new phrase with no associated audio.
+        /// </summary>
+        /// <param name="str"></param>
         public Phrase (string str)
         {
             this.str = str;
             this.words = getWords(str);
         }
 
+        /// <summary>
+        /// Constructs a new phrase with a single associated <see cref="IAudioClip"/>.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="audioClip"></param>
+        /// <param name="audioClipInflection">The inflection of the associated audio clip (default is <see cref="Inflection.End"/>)</param>
         public Phrase(string str, IAudioClip audioClip, Inflection audioClipInflection = Inflection.End)
         {
             this.str = str;
@@ -25,6 +38,12 @@ namespace CVAS.DataStructure
             _audioClips.Add(audioClipInflection, audioClip);
         }
 
+        /// <summary>
+        /// Constructs a new phrase with two associated <see cref="IAudioClip"/>s, each mapped to their associated inflections.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="audioClip_End"></param>
+        /// <param name="audioClip_Middle"></param>
         public Phrase(string str, IAudioClip audioClip_End, IAudioClip audioClip_Middle)
         {
             this.str = str;
@@ -33,6 +52,10 @@ namespace CVAS.DataStructure
             _audioClips.Add(Inflection.End, audioClip_End);
         }
 
+        /// <summary>
+        /// Gets the default <see cref="IAudioClip"/> for this phrase, or silence.
+        /// </summary>
+        /// <returns><see cref="Inflection.End"/> if available, otherwise <see cref="Inflection.Middle"/>. If there is no associated <see cref="IAudioClip"/>, this returns <see cref="Silence"/>.</returns>
         public IAudioClip GetAudioClip()
         {
             if (_audioClips.Keys.Contains(Inflection.End))
@@ -46,6 +69,11 @@ namespace CVAS.DataStructure
             else return new Silence(0);
         }
 
+        /// <summary>
+        /// Retrieves the <see cref="IAudioClip"/> with the specified <see cref="Inflection"/>, or default.
+        /// </summary>
+        /// <param name="inflection"></param>
+        /// <returns></returns>
         public IAudioClip GetAudioClip(Inflection inflection)
         {
             if (_audioClips.Keys.Contains(inflection))
@@ -55,6 +83,11 @@ namespace CVAS.DataStructure
             else return GetAudioClip();
         }
 
+        /// <summary>
+        /// Gets the <see cref="SpokenPhrase"/> for this phrase, given the specified <see cref="Inflection"/>.
+        /// </summary>
+        /// <param name="inflection"></param>
+        /// <returns></returns>
         public SpokenPhrase GetSpoken(Inflection inflection)
         {
             return new SpokenPhrase(str, words, GetAudioClip(inflection));

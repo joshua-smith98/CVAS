@@ -5,7 +5,7 @@
     /// </summary>
     public partial class Library
     {
-        private List<Phrase> _phrases = DEFAULT_PHRASES.ToList();
+        private List<Phrase> _phrases = DEFAULT_PHRASES.ToList(); // All Libraries include the special phrases by default
         public Phrase[] phrases => _phrases.ToArray(); //public get only
 
         public Library(Phrase[] phrases)
@@ -38,6 +38,11 @@
             return _findSubPhrases(phrase.words);
         }
 
+        /// <summary>
+        /// Takes a given string and attempts to find a speakable sentence using the phrases in this library.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public Sentence GetSentence(string str)
         {
             string[] words = Phrase.getWords(str); // TODO? Fix dependency on Phrase here
@@ -62,6 +67,11 @@
             return new Sentence(str, words, spokenPhrases);
         }
 
+        /// <summary>
+        /// Finds the collection of Phrases in this Library that can be concatenated to match the given words.
+        /// </summary>
+        /// <param name="words"></param>
+        /// <returns></returns>
         private Phrase[] _findSubPhrases(string[] words)
         {
             List<string> tempWords = words.ToList();

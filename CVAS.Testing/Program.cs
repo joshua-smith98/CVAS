@@ -36,8 +36,8 @@ foreach (IAudioClip audioClip in playlist.audioClips)
 {
     if (audioClip is IAudioFile)
         Console.WriteLine(((IAudioFile)audioClip).path);
-    else if (audioClip is Delay)
-        Console.WriteLine(((Delay)audioClip).milliseconds);
+    else if (audioClip is Silence)
+        Console.WriteLine(((Silence)audioClip).milliseconds);
 }
 AudioPlayer.instance.Play(playlist);
 

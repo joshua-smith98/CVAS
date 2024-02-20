@@ -5,14 +5,14 @@ namespace CVAS.AudioEngine
     /// <summary>
     /// A sample provider that provides a given number of milliseconds of silence. Only playable once.
     /// </summary>
-    internal class DelaySampleProvider : ISampleProvider
+    internal class SilenceSampleProvider : ISampleProvider
     {
         public WaveFormat WaveFormat { get; }
         
         private long _numSamples;
         private long _sampleCounter = 0;
 
-        public DelaySampleProvider(WaveFormat waveFormat, int milliseconds)
+        public SilenceSampleProvider(WaveFormat waveFormat, int milliseconds)
         {
             WaveFormat = waveFormat;
             _numSamples = (long)(milliseconds * (WaveFormat.SampleRate / 1000.0f) * WaveFormat.Channels); // Convert milliseconds into samples

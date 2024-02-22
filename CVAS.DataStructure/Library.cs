@@ -33,8 +33,17 @@ namespace CVAS.DataStructure
 
             foreach (string file_middle in files_middles)
             {
+                // Audio file validity check
+                IAudioClip audioClip_middle;
+                try
+                {
+                    audioClip_middle = new AudioFileStreaming(file_middle);
+                }
+                catch { continue; }
+
+                Console.WriteLine(file_middle);
+
                 string str = Path.GetFileNameWithoutExtension(file_middle);
-                IAudioClip audioClip_middle = new AudioFileStreaming(file_middle);
 
                 // Check for ending inflection: construct new file path using directory, filename without extension, ".f" and extension
                 string file_end = Path.Combine(
@@ -58,6 +67,7 @@ namespace CVAS.DataStructure
                     // If we add an end inflection to a phrase, remove it from the list of end inflection files
                     phrases.Add(new Phrase(str, audioClip_end, audioClip_middle));
                     files_ends.Remove(file_end);
+                    Console.WriteLine(file_end);
                 }
                 else phrases.Add(new Phrase(str, audioClip_middle, Inflection.Middle));
             }
@@ -65,11 +75,20 @@ namespace CVAS.DataStructure
             // Add all remaining end inflection files to a phrase
             foreach (string file_end in files_ends)
             {
+                // Audio file validity check
+                IAudioClip audioClip_end;
+
+                try
+                {
+                    audioClip_end = new AudioFileStreaming(file_end);
+                }
+                catch { continue; }
+
                 string str = Path.GetFileNameWithoutExtension(file_end);
                 str = str.Substring(0, str.Length - 2);
-                IAudioClip audioClip_end = new AudioFileStreaming(file_end);
 
                 phrases.Add(new Phrase(str, audioClip_end));
+                Console.WriteLine(file_end);
             }
 
             // Construct and return library

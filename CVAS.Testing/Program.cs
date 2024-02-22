@@ -1,6 +1,7 @@
 ﻿using CVAS.DataStructure;
 using CVAS.AudioEngine;
 
+/*
 // Phrase algorithm test
 List<Phrase> Phrases = new List<Phrase>
 {
@@ -17,8 +18,11 @@ List<Phrase> Phrases = new List<Phrase>
 };
 
 Library library = new(Phrases.ToArray());
+*/
 
-string testStr = "The train on platform one goes to Strathfield. First stop Central. Then Redfern, Central, Strathfield, Central and Redfern.";
+Library library = Library.LoadFromFolder("C:\\Users\\Josh\\Downloads\\DVA5-master\\DVA5-master\\sounds\\Sydney-Female\\");
+
+string testStr = "The train on platform 1 goes to Strathfield. First stop Central. Then Redfern, Central, Strathfield, Central and Redfern.";
 Sentence testSentence = library.GetSentence(testStr);
 
 Console.WriteLine($"Attempting to say: \"{testStr}\"");

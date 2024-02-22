@@ -1,4 +1,6 @@
-﻿namespace CVAS.DataStructure
+﻿using CVAS.AudioEngine;
+
+namespace CVAS.DataStructure
 {
     /// <summary>
     /// A collection of <see cref="Phrase"/>s, including some default punctuation.
@@ -11,6 +13,95 @@
         public Library(Phrase[] phrases)
         {
             _phrases.AddRange(phrases);
+        }
+
+        /// <summary>
+        /// Constructs and loads a Library from the given directory. Assumes the directory contains audio files with correctly formatted file names.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        /// <exception cref="DirectoryNotFoundException"></exception>
+        public static Library LoadFromFolder(string path)
+        {
+            // Path validity checks
+            if (!Directory.Exists(path)) throw new DirectoryNotFoundException();
+
+            // Construct list of phrases to build library from
+            List<Phrase> phrases = new List<Phrase>();
+
+            // Assume we could have either a middle, end or both inflections.
+            // First, iterate through all middle inflection files (no suffix), create phrases and attach any end inflections if they exist
+            // If we attach an end reflection, remove it from the list of end inflection files
+            // Finally, add all remaining end inflection files to their own phrase and construct library.
+
+            // Get files
+            string[] files = Directory.GetFiles(path);
+            List<string> files_ends = files.Where(x => Path.GetFileNameWithoutExtension(x).EndsWith(".f")).ToList(); // List of files with end inflection
+            string[] files_middles = files.Where(x => !files_ends.Contains(x)).ToArray(); // List of files with middle inflection (all that aren't an end)
+
+            // Iterate through all middle inflection files
+            foreach (string file_middle in files_middles)
+            {
+                // Audio file validity check
+                IAudioClip audioClip_middle;
+                try
+                {
+                    audioClip_middle = new AudioFileStreaming(file_middle);
+                }
+                catch { continue; }
+
+                Console.WriteLine(file_middle);
+
+                // Phrase.str is file name without extension
+                string str = Path.GetFileNameWithoutExtension(file_middle);
+
+                // Check for ending inflection: construct new file path using directory, filename without extension, ".f" and extension
+                string file_end = Path.Combine(
+                    path, // directory name
+                    Path.GetFileNameWithoutExtension(file_middle) + ".f" + // Filename + ending suffice
+                    Path.GetExtension(file_middle)
+                    );
+
+                // Try to load ending inflection
+                IAudioClip? audioClip_end = null;
+
+                try // If it doesn't exist, or isn't an audio file, audioClip_end = null
+                {
+                    audioClip_end = new AudioFileStreaming(file_end);
+                }
+                catch { }
+
+                // Construct new phrases and add to list
+                if (audioClip_end is not null)
+                {
+                    phrases.Add(new Phrase(str, audioClip_end, audioClip_middle));
+                    files_ends.Remove(file_end); // If we add an end inflection to a phrase, remove it from the list of end inflection files
+                    Console.WriteLine(file_end);
+                }
+                else phrases.Add(new Phrase(str, audioClip_middle, Inflection.Middle));
+            }
+
+            // Add all remaining end inflection files to their own phrase
+            foreach (string file_end in files_ends)
+            {
+                // Audio file validity check
+                IAudioClip audioClip_end;
+
+                try
+                {
+                    audioClip_end = new AudioFileStreaming(file_end);
+                }
+                catch { continue; }
+
+                string str = Path.GetFileNameWithoutExtension(file_end);
+                str = str.Substring(0, str.Length - 2);
+
+                phrases.Add(new Phrase(str, audioClip_end));
+                Console.WriteLine(file_end);
+            }
+
+            // Construct and return library
+            return new Library(phrases.ToArray());
         }
 
         /// <summary>

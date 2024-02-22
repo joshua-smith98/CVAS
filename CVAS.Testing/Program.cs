@@ -1,6 +1,7 @@
 ﻿using CVAS.DataStructure;
 using CVAS.AudioEngine;
 
+/*
 // Phrase algorithm test
 List<Phrase> Phrases = new List<Phrase>
 {
@@ -17,35 +18,41 @@ List<Phrase> Phrases = new List<Phrase>
 };
 
 Library library = new(Phrases.ToArray());
+*/
 
-string testStr = "The train on platform one goes to Strathfield. First stop Central. Then Redfern, Central, Strathfield, Central and Redfern.";
-Sentence testSentence = library.GetSentence(testStr);
+Library library = Library.LoadFromFolder("C:\\Users\\Josh\\Downloads\\DVA5-master\\DVA5-master\\sounds\\Sydney-Female\\");
 
-Console.WriteLine($"Attempting to say: \"{testStr}\"");
-Console.WriteLine();
-Console.Write("Sentence decoded as: ");
-foreach (IPhrase subPhrase in testSentence.spokenPhrases)
-{
-    Console.Write($"[{subPhrase.str}] ");
+string testStr = "";
+while (testStr != "exit") {
+    testStr = Console.ReadLine();
+    Sentence testSentence = library.GetSentence(testStr);
+
+    //Console.WriteLine($"Attempting to say: \"{testStr}\"");
+    //Console.WriteLine();
+    Console.Write("Sentence decoded as: ");
+    foreach (IPhrase subPhrase in testSentence.spokenPhrases)
+    {
+        Console.Write($"[{subPhrase.str}] ");
+    }
+
+    // Audio engine test
+    Console.ReadKey();
+
+    Playlist playlist = (Playlist)testSentence.GetAudioClip();
+    Console.WriteLine("\n\nPlaying IAudioClips:");
+
+    foreach (IAudioClip audioClip in playlist.audioClips)
+    {
+        if (audioClip is IAudioFile)
+            Console.WriteLine(((IAudioFile)audioClip).path);
+        else if (audioClip is Silence)
+            Console.WriteLine(((Silence)audioClip).milliseconds);
+    }
+    AudioPlayer.instance.Play(playlist);
+
+    Console.ReadKey();
+
+    AudioPlayer.instance.Play(testSentence.GetAudioClip());
+
+    Console.ReadKey();
 }
-
-// Audio engine test
-Console.ReadKey();
-
-Playlist playlist = (Playlist)testSentence.GetAudioClip();
-Console.WriteLine("\n\nPlaying IAudioClips:");
-
-foreach (IAudioClip audioClip in playlist.audioClips)
-{
-    if (audioClip is IAudioFile)
-        Console.WriteLine(((IAudioFile)audioClip).path);
-    else if (audioClip is Silence)
-        Console.WriteLine(((Silence)audioClip).milliseconds);
-}
-AudioPlayer.instance.Play(playlist);
-
-Console.ReadKey();
-
-AudioPlayer.instance.Play(testSentence.GetAudioClip());
-
-Console.ReadKey();

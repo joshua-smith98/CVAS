@@ -41,6 +41,8 @@ namespace CVAS.DataStructure
                 }
                 catch { continue; }
 
+                Console.WriteLine(file_middle);
+
                 string str = Path.GetFileNameWithoutExtension(file_middle);
 
                 // Check for ending inflection: construct new file path using directory, filename without extension, ".f" and extension
@@ -65,6 +67,7 @@ namespace CVAS.DataStructure
                     // If we add an end inflection to a phrase, remove it from the list of end inflection files
                     phrases.Add(new Phrase(str, audioClip_end, audioClip_middle));
                     files_ends.Remove(file_end);
+                    Console.WriteLine(file_end);
                 }
                 else phrases.Add(new Phrase(str, audioClip_middle, Inflection.Middle));
             }
@@ -85,6 +88,7 @@ namespace CVAS.DataStructure
                 str = str.Substring(0, str.Length - 2);
 
                 phrases.Add(new Phrase(str, audioClip_end));
+                Console.WriteLine(file_end);
             }
 
             // Construct and return library

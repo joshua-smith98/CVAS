@@ -15,7 +15,7 @@ Bla bla bla, still in heavy development. Here's how you can test it in its curre
  - [x] Sentence, phase & library functionality
  - [x] Audio playback of sentences and phrases
  - [x] Audio caching
- - [ ] Inflection support
+ - [x] Inflection support
  - [ ] Automatically load a library from a folder
  - [ ] Library caching on the disk
  - [ ] Perform functions via REPL

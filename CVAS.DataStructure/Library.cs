@@ -15,6 +15,12 @@ namespace CVAS.DataStructure
             _phrases.AddRange(phrases);
         }
 
+        /// <summary>
+        /// Constructs and loads a Library from the given directory. Assumes the directory contains audio files with correctly formatted file names.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        /// <exception cref="DirectoryNotFoundException"></exception>
         public static Library LoadFromFolder(string path)
         {
             // Path validity checks
@@ -24,13 +30,16 @@ namespace CVAS.DataStructure
             List<Phrase> phrases = new List<Phrase>();
 
             // Assume we could have either a middle, end or both inflections.
-            // First, run through all middle inflection files (no suffix) and attach any end inflections if they exist
-            // If we add an end inflection to a phrase, remove it from the list of end inflection files
+            // First, iterate through all middle inflection files (no suffix), create phrases and attach any end inflections if they exist
+            // If we attach an end reflection, remove it from the list of end inflection files
+            // Finally, add all remaining end inflection files to their own phrase and construct library.
 
+            // Get files
             string[] files = Directory.GetFiles(path);
             List<string> files_ends = files.Where(x => Path.GetFileNameWithoutExtension(x).EndsWith(".f")).ToList(); // List of files with end inflection
             string[] files_middles = files.Where(x => !files_ends.Contains(x)).ToArray(); // List of files with middle inflection (all that aren't an end)
 
+            // Iterate through all middle inflection files
             foreach (string file_middle in files_middles)
             {
                 // Audio file validity check
@@ -43,6 +52,7 @@ namespace CVAS.DataStructure
 
                 Console.WriteLine(file_middle);
 
+                // Phrase.str is file name without extension
                 string str = Path.GetFileNameWithoutExtension(file_middle);
 
                 // Check for ending inflection: construct new file path using directory, filename without extension, ".f" and extension
@@ -64,15 +74,14 @@ namespace CVAS.DataStructure
                 // Construct new phrases and add to list
                 if (audioClip_end is not null)
                 {
-                    // If we add an end inflection to a phrase, remove it from the list of end inflection files
                     phrases.Add(new Phrase(str, audioClip_end, audioClip_middle));
-                    files_ends.Remove(file_end);
+                    files_ends.Remove(file_end); // If we add an end inflection to a phrase, remove it from the list of end inflection files
                     Console.WriteLine(file_end);
                 }
                 else phrases.Add(new Phrase(str, audioClip_middle, Inflection.Middle));
             }
 
-            // Add all remaining end inflection files to a phrase
+            // Add all remaining end inflection files to their own phrase
             foreach (string file_end in files_ends)
             {
                 // Audio file validity check

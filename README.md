@@ -16,7 +16,7 @@ Bla bla bla, still in heavy development. Here's how you can test it in its curre
  - [x] Audio playback of sentences and phrases
  - [x] Audio caching
  - [x] Inflection support
- - [ ] Automatically load a library from a folder
+ - [x] Automatically load a library from a folder
  - [ ] Library caching on the disk
  - [ ] Perform functions via REPL
  - [ ] Perform functions via command line

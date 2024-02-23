@@ -7,7 +7,7 @@ At its basic level, this program takes a series of recorded phrases and attempts
 If you're looking for a finished & working program, try this one - its quite nice:** [jaboles/DVA5](https://github.com/jaboles/DVA5)
 ## Roadmap
 
-### V0.5 - Back-end & Command-line
+### V0.5 - Back-end, Command-line & README.md
  - [x] Sentence, phase & library functionality
  - [x] Audio playback of sentences and phrases
  - [x] Audio caching

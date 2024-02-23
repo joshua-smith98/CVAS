@@ -173,7 +173,13 @@ namespace CVAS.DataStructure
             while (tempWords.Count > 0)
             {
                 Phrase? subPhrase = _findLargestSubphrase(tempWords.ToArray());
-                if (subPhrase is null) break;
+                if (subPhrase is null)
+                {
+                    // If we can't find a subphrase, just add an empty phrase to the list and continue
+                    subPhrases.Add(new Phrase("NULL")); // TODO: make this into a static readonly Phrase.NULL ?
+                    tempWords.RemoveRange(0, 1);
+                    continue;
+                }
 
                 subPhrases.Add(subPhrase);
                 tempWords.RemoveRange(0, subPhrase.words.Length);

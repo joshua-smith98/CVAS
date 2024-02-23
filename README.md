@@ -5,10 +5,6 @@ At its basic level, this program takes a series of recorded phrases and attempts
 
 **Please note: CVAS is still in heavy development.
 If you're looking for a finished & working program, try this one - its quite nice:** [jaboles/DVA5](https://github.com/jaboles/DVA5)
-## How to work with CVAS [TODO]
-Description of Phrases, Libraries, Sentences etc.
-## Installation [TODO]
-Bla bla bla, still in heavy development. Here's how you can test it in its current state...
 ## Roadmap
 
 ### V0.5 - Back-end & Command-line
@@ -17,9 +13,11 @@ Bla bla bla, still in heavy development. Here's how you can test it in its curre
  - [x] Audio caching
  - [x] Inflection support
  - [x] Automatically load a library from a folder
+ - [ ] Render spoken sentences to files
  - [ ] Library caching on the disk
  - [ ] Perform functions via REPL
  - [ ] Perform functions via command line
+ - [ ] A completed README.md, with "Usage" and "Installation" sections.
 
 ### V1.0 - WPF GUI
 - This will be expanded on once V0.5 is complete.

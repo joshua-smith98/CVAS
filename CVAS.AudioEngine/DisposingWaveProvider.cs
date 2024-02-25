@@ -28,7 +28,7 @@ namespace CVAS.AudioEngine
             {
                 _waveStream.Dispose();
                 _disposed = true;
-                return 0;
+                GC.Collect(); // If we don't do this, the GC will allow gigabytes of memory usage to build up over time. This block won't be accessed often, so it should be fine.
             }
 
             return bytesRead;

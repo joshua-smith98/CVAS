@@ -7,12 +7,12 @@ namespace CVAS.DataStructure
     /// </summary>
     public partial class Library
     {
-        private List<Phrase> _phrases = DEFAULT_PHRASES.ToList(); // All Libraries include the special phrases by default
-        public Phrase[] phrases => _phrases.ToArray(); //public get only
+        public Phrase[] Phrases => phrases.ToArray(); //public get only
+        private readonly List<Phrase> phrases = DefaultPhrases.ToList(); // All Libraries include the special phrases by default
 
         public Library(Phrase[] phrases)
         {
-            _phrases.AddRange(phrases);
+            this.phrases.AddRange(phrases);
         }
 
         /// <summary>
@@ -111,9 +111,9 @@ namespace CVAS.DataStructure
         /// <returns>The specified <see cref="Phrase"/> or null if unsuccessful.</returns>
         public Phrase? FindPhrase(string str)
         {
-            foreach(Phrase phr in _phrases)
+            foreach(Phrase phr in phrases)
             {
-                if (phr.str == str) return phr;
+                if (phr.Str == str) return phr;
             }
 
             return null;
@@ -126,7 +126,7 @@ namespace CVAS.DataStructure
         /// <returns></returns>
         public Phrase[] FindSubPhrases(Phrase phrase)
         {
-            return _findSubPhrases(phrase.words);
+            return FindSubPhrases(phrase.Words);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace CVAS.DataStructure
 
             // Copy paste from FindSubPhrases(), but with a big difference: we are calculating inflections here!
 
-            Phrase[] subPhrases = _findSubPhrases(words);
+            Phrase[] subPhrases = FindSubPhrases(words);
 
             SpokenPhrase[] spokenPhrases = new SpokenPhrase[subPhrases.Length];
 
@@ -148,7 +148,7 @@ namespace CVAS.DataStructure
             for (int i = 0; i < spokenPhrases.Length; i++)
             {
                 // Case: This is not the last phrase, and the next phrase is a period.
-                if (i < spokenPhrases.Length - 1 && subPhrases[i + 1].str == Phrase.SPECIAL_PHRASES["PERIOD"].ToString())
+                if (i < spokenPhrases.Length - 1 && subPhrases[i + 1].Str == Phrase.SpecialPhrases["PERIOD"].ToString())
                 {
                     spokenPhrases[i] = subPhrases[i].GetSpoken(Inflection.End);
                 }
@@ -163,7 +163,7 @@ namespace CVAS.DataStructure
         /// </summary>
         /// <param name="words"></param>
         /// <returns></returns>
-        private Phrase[] _findSubPhrases(string[] words)
+        private Phrase[] FindSubPhrases(string[] words)
         {
             List<string> tempWords = words.ToList();
             List<Phrase> subPhrases = new List<Phrase>();
@@ -172,7 +172,7 @@ namespace CVAS.DataStructure
             // Repeats until there are no more words remaining, or no more subphrases can be found.
             while (tempWords.Count > 0)
             {
-                Phrase? subPhrase = _findLargestSubphrase(tempWords.ToArray());
+                Phrase? subPhrase = FindLargestSubphrase(tempWords.ToArray());
                 if (subPhrase is null)
                 {
                     // If we can't find a subphrase, just add an empty phrase to the list and continue
@@ -182,7 +182,7 @@ namespace CVAS.DataStructure
                 }
 
                 subPhrases.Add(subPhrase);
-                tempWords.RemoveRange(0, subPhrase.words.Length);
+                tempWords.RemoveRange(0, subPhrase.Words.Length);
             }
 
             return subPhrases.ToArray();
@@ -194,7 +194,7 @@ namespace CVAS.DataStructure
         /// <param name="words"></param>
         /// <param name="inLibrary">The Library to search.</param>
         /// <returns>The longest <see cref="Phrase"/>, or <see cref="null"/>.</returns>
-        private Phrase? _findLargestSubphrase(string[] words)
+        private Phrase? FindLargestSubphrase(string[] words)
         {
             // Iterates through words to find the largest subphrase of those words, or null
 
@@ -206,7 +206,7 @@ namespace CVAS.DataStructure
                 testPhrase.Add(word.ToLower());
 
                 // Find matching phrase
-                Phrase? tempSubPhrase = phrases.ToList().Find(libPhrase => libPhrase.words.Select(x => x.ToLower()).SequenceEqual(testPhrase));
+                Phrase? tempSubPhrase = Phrases.ToList().Find(libPhrase => libPhrase.Words.Select(x => x.ToLower()).SequenceEqual(testPhrase));
 
                 // Case: there is a match
                 if (tempSubPhrase is not null)

@@ -7,13 +7,13 @@ namespace CVAS.DataStructure
     /// </summary>
     public partial class Phrase : IPhrase
     {
-        public string str { get; }
-        public string[] words { get; }
+        public string Str { get; }
+        public string[] Words { get; }
 
         /// <summary>
         /// The collection of <see cref="IAudioClip"/>s associated with this phrase, mapped to their inflections.
         /// </summary>
-        private Dictionary<Inflection, IAudioClip> _audioClips = new();
+        private readonly Dictionary<Inflection, IAudioClip> audioClips = new();
         
         /// <summary>
         /// Constructs a new phrase with no associated audio.
@@ -21,8 +21,8 @@ namespace CVAS.DataStructure
         /// <param name="str"></param>
         public Phrase (string str)
         {
-            this.str = str;
-            this.words = getWords(str);
+            Str = str;
+            Words = getWords(str);
         }
 
         /// <summary>
@@ -33,9 +33,9 @@ namespace CVAS.DataStructure
         /// <param name="audioClipInflection">The inflection of the associated audio clip (default is <see cref="Inflection.End"/>)</param>
         public Phrase(string str, IAudioClip audioClip, Inflection audioClipInflection = Inflection.End)
         {
-            this.str = str;
-            this.words = getWords(str);
-            _audioClips.Add(audioClipInflection, audioClip);
+            Str = str;
+            Words = getWords(str);
+            audioClips.Add(audioClipInflection, audioClip);
         }
 
         /// <summary>
@@ -46,10 +46,10 @@ namespace CVAS.DataStructure
         /// <param name="audioClip_Middle"></param>
         public Phrase(string str, IAudioClip audioClip_End, IAudioClip audioClip_Middle)
         {
-            this.str = str;
-            this.words = getWords(str);
-            _audioClips.Add(Inflection.Middle, audioClip_Middle);
-            _audioClips.Add(Inflection.End, audioClip_End);
+            Str = str;
+            Words = getWords(str);
+            audioClips.Add(Inflection.Middle, audioClip_Middle);
+            audioClips.Add(Inflection.End, audioClip_End);
         }
 
         /// <summary>
@@ -58,13 +58,13 @@ namespace CVAS.DataStructure
         /// <returns><see cref="Inflection.End"/> if available, otherwise <see cref="Inflection.Middle"/>. If there is no associated <see cref="IAudioClip"/>, this returns <see cref="Silence"/>.</returns>
         public IAudioClip GetAudioClip()
         {
-            if (_audioClips.Keys.Contains(Inflection.End))
+            if (audioClips.Keys.Contains(Inflection.End))
             {
-                return _audioClips[Inflection.End];
+                return audioClips[Inflection.End];
             }
-            else if (_audioClips.Keys.Contains(Inflection.Middle))
+            else if (audioClips.Keys.Contains(Inflection.Middle))
             {
-                return _audioClips[Inflection.Middle];
+                return audioClips[Inflection.Middle];
             }
             else return new Silence(0);
         }
@@ -76,9 +76,9 @@ namespace CVAS.DataStructure
         /// <returns></returns>
         public IAudioClip GetAudioClip(Inflection inflection)
         {
-            if (_audioClips.Keys.Contains(inflection))
+            if (audioClips.Keys.Contains(inflection))
             {
-                return _audioClips[inflection];
+                return audioClips[inflection];
             }
             else return GetAudioClip();
         }
@@ -90,7 +90,7 @@ namespace CVAS.DataStructure
         /// <returns></returns>
         public SpokenPhrase GetSpoken(Inflection inflection)
         {
-            return new SpokenPhrase(str, words, GetAudioClip(inflection), inflection);
+            return new SpokenPhrase(Str, Words, GetAudioClip(inflection), inflection);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace CVAS.DataStructure
                     word = "";
                 }
                 // Case Special Phrases/Punctuation: add word & char to list and clear
-                else if (SPECIAL_PHRASES.Values.Contains(character))
+                else if (SpecialPhrases.Values.Contains(character))
                 {
                     if (word != "") words.Add(word); // Ditto
                     words.Add(character.ToString());

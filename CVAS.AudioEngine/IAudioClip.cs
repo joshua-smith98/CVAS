@@ -9,6 +9,6 @@ namespace CVAS.AudioEngine
     {
         public WaveFormat WaveFormat { get; }
 
-        public IWaveProvider toWaveProvider();
+        public IWaveProvider ToWaveProvider();
     }
 }

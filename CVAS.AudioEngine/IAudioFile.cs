@@ -5,8 +5,8 @@
     /// </summary>
     public interface IAudioFile : IAudioClip
     {
-        public string path { get; }
-        public long offset { get; }
-        public long length { get; }
+        public string Path { get; }
+        public long Offset { get; }
+        public long Length { get; }
     }
 }

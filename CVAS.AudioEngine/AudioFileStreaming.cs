@@ -12,25 +12,25 @@ namespace CVAS.AudioEngine
         /// <summary>
         /// Path to the originating file.
         /// </summary>
-        public string path { get; }
-        public long offset { get; } // These two properties are for future plans to access WaveStreams embedded somewhere in a file block (will need a refactor))
-        public long length { get; }
+        public string Path { get; }
+        public long Offset { get; } // These two properties are for future plans to access WaveStreams embedded somewhere in a file block (will need a refactor))
+        public long Length { get; }
 
         public AudioFileStreaming(string path)
         {
-            this.path = path;
-            this.offset = 0;
+            Path = path;
+            Offset = 0;
 
             using (var tempAudioFileReader = new AudioFileReader(path)) // Briefly opening file to get some metadata
             {
-                this.WaveFormat = tempAudioFileReader.WaveFormat;
-                this.length = tempAudioFileReader.Length;
+                WaveFormat = tempAudioFileReader.WaveFormat;
+                Length = tempAudioFileReader.Length;
             }
         }
 
-        public IWaveProvider toWaveProvider()
+        public IWaveProvider ToWaveProvider()
         {
-            return new DisposingWaveProvider(new AudioFileReader(path));
+            return new DisposingWaveProvider(new AudioFileReader(Path));
         }
 
         public void Dispose()

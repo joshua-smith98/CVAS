@@ -3,32 +3,32 @@
 namespace CVAS.DataStructure
 {
     /// <summary>
-    /// Represents a speakable phrase positioned within a sentence, with a single associated <see cref="Inflection"/>.
+    /// Represents a speakable phrase positioned within a sentence, with a single associated <see cref="DataStructure.Inflection"/>.
     /// </summary>
     public class SpokenPhrase : IPhrase
     {
-        public string str { get; }
-        public string[] words { get; }
+        public string Str { get; }
+        public string[] Words { get; }
 
         /// <summary>
-        /// The <see cref="Inflection"/> associated with this SpokenPhrase.
+        /// The <see cref="DataStructure.Inflection"/> associated with this SpokenPhrase.
         /// </summary>
-        public Inflection inflection { get; }
+        public Inflection Inflection { get; }
 
-        private IAudioClip _audioClip { get; }
+        private IAudioClip audioClip { get; }
 
         internal SpokenPhrase(string str, string[] words, IAudioClip audioClip, Inflection inflection)
         {
-            this.str = str;
-            this.words = words;
-            this.inflection = inflection;
-            _audioClip = audioClip;
+            Str = str;
+            Words = words;
+            Inflection = inflection;
+            this.audioClip = audioClip;
         }
 
         /// <summary>
         /// Gets the associated <see cref="IAudioClip"/> for this SpokenPhrase.
         /// </summary>
         /// <returns></returns>
-        public IAudioClip GetAudioClip() => _audioClip;
+        public IAudioClip GetAudioClip() => audioClip;
     }
 }

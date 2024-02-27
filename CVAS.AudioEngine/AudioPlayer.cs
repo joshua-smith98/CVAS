@@ -4,27 +4,27 @@ using NAudio.Wave.SampleProviders;
 namespace CVAS.AudioEngine
 {
     /// <summary>
-    /// Governs all audio mixing and playback. Non-constructable - use the static <see cref="AudioPlayer.instance"/> to access.
+    /// Governs all audio mixing and playback. Non-constructable - use the static <see cref="AudioPlayer.Instance"/> to access.
     /// </summary>
     public class AudioPlayer : IDisposable
     {
-        public static AudioPlayer instance { get; } = new AudioPlayer();
+        public static AudioPlayer Instance { get; } = new AudioPlayer();
         
-        public WaveFormat WaveFormat => _sampleProvider.WaveFormat; // Not sure if I'll need this but good to have it anyway
+        public WaveFormat WaveFormat => sampleProvider.WaveFormat; // Not sure if I'll need this but good to have it anyway
 
-        private WaveOutEvent _waveOutEvent;
+        private readonly WaveOutEvent waveOutEvent;
 
-        private MixingSampleProvider _sampleProvider;
+        private readonly MixingSampleProvider sampleProvider;
 
 
         private AudioPlayer()
         {
             // Initialise properties
-            _sampleProvider = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100, 2)); // TODO: Implement changing WaveFormat
-            _sampleProvider.ReadFully = true;
-            _waveOutEvent = new WaveOutEvent();
-            _waveOutEvent.Init(_sampleProvider);
-            _waveOutEvent.Play();
+            sampleProvider = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100, 2)); // TODO: Implement changing WaveFormat
+            sampleProvider.ReadFully = true;
+            waveOutEvent = new WaveOutEvent();
+            waveOutEvent.Init(sampleProvider);
+            waveOutEvent.Play();
         }
 
         /// <summary>
@@ -33,14 +33,14 @@ namespace CVAS.AudioEngine
         /// <param name="audioClip"></param>
         public void Play(IAudioClip audioClip)
         {
-            MediaFoundationResampler resampler = new MediaFoundationResampler(audioClip.toWaveProvider(), WaveFormat);
-            _sampleProvider.AddMixerInput(resampler);
+            MediaFoundationResampler resampler = new MediaFoundationResampler(audioClip.ToWaveProvider(), WaveFormat);
+            sampleProvider.AddMixerInput(resampler);
         }
 
         public void Dispose()
         {
-            _waveOutEvent.Stop();
-            _waveOutEvent.Dispose();
+            waveOutEvent.Stop();
+            waveOutEvent.Dispose();
         }
     }
 }

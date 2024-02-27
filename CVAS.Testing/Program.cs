@@ -32,7 +32,7 @@ while (testStr != "exit") {
     Console.Write("Sentence decoded as: ");
     foreach (IPhrase subPhrase in testSentence.spokenPhrases)
     {
-        Console.Write($"[{subPhrase.str}] ");
+        Console.Write($"[{subPhrase.Str}] ");
     }
 
     // Audio engine test
@@ -41,18 +41,18 @@ while (testStr != "exit") {
     Playlist playlist = (Playlist)testSentence.GetAudioClip();
     Console.WriteLine("\n\nPlaying IAudioClips:");
 
-    foreach (IAudioClip audioClip in playlist.audioClips)
+    foreach (IAudioClip audioClip in playlist.AudioClips)
     {
         if (audioClip is IAudioFile)
-            Console.WriteLine(((IAudioFile)audioClip).path);
+            Console.WriteLine(((IAudioFile)audioClip).Path);
         else if (audioClip is Silence)
-            Console.WriteLine(((Silence)audioClip).milliseconds);
+            Console.WriteLine(((Silence)audioClip).Milliseconds);
     }
-    AudioPlayer.instance.Play(playlist);
+    AudioPlayer.Instance.Play(playlist);
 
     Console.ReadKey();
 
-    AudioPlayer.instance.Play(testSentence.GetAudioClip());
+    AudioPlayer.Instance.Play(testSentence.GetAudioClip());
 
     Console.ReadKey();
 }

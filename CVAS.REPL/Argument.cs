@@ -7,7 +7,7 @@
 
         };
 
-        public static IArgument? ReadFrom(ref string str)
+        public static IArgument ReadFrom(ref string str)
         {
             foreach (IArgument arg in Arguments)
             {
@@ -19,7 +19,7 @@
                 catch (ArgumentNotValidException) { }
             }
 
-            return null; // Case: no valid argument is found
+            throw new ArgumentNotValidException(); // Case: no valid argument is found
         }
     }
 }

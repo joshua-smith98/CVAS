@@ -16,7 +16,7 @@
                     arg.ReadFrom(ref str);
                     return arg; // Case: a valid argument is found
                 }
-                catch (ArgumentInvalidException) { }
+                catch (ArgumentNotValidException) { }
             }
 
             return null; // Case: no valid argument is found

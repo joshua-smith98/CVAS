@@ -5,6 +5,6 @@
         public object? Value { get; }
         public Type ValueType { get; }
 
-        public void ReadFrom();
+        public void ReadFrom(ref string str);
     }
 }

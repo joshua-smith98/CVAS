@@ -7,8 +7,8 @@ namespace CVAS.DataStructure
     /// </summary>
     public interface IPhrase
     {
-        public string str { get; }
-        public string[] words { get; }
+        public string Str { get; }
+        public string[] Words { get; }
 
         /// <summary>
         /// Gets the default <see cref="IAudioClip"/> associated with this phrase.

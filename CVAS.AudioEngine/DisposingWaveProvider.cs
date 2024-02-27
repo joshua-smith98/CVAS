@@ -7,27 +7,27 @@ namespace CVAS.AudioEngine
     /// </summary>
     internal class DisposingWaveProvider : IWaveProvider
     {
-        public WaveFormat WaveFormat => _waveStream.WaveFormat;
+        public WaveFormat WaveFormat => waveStream.WaveFormat;
 
-        private WaveStream _waveStream;
-        private bool _disposed = false;
+        private readonly WaveStream waveStream;
+        private bool disposed = false;
 
         public DisposingWaveProvider(WaveStream waveStream)
         {
-            _waveStream = waveStream;
+            this.waveStream = waveStream;
         }
 
         public int Read(byte[] buffer, int offset, int count)
         {
-            if (_disposed) return 0; // In case this is called after EOF
+            if (disposed) return 0; // In case this is called after EOF
             
-            var bytesRead = _waveStream.Read(buffer, offset, count);
+            var bytesRead = waveStream.Read(buffer, offset, count);
             
             // Case: EOF
             if (bytesRead == 0)
             {
-                _waveStream.Dispose();
-                _disposed = true;
+                waveStream.Dispose();
+                disposed = true;
                 GC.Collect(); // If we don't do this, the GC will allow gigabytes of memory usage to build up over time. This block won't be accessed too often, so it shouldn't affect performance.
             }
 

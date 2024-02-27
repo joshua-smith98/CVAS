@@ -9,26 +9,26 @@ namespace CVAS.AudioEngine
     {
         public WaveFormat WaveFormat { get; }
         
-        private long _numSamples;
-        private long _sampleCounter = 0;
+        private readonly long numSamples;
+        private long sampleCounter = 0;
 
         public SilenceSampleProvider(WaveFormat waveFormat, int milliseconds)
         {
             WaveFormat = waveFormat;
-            _numSamples = (long)(milliseconds * (WaveFormat.SampleRate / 1000.0f) * WaveFormat.Channels); // Convert milliseconds into samples
+            numSamples = (long)(milliseconds * (WaveFormat.SampleRate / 1000.0f) * WaveFormat.Channels); // Convert milliseconds into samples
         }
 
         public int Read(float[] buffer, int offset, int count)
         {
             // Calculate the number of samples remaining
-            long samplesRemaining = _numSamples - _sampleCounter;
+            long samplesRemaining = numSamples - sampleCounter;
             
             // Case: intermediate reads
             if (samplesRemaining >= count)
             {
                 for (int i = offset; i < count; i++)
                     buffer[i] = 0.0f;
-                _sampleCounter += count;
+                sampleCounter += count;
                 return count;
             }
             // Case: last read (and any subsequent)
@@ -36,7 +36,7 @@ namespace CVAS.AudioEngine
             {
                 for (int i = offset; i < samplesRemaining; i++)
                     buffer[i] = 0.0f;
-                _sampleCounter += samplesRemaining;
+                sampleCounter += samplesRemaining;
                 return (int)samplesRemaining;
             }
         }

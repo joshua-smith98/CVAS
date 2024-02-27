@@ -7,8 +7,8 @@ namespace CVAS.DataStructure
     /// </summary>
     public class Sentence : IPhrase
     {
-        public string str { get; }
-        public string[] words { get; }
+        public string Str { get; }
+        public string[] Words { get; }
 
         /// <summary>
         /// The sequence of <see cref="SpokenPhrase"/>s that defines this sentence.
@@ -17,8 +17,8 @@ namespace CVAS.DataStructure
 
         internal Sentence(string str, string[] words, SpokenPhrase[] spokenPhrases)
         {
-            this.str = str;
-            this.words = words;
+            Str = str;
+            Words = words;
             this.spokenPhrases = spokenPhrases;
         }
 

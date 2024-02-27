@@ -12,38 +12,38 @@ namespace CVAS.AudioEngine
         /// <summary>
         /// Path to the originating file.
         /// </summary>
-        public string path { get; }
-        public long offset { get; } // See: AudioFileStreaming
-        public long length { get; }
+        public string Path { get; }
+        public long Offset { get; } // See: AudioFileStreaming
+        public long Length { get; }
 
-        private MemoryStream _masterCache;
+        private readonly MemoryStream masterCache;
 
         public AudioFileCached(string path)
         {
             // Initialise properties
-            this.path = path;
-            offset = 0;
+            Path = path;
+            Offset = 0;
 
             // Gather metadata & copy wave data
             using (var tempAudioFileReader = new AudioFileReader(path))
             {
                 WaveFormat = tempAudioFileReader.WaveFormat;
-                length = tempAudioFileReader.Length;
+                Length = tempAudioFileReader.Length;
 
-                _masterCache = new MemoryStream();
-                _masterCache.SetLength(tempAudioFileReader.Length);
-                tempAudioFileReader.CopyTo(_masterCache);
-                _masterCache.Flush();
+                masterCache = new MemoryStream();
+                masterCache.SetLength(tempAudioFileReader.Length);
+                tempAudioFileReader.CopyTo(masterCache);
+                masterCache.Flush();
             }
         }
 
-        public IWaveProvider toWaveProvider()
+        public IWaveProvider ToWaveProvider()
         {
             // Copy audio data from master cache to new cache
             var newStream = new MemoryStream();
-            newStream.SetLength(_masterCache.Length);
-            _masterCache.Position = 0;
-            _masterCache.CopyTo(newStream);
+            newStream.SetLength(masterCache.Length);
+            masterCache.Position = 0;
+            masterCache.CopyTo(newStream);
             newStream.Flush();
             newStream.Position = 0;
 
@@ -52,7 +52,7 @@ namespace CVAS.AudioEngine
 
         public void Dispose()
         {
-            _masterCache.Dispose();
+            masterCache.Dispose();
         }
     }
 }

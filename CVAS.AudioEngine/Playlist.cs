@@ -10,24 +10,24 @@ namespace CVAS.AudioEngine
     {
         public WaveFormat WaveFormat { get; }
 
-        public IAudioClip[] audioClips { get; }
+        public IAudioClip[] AudioClips { get; }
 
         public Playlist(params IAudioClip[] audioClips)
         {
-            this.audioClips = audioClips;
+            AudioClips = audioClips;
 
-            WaveFormat = AudioPlayer.instance.WaveFormat;
+            WaveFormat = AudioPlayer.Instance.WaveFormat;
         }
 
-        public IWaveProvider toWaveProvider()
+        public IWaveProvider ToWaveProvider()
         {
             ConcatenatingSampleProvider sampleProvider;
-            IWaveProvider[] waveProviders = new IWaveProvider[audioClips.Length]; // Collection of WaveProviders to concatenate
+            IWaveProvider[] waveProviders = new IWaveProvider[AudioClips.Length]; // Collection of WaveProviders to concatenate
 
-            for (int i = 0; i < audioClips.Length; i++)
+            for (int i = 0; i < AudioClips.Length; i++)
             {
                 // Initialise waveProvider
-                IWaveProvider waveProvider = audioClips[i].toWaveProvider();
+                IWaveProvider waveProvider = AudioClips[i].ToWaveProvider();
 
                 // Check for resampling
                 if (!waveProvider.WaveFormat.Equals(WaveFormat))
@@ -46,7 +46,7 @@ namespace CVAS.AudioEngine
 
         public void Dispose()
         {
-            foreach (IAudioClip audioClip in audioClips)
+            foreach (IAudioClip audioClip in AudioClips)
             {
                 audioClip.Dispose();
             }

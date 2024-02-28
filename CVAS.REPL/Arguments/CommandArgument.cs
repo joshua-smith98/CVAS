@@ -6,6 +6,8 @@
 
         public Type ValueType => typeof(ICommand);
 
+        internal CommandArgument() { }
+
         public void ReadFrom(ref string str)
         {
             // Validity check: str must not be empty, and must start with an ICommand.Str

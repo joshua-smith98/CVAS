@@ -8,6 +8,8 @@ namespace CVAS.REPL
 
         public Type ValueType => typeof(string);
 
+        internal StringArgument() { }
+
         public void ReadFrom(ref string str)
         {
             // Validity check: str must not be empty, and must start with double quotes

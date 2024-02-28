@@ -6,6 +6,8 @@
 
         public Type ValueType => typeof(string);
 
+        internal OptionArgument() { }
+
         public void ReadFrom(ref string str)
         {
             // Validity check: string must not be empty, and must start with '-'

@@ -4,7 +4,9 @@
     {
         private static readonly IArgument[] Arguments =
         {
-
+            new StringArgument(),
+            new CommandArgument(),
+            new OptionArgument(),
         };
 
         public static IArgument ReadFrom(ref string str)

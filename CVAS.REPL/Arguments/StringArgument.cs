@@ -30,7 +30,7 @@ namespace CVAS.REPL
             Value = valueBuilder.ToString();
 
             // Trim ref str
-            str = str.Substring(valueBuilder.Length + 2).TrimStart();s
+            str = str.Substring(valueBuilder.Length + 2).TrimStart();
         }
     }
 }

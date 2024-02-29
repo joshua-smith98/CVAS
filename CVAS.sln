@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.DataStructure", "CVAS.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.AudioEngine", "CVAS.AudioEngine\CVAS.AudioEngine.csproj", "{A29FCBE2-A7A8-4280-BA52-47153B6C6DDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CVAS.REPL", "CVAS.REPL\CVAS.REPL.csproj", "{1563A132-E404-4A9D-B70F-161797A0D5CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.REPL", "CVAS.REPL\CVAS.REPL.csproj", "{1563A132-E404-4A9D-B70F-161797A0D5CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Main", "Main\Main.csproj", "{2BDCB3FC-EB95-45A1-A381-6E29E62C83E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{1563A132-E404-4A9D-B70F-161797A0D5CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1563A132-E404-4A9D-B70F-161797A0D5CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1563A132-E404-4A9D-B70F-161797A0D5CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BDCB3FC-EB95-45A1-A381-6E29E62C83E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BDCB3FC-EB95-45A1-A381-6E29E62C83E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BDCB3FC-EB95-45A1-A381-6E29E62C83E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BDCB3FC-EB95-45A1-A381-6E29E62C83E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,6 +2,9 @@
 
 namespace CVAS.REPL
 {
+    /// <summary>
+    /// An <see cref="ICommand"/> that loads a library from a folder into the current REPL context.
+    /// </summary>
     internal class LoadCommand : ICommand
     {
         public string Str => "load";
@@ -27,7 +30,10 @@ namespace CVAS.REPL
             // Try to read arguments
             var temp_str = str.Substring(Str.Length).TrimStart();
 
-            foreach (IArgument argument in Arguments) argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
+            foreach (IArgument argument in Arguments)
+            {
+                argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
+            }
 
             // Validity check: str must be empty after all arguments are read
             if (temp_str != "") throw new ArgumentNotValidException();
@@ -37,10 +43,8 @@ namespace CVAS.REPL
             // Validity check: path must point to a folder
             if (!Directory.Exists(Path)) throw new ArgumentNotValidException();
 
-            // Run command
+            // Load library into REPL context
             REPL.Instance.CurrentLibrary = Library.LoadFromFolder(Path);
-
-            str = temp_str;
         }
     }
 }

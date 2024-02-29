@@ -1,5 +1,8 @@
 ﻿namespace CVAS.REPL
 {
+    /// <summary>
+    /// An <see cref="ICommand"/> that sets <see cref="REPL.isRunning"/> to <see cref="false"/>, and therefore halts the REPL.
+    /// </summary>
     internal class ExitCommand : ICommand
     {
         public string Str => "exit";
@@ -27,7 +30,7 @@
             // Validity check: str must be empty after all arguments are read
             if (temp_str != "") throw new ArgumentNotValidException();
 
-            // Run command
+            // End REPL loop
             REPL.Instance.isRunning = false;
         }
     }

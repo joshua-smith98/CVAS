@@ -1,5 +1,8 @@
 ﻿namespace CVAS.REPL
 {
+    /// <summary>
+    /// An <see cref="IArgument"/> that attempts to read an <see cref="ICommand"/>. Used primarily in the 'help' command.
+    /// </summary>
     internal class CommandArgument : IArgument
     {
         public object? Value { get; private set; }
@@ -15,8 +18,10 @@
 
             if (str == "" || !REPL.Instance.CommandInstances.Any(x => x.Str == strFirst)) throw new ArgumentNotValidException();
 
+            // Store relevant ICommand
             Value = REPL.Instance.CommandInstances.Where(x => x.Str == strFirst).First();
 
+            // Trim ref str
             str = str.Substring(strFirst.Length).TrimStart();
         }
     }

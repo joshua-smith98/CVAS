@@ -1,5 +1,8 @@
 ﻿namespace CVAS.REPL
 {
+    /// <summary>
+    /// An <see cref="ICommand"/> that renders a given sentence to a file.
+    /// </summary>
     internal class RenderCommand : ICommand
     {
         public string Str => "render";
@@ -26,7 +29,10 @@
             // Try to read arguments
             var temp_str = str.Substring(Str.Length).TrimStart();
 
-            foreach (IArgument argument in Arguments) argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
+            foreach (IArgument argument in Arguments)
+            {
+                argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
+            }
 
             // Validity check: str must be empty after all arguments are read
             if (temp_str != "") throw new ArgumentNotValidException();
@@ -34,7 +40,7 @@
             // Validity check: CurrentLibrary must not be null
             if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException();
 
-            // Run Command
+            // JUST PRINTS DEBUG INFO FOR NOW
             var sentence_str = Arguments[0].Value as string;
             var path = Arguments[1].Value as string;
 

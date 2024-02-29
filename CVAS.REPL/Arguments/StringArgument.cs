@@ -2,6 +2,9 @@
 
 namespace CVAS.REPL
 {
+    /// <summary>
+    /// An <see cref="IArgument"/> that attempts to read a string surrounded by whitespace or double quotes (").
+    /// </summary>
     internal class StringArgument : IArgument
     {
         public object? Value { get; private set; }
@@ -23,7 +26,7 @@ namespace CVAS.REPL
                 // Build string from str contents
                 for (int i = 1; i < str.Length; i++)
                 {
-                    if (str[i] == '"') break;
+                    if (str[i] == '"') break; // Case: end of value
 
                     valueBuilder.Append(str[i]);
 
@@ -35,12 +38,12 @@ namespace CVAS.REPL
                 // Trim ref str
                 str = str.Substring(valueBuilder.Length + 2).TrimStart();
             }
-            else
+            else // Case: str doesn't begin with quotes
             {
                 // Build string from str contents
                 for (int i = 0; i < str.Length; i++)
                 {
-                    if (char.IsSeparator(str[i])) break;
+                    if (char.IsSeparator(str[i])) break; // Case: end of value
 
                     valueBuilder.Append(str[i]);
                 }

@@ -3,6 +3,9 @@ using CVAS.DataStructure;
 
 namespace CVAS.REPL
 {
+    /// <summary>
+    /// An <see cref="ICommand"/> that attempts to 'say' the given sentence.
+    /// </summary>
     internal class SayCommand : ICommand
     {
         public string Str => "say";
@@ -28,7 +31,10 @@ namespace CVAS.REPL
             // Try to read arguments
             var temp_str = str.Substring(Str.Length).TrimStart();
 
-            foreach (IArgument argument in Arguments) argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
+            foreach (IArgument argument in Arguments)
+            {
+                argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
+            }
 
             // Validity check: str must be empty after all arguments are read
             if (temp_str != "") throw new ArgumentNotValidException();

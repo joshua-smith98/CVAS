@@ -2,6 +2,9 @@
 
 namespace CVAS.REPL
 {
+    /// <summary>
+    /// An <see cref="ICommand"/> that prints a list of a given sentence's subphrases.
+    /// </summary>
     internal class PreviewCommand : ICommand
     {
         public string Str => "preview";
@@ -27,7 +30,10 @@ namespace CVAS.REPL
             // Try to read arguments
             var temp_str = str.Substring(Str.Length).TrimStart();
 
-            foreach (IArgument argument in Arguments) argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
+            foreach (IArgument argument in Arguments)
+            {
+                argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
+            }
 
             // Validity check: str must be empty after all arguments are read
             if (temp_str != "") throw new ArgumentNotValidException();
@@ -35,7 +41,7 @@ namespace CVAS.REPL
             // Validity check: CurrentLibrary must not be null
             if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException();
 
-            // Run Command
+            // Get sentence and print phrases & inflections.
             var sentence_str = Arguments[0].Value as string;
             var sentence = REPL.Instance.CurrentLibrary.GetSentence(sentence_str);
 
@@ -43,7 +49,7 @@ namespace CVAS.REPL
 
             foreach (var phrase in sentence.spokenPhrases)
             {
-                Console.WriteLine($"[{phrase.Str}] : {phrase.Inflection.ToString()}");
+                Console.WriteLine($"[{phrase.Str}] : {phrase.Inflection}");
             }
 
             Console.WriteLine();

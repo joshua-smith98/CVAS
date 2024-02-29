@@ -1,5 +1,8 @@
 ﻿namespace CVAS.REPL
 {
+    /// <summary>
+    /// An <see cref="ICommand"/> that either prints the description and usage for a given command, or lists all commands.
+    /// </summary>
     internal class HelpCommand : ICommand
     {
         public string Str => "help";
@@ -27,6 +30,7 @@
             {
                 Console.WriteLine();
 
+                // Print list of commands
                 foreach (var command in REPL.Instance.CommandInstances)
                 {
                     // Print str
@@ -48,19 +52,20 @@
 
                     Console.WriteLine();
                 }
-
-                Console.WriteLine();
             }
             else // Case: there is one or more argument given
             {
                 // Try to read arguments
                 var temp_str = str.Substring(Str.Length).TrimStart();
 
-                foreach (IArgument argument in Arguments) argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
-
+                foreach (IArgument argument in Arguments)
+                {
+                    argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
+                }
                 // Validity check: str must be empty after all arguments are read
                 if (temp_str != "") throw new ArgumentNotValidException();
 
+                // Get command and print details
                 var command = Arguments[0].Value as ICommand;
 
                 Console.WriteLine();

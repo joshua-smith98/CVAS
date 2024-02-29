@@ -24,7 +24,32 @@ namespace CVAS.REPL
 
         public void Start()
         {
-            // REPL logic
+            isRunning = true;
+
+            while (isRunning)
+            {
+                // Prompt user
+                Console.Write(">>");
+                var command = Console.ReadLine();
+
+                // Attempt to run command
+
+                RunFrom(command); // For testing purposes, we will leave this bare for now
+
+                /*
+                try
+                {
+                    RunFrom(command);
+                }
+                catch (CommandNotValidException)
+                {
+                    Console.WriteLine("Failed to execute: Command was not valid!"); // TODO: make this more detailed
+                }
+                catch (ArgumentNotValidException)
+                {
+                    Console.WriteLine("Failed to execute: Argument was not valid!"); // TODO: make this more detailed
+                }*/
+            }
         }
 
         internal void RunFrom(string str)

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.AudioEngine", "CVAS.Au
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.REPL", "CVAS.REPL\CVAS.REPL.csproj", "{1563A132-E404-4A9D-B70F-161797A0D5CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Main", "Main\Main.csproj", "{2BDCB3FC-EB95-45A1-A381-6E29E62C83E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CVAS.Main", "CVAS.Main\CVAS.Main.csproj", "{2BDCB3FC-EB95-45A1-A381-6E29E62C83E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

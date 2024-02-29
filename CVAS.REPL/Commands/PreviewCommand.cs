@@ -25,7 +25,7 @@ namespace CVAS.REPL
             if (!str.StartsWith(Str)) throw new CommandNotValidException();
 
             // Try to read arguments
-            var temp_str = str.Substring(Str.Length + 1);
+            var temp_str = str.Substring(Str.Length).TrimStart();
 
             foreach (IArgument argument in Arguments) argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
 

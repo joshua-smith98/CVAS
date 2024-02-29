@@ -13,9 +13,9 @@
             // Validity check: str must not be empty, and must start with an ICommand.Str
             var strFirst = str.Split().First();
 
-            if (str == "" || !Command.Commands.Any(x => x.Str == strFirst)) throw new ArgumentNotValidException();
+            if (str == "" || !REPL.Instance.CommandInstances.Any(x => x.Str == strFirst)) throw new ArgumentNotValidException();
 
-            Value = Command.Commands.Where(x => x.Str == strFirst).First();
+            Value = REPL.Instance.CommandInstances.Where(x => x.Str == strFirst).First();
 
             str = str.Substring(strFirst.Length).TrimStart();
         }

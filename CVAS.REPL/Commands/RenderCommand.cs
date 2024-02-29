@@ -6,7 +6,7 @@
 
         public string Description => "Renders the given sentence to a file, using the currently loaded library.";
 
-        public string Usage => "render \"[sentence to render]\" \"[path to file]\"";
+        public string Usage => "render [sentence to render] [path to file]";
 
         public ICommand? SubCommand { get; }
 

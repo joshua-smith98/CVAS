@@ -12,25 +12,44 @@ namespace CVAS.REPL
 
         public void ReadFrom(ref string str)
         {
-            // Validity check: str must not be empty, and must start with double quotes
-            if (str == "" || str[0] != '"') throw new ArgumentNotValidException();
+            // Validity check: str must not be empty
+            if (str == "") throw new ArgumentNotValidException();
 
-            // Build string from str contents
             StringBuilder valueBuilder = new StringBuilder();
 
-            for (int i = 1; i < str.Length; i++)
+            // Case: str begins with double quotes
+            if (str[0] == '"')
             {
-                if (str[i] == '"') break;
+                // Build string from str contents
+                for (int i = 1; i < str.Length; i++)
+                {
+                    if (str[i] == '"') break;
 
-                valueBuilder.Append(str[i]);
+                    valueBuilder.Append(str[i]);
 
-                if (i == str.Length - 1) throw new ArgumentNotValidException(); // Validity check: str must contain a second set of double quotes
+                    if (i == str.Length - 1) throw new ArgumentNotValidException(); // Validity check: str must contain a second set of double quotes
+                }
+
+                Value = valueBuilder.ToString();
+
+                // Trim ref str
+                str = str.Substring(valueBuilder.Length + 2).TrimStart();
             }
+            else
+            {
+                // Build string from str contents
+                for (int i = 0; i < str.Length; i++)
+                {
+                    if (char.IsSeparator(str[i])) break;
 
-            Value = valueBuilder.ToString();
+                    valueBuilder.Append(str[i]);
+                }
 
-            // Trim ref str
-            str = str.Substring(valueBuilder.Length + 2).TrimStart();
+                Value = valueBuilder.ToString();
+
+                // Trim ref str
+                str = str.Substring(valueBuilder.Length).TrimStart();
+            }
         }
     }
 }

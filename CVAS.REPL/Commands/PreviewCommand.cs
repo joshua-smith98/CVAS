@@ -8,7 +8,7 @@ namespace CVAS.REPL
 
         public string Description => "Displays the phrases that would be used to speak a given sentence, using the currently loaded library.";
 
-        public string Usage => "preview \"[sentence to preview]\"";
+        public string Usage => "preview [sentence to preview]";
 
         public ICommand? SubCommand { get; }
 

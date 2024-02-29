@@ -9,7 +9,7 @@ namespace CVAS.REPL
 
         public string Description => "Says the given sentence, using the currently loaded library.";
 
-        public string Usage => "say \"[sentence to say]\"";
+        public string Usage => "say [sentence to say]";
 
         public ICommand? SubCommand { get; }
 

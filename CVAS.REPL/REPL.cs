@@ -8,12 +8,12 @@ namespace CVAS.REPL
 
         internal ICommand[] CommandInstances { get; } =
         {
-            new ExitCommand(),
             new HelpCommand(),
             new LoadCommand(),
             new PreviewCommand(),
-            new RenderCommand(),
             new SayCommand(),
+            new RenderCommand(),
+            new ExitCommand(),
         };
 
         public Library? CurrentLibrary { get; internal set; }

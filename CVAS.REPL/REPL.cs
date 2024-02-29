@@ -11,7 +11,7 @@ namespace CVAS.REPL
 
         };
 
-        public Library? CurrentLibrary { get; private set; }
+        public Library? CurrentLibrary { get; internal set; }
 
         private REPL() { } // Non-constructable
 

@@ -2,7 +2,7 @@
 
 namespace CVAS.REPL
 {
-    public class StringArgument : IArgument
+    internal class StringArgument : IArgument
     {
         public object? Value { get; private set; }
 

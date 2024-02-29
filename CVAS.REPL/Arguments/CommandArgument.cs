@@ -1,6 +1,6 @@
 ﻿namespace CVAS.REPL
 {
-    public class CommandArgument : IArgument
+    internal class CommandArgument : IArgument
     {
         public object? Value { get; private set; }
 

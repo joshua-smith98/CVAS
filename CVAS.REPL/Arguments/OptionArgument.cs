@@ -1,6 +1,6 @@
 ﻿namespace CVAS.REPL
 {
-    public class OptionArgument : IArgument
+    internal class OptionArgument : IArgument
     {
         public object? Value { get; private set; }
 

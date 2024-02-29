@@ -13,7 +13,7 @@ namespace CVAS.REPL
             new LoadCommand(),
             new PreviewCommand(),
             new RenderCommand(),
-            new SpeakCommand(),
+            new SayCommand(),
         };
 
         public Library? CurrentLibrary { get; internal set; }

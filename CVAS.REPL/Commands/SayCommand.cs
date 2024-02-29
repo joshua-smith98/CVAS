@@ -3,13 +3,13 @@ using CVAS.DataStructure;
 
 namespace CVAS.REPL
 {
-    internal class SpeakCommand : ICommand
+    internal class SayCommand : ICommand
     {
-        public string Str => "speak";
+        public string Str => "say";
 
-        public string Description => "Speaks the given sentence, using the currently loaded library.";
+        public string Description => "Says the given sentence, using the currently loaded library.";
 
-        public string Usage => "speak \"[sentence to speak]\"";
+        public string Usage => "say \"[sentence to say]\"";
 
         public ICommand? SubCommand { get; }
 
@@ -18,7 +18,7 @@ namespace CVAS.REPL
             new StringArgument(),
         };
 
-        internal SpeakCommand() { }
+        internal SayCommand() { }
 
         public void RunFrom(string str)
         {

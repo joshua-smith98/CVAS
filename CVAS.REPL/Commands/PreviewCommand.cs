@@ -38,7 +38,7 @@ namespace CVAS.REPL
 
             foreach (var phrase in sentence.spokenPhrases)
             {
-                Console.WriteLine($"[{phrase.Str}]:{phrase.Inflection.ToString()}");
+                Console.WriteLine($"[{phrase.Str}] : {phrase.Inflection.ToString()}");
             }
         }
     }

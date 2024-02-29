@@ -29,7 +29,7 @@ namespace CVAS.REPL
             while (isRunning)
             {
                 // Prompt user
-                Console.Write(">>");
+                Console.Write(">> ");
                 var command = Console.ReadLine();
 
                 // Attempt to run command

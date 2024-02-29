@@ -36,10 +36,14 @@ namespace CVAS.REPL
             var sentence_str = Arguments[0].Value as string;
             var sentence = REPL.Instance.CurrentLibrary.GetSentence(sentence_str); // TODO: Handle CurrentLibrary being null
 
+            Console.WriteLine();
+
             foreach (var phrase in sentence.spokenPhrases)
             {
                 Console.WriteLine($"[{phrase.Str}] : {phrase.Inflection.ToString()}");
             }
+
+            Console.WriteLine();
         }
     }
 }

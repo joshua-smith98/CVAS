@@ -10,7 +10,7 @@ namespace CVAS.DataStructure
         public Phrase[] Phrases => phrases.ToArray(); //public get only
         private readonly List<Phrase> phrases = DefaultPhrases.ToList(); // All Libraries include the special phrases by default
 
-        public Library(Phrase[] phrases)
+        public Library(params Phrase[] phrases)
         {
             this.phrases.AddRange(phrases);
         }

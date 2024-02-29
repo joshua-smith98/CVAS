@@ -26,6 +26,10 @@ namespace CVAS.REPL
         {
             isRunning = true;
 
+            Console.WriteLine("----CVAS v0.5 REPL----"); // Write REPL header
+            Console.WriteLine("Type 'help' for a list of commands.");
+            Console.WriteLine();
+
             while (isRunning)
             {
                 // Prompt user

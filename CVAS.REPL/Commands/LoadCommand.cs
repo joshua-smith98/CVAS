@@ -19,7 +19,7 @@ namespace CVAS.REPL
 
         internal LoadCommand() { }
 
-        public void RunFrom(ref string str)
+        public void RunFrom(string str)
         {
             // Validity check: str must begin with "load"
             if (!str.StartsWith(Str)) throw new CommandNotValidException();

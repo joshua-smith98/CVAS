@@ -10,6 +10,6 @@
 
         public IArgument[] Arguments { get; }
 
-        public void RunFrom(ref string str);
+        public void RunFrom(string str);
     }
 }

@@ -27,13 +27,13 @@ namespace CVAS.REPL
             // REPL logic
         }
 
-        internal void RunFrom(ref string str)
+        internal void RunFrom(string str)
         {
             foreach (ICommand command in CommandInstances)
             {
                 try
                 {
-                    command.RunFrom(ref str);
+                    command.RunFrom(str);
                     return; // Case: a valid command is found
                 }
                 catch (CommandNotValidException) { }

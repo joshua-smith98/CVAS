@@ -18,7 +18,7 @@
 
         internal RenderCommand() { }
 
-        public void RunFrom(ref string str)
+        public void RunFrom(string str)
         {
             throw new NotImplementedException(); // File rendering is yet to be implemented!
         }

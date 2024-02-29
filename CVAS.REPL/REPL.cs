@@ -33,10 +33,6 @@ namespace CVAS.REPL
                 var command = Console.ReadLine();
 
                 // Attempt to run command
-
-                RunFrom(command); // For testing purposes, we will leave this bare for now
-
-                /*
                 try
                 {
                     RunFrom(command);
@@ -48,7 +44,7 @@ namespace CVAS.REPL
                 catch (ArgumentNotValidException)
                 {
                     Console.WriteLine("Failed to execute: Argument was not valid!"); // TODO: make this more detailed
-                }*/
+                }
             }
         }
 

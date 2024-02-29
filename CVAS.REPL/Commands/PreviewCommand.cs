@@ -32,9 +32,12 @@ namespace CVAS.REPL
             // Validity check: str must be empty after all arguments are read
             if (temp_str != "") throw new CommandNotValidException();
 
+            // Validity check: CurrentLibrary must not be null
+            if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException();
+
             // Run Command
             var sentence_str = Arguments[0].Value as string;
-            var sentence = REPL.Instance.CurrentLibrary.GetSentence(sentence_str); // TODO: Handle CurrentLibrary being null
+            var sentence = REPL.Instance.CurrentLibrary.GetSentence(sentence_str);
 
             Console.WriteLine();
 

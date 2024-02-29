@@ -31,6 +31,9 @@
             // Validity check: str must be empty after all arguments are read
             if (temp_str != "") throw new CommandNotValidException();
 
+            // Validity check: CurrentLibrary must not be null
+            if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException();
+
             // Run Command
             var sentence_str = Arguments[0].Value as string;
             var path = Arguments[1].Value as string;

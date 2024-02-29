@@ -6,13 +6,6 @@ namespace CVAS.REPL
     {
         public static REPL Instance { get; } = new REPL();
 
-        internal IArgument[] ArgumentInstances { get; } =
-        {
-            new StringArgument(),
-            new CommandArgument(),
-            new OptionArgument(),
-        };
-
         internal ICommand[] CommandInstances { get; } =
         {
 

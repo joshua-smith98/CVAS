@@ -44,14 +44,17 @@ namespace CVAS.REPL
                 catch (CommandNotValidException)
                 {
                     Console.WriteLine("Failed to execute: Command was not valid!"); // TODO: make this more detailed
+                    Console.WriteLine();
                 }
                 catch (ArgumentNotValidException)
                 {
                     Console.WriteLine("Failed to execute: Argument was not valid!"); // TODO: make this more detailed
+                    Console.WriteLine();
                 }
                 catch (ContextNotValidException)
                 {
                     Console.WriteLine("Failed to execute: Context was not valid! (Have you loaded a library yet?)");
+                    Console.WriteLine();
                 }
             }
         }

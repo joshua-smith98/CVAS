@@ -32,8 +32,10 @@
             if (temp_str != "") throw new CommandNotValidException();
 
             // Run Command
+            var sentence_str = Arguments[0].Value as string;
+            var path = Arguments[1].Value as string;
 
-            throw new NotImplementedException(); // File rendering is yet to be implemented!
+            Console.WriteLine($"DEBUG: Rendering \"{sentence_str}\" to path:\n\t{path}"); // Debug print - file rendering is not yet implemented!
         }
     }
 }

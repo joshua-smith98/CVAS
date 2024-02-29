@@ -15,7 +15,7 @@ If you're looking for a finished & working program, try this one - its quite nic
  - [x] Automatically load a library from a folder
  - [ ] Render spoken sentences to files
  - [ ] Library caching on the disk
- - [ ] Perform functions via REPL
+ - [x] Perform functions via REPL
  - [ ] Perform functions via command line
  - [ ] A completed README.md, with "Usage" and "Installation" sections.
 

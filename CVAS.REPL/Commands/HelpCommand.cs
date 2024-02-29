@@ -41,7 +41,7 @@
 
                     // Print usage
                     Console.WriteLine("\tUsage:");
-                    foreach (var line in command.Description.Split('\n'))
+                    foreach (var line in command.Usage.Split('\n'))
                     {
                         Console.WriteLine($"\t\t{line}");
                     }
@@ -77,7 +77,7 @@
 
                 // Print usage
                 Console.WriteLine("\tUsage:");
-                foreach (var line in command.Description.Split('\n'))
+                foreach (var line in command.Usage.Split('\n'))
                 {
                     Console.WriteLine($"\t\t{line}");
                 }

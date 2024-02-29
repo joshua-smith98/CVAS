@@ -17,6 +17,8 @@ namespace CVAS.REPL
             new StringArgument(), // Library path
         };
 
+        internal LoadCommand() { }
+
         public void RunFrom(ref string str)
         {
             // Validity check: str must begin with "load"

@@ -15,6 +15,8 @@
             new CommandArgument(),
         };
 
+        internal HelpCommand() { }
+
         public void RunFrom(ref string str)
         {
             // Validity check: str must begin with "load"

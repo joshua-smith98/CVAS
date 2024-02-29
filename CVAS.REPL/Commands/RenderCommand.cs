@@ -16,6 +16,8 @@
             new StringArgument(), // Path to file
         };
 
+        internal RenderCommand() { }
+
         public void RunFrom(ref string str)
         {
             throw new NotImplementedException(); // File rendering is yet to be implemented!

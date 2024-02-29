@@ -17,6 +17,8 @@ namespace CVAS.REPL
             new StringArgument(),
         };
 
+        internal PreviewCommand() { }
+
         public void RunFrom(ref string str)
         {
             // Validity check: str must begin with "load"

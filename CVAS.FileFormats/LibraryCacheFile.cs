@@ -14,6 +14,17 @@ namespace CVAS.FileFormats
         private int NumPhrases;
 
         private PhraseTableRow[] PhraseTable;
+        private struct PhraseTableRow
+        {
+            string Str;
+            int NumInflections;
+            InflectionTableRow[] InflectionTable;
+            struct InflectionTableRow
+            {
+                int Inflection;
+                string AudioFilePath;
+            }
+        }
 
         private LibraryCacheFile(string path, byte[] folderHash, int numPhrases, PhraseTableRow[] phraseTable)
         {

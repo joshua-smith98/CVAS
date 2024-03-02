@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CVAS.DataStructure\CVAS.DataStructure.csproj" />
+  </ItemGroup>
+
 </Project>

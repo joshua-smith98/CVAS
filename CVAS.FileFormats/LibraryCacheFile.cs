@@ -41,17 +41,12 @@ namespace CVAS.FileFormats
             PhraseTable = phraseTable;
         }
 
-        public static IFile Deconstruct(object o)
-        {
-            throw new NotImplementedException();
-        }
-
         public static IFile LoadFrom(string path)
         {
             throw new NotImplementedException();
         }
 
-        public static void Validate()
+        public static IFile Deconstruct(object o)
         {
             throw new NotImplementedException();
         }

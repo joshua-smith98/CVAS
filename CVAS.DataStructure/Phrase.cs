@@ -11,9 +11,10 @@ namespace CVAS.DataStructure
         public string[] Words { get; }
 
         /// <summary>
-        /// The collection of <see cref="IAudioClip"/>s associated with this phrase, mapped to their inflections.
+        /// The collection of <see cref="Inflection"/>s associated with this phrase, each containing an <see cref="IAudioClip"/>.
         /// </summary>
-        private readonly Dictionary<Inflection, IAudioClip> audioClips = new();
+        public Inflection[] Inflections => inflections.ToArray();
+        private InflectionCollection inflections = new();
         
         /// <summary>
         /// Constructs a new phrase with no associated audio.
@@ -26,69 +27,54 @@ namespace CVAS.DataStructure
         }
 
         /// <summary>
-        /// Constructs a new phrase with a single associated <see cref="IAudioClip"/>.
+        /// Constructs a new phrase with the given <see cref="Inflection"/>s.
         /// </summary>
         /// <param name="str"></param>
-        /// <param name="audioClip"></param>
-        /// <param name="audioClipInflection">The inflection of the associated audio clip (default is <see cref="Inflection.End"/>)</param>
-        public Phrase(string str, IAudioClip audioClip, Inflection audioClipInflection = Inflection.End)
+        /// <param name="inflections">The collection of inflections to assign to this phrase.</param>
+        public Phrase(string str, params Inflection[] inflections)
         {
             Str = str;
             Words = getWords(str);
-            audioClips.Add(audioClipInflection, audioClip);
-        }
-
-        /// <summary>
-        /// Constructs a new phrase with two associated <see cref="IAudioClip"/>s, each mapped to their associated inflections.
-        /// </summary>
-        /// <param name="str"></param>
-        /// <param name="audioClip_End"></param>
-        /// <param name="audioClip_Middle"></param>
-        public Phrase(string str, IAudioClip audioClip_End, IAudioClip audioClip_Middle)
-        {
-            Str = str;
-            Words = getWords(str);
-            audioClips.Add(Inflection.Middle, audioClip_Middle);
-            audioClips.Add(Inflection.End, audioClip_End);
+            this.inflections.AddRange(inflections);
         }
 
         /// <summary>
         /// Gets the default <see cref="IAudioClip"/> for this phrase, or silence.
         /// </summary>
-        /// <returns><see cref="Inflection.End"/> if available, otherwise <see cref="Inflection.Middle"/>. If there is no associated <see cref="IAudioClip"/>, this returns <see cref="Silence"/>.</returns>
+        /// <returns><see cref="InflectionType.End"/> if available, otherwise <see cref="InflectionType.Middle"/>. If there is no associated <see cref="IAudioClip"/>, this returns <see cref="Silence"/>.</returns>
         public IAudioClip GetAudioClip()
         {
-            if (audioClips.Keys.Contains(Inflection.End))
+            if (inflections.Select(x => x.InflectionType).Contains(InflectionType.End))
             {
-                return audioClips[Inflection.End];
+                return inflections[InflectionType.End];
             }
-            else if (audioClips.Keys.Contains(Inflection.Middle))
+            else if (inflections.Select(x => x.InflectionType).Contains(InflectionType.Middle))
             {
-                return audioClips[Inflection.Middle];
+                return inflections[InflectionType.Middle];
             }
             else return new Silence(0);
         }
 
         /// <summary>
-        /// Retrieves the <see cref="IAudioClip"/> with the specified <see cref="Inflection"/>, or default.
+        /// Retrieves the <see cref="IAudioClip"/> with the specified <see cref="InflectionType"/>, or default.
         /// </summary>
         /// <param name="inflection"></param>
         /// <returns></returns>
-        public IAudioClip GetAudioClip(Inflection inflection)
+        public IAudioClip GetAudioClip(InflectionType inflection)
         {
-            if (audioClips.Keys.Contains(inflection))
+            if (inflections.Select(x => x.InflectionType).Contains(inflection))
             {
-                return audioClips[inflection];
+                return inflections[inflection];
             }
             else return GetAudioClip();
         }
 
         /// <summary>
-        /// Gets the <see cref="SpokenPhrase"/> for this phrase, given the specified <see cref="Inflection"/>.
+        /// Gets the <see cref="SpokenPhrase"/> for this phrase, given the specified <see cref="InflectionType"/>.
         /// </summary>
         /// <param name="inflection"></param>
         /// <returns></returns>
-        public SpokenPhrase GetSpoken(Inflection inflection)
+        public SpokenPhrase GetSpoken(InflectionType inflection)
         {
             return new SpokenPhrase(Str, Words, GetAudioClip(inflection), inflection);
         }

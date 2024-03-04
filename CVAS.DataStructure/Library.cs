@@ -74,11 +74,11 @@ namespace CVAS.DataStructure
                 // Construct new phrases and add to list
                 if (audioClip_end is not null)
                 {
-                    phrases.Add(new Phrase(str, audioClip_end, audioClip_middle));
+                    phrases.Add(new Phrase(str, new Inflection(InflectionType.End, audioClip_end), new Inflection(InflectionType.Middle, audioClip_middle)));
                     files_ends.Remove(file_end); // If we add an end inflection to a phrase, remove it from the list of end inflection files
                     Console.WriteLine(file_end);
                 }
-                else phrases.Add(new Phrase(str, audioClip_middle, Inflection.Middle));
+                else phrases.Add(new Phrase(str, new Inflection(InflectionType.Middle, audioClip_middle)));
             }
 
             // Add all remaining end inflection files to their own phrase
@@ -96,7 +96,7 @@ namespace CVAS.DataStructure
                 string str = Path.GetFileNameWithoutExtension(file_end);
                 str = str.Substring(0, str.Length - 2);
 
-                phrases.Add(new Phrase(str, audioClip_end));
+                phrases.Add(new Phrase(str, new Inflection(InflectionType.End, audioClip_end)));
                 Console.WriteLine(file_end);
             }
 
@@ -150,9 +150,9 @@ namespace CVAS.DataStructure
                 // Case: This is not the last phrase, and the next phrase is a period.
                 if (i < spokenPhrases.Length - 1 && subPhrases[i + 1].Str == Phrase.SpecialPhrases["PERIOD"].ToString())
                 {
-                    spokenPhrases[i] = subPhrases[i].GetSpoken(Inflection.End);
+                    spokenPhrases[i] = subPhrases[i].GetSpoken(InflectionType.End);
                 }
-                else spokenPhrases[i] = subPhrases[i].GetSpoken(Inflection.Middle);
+                else spokenPhrases[i] = subPhrases[i].GetSpoken(InflectionType.Middle);
             }
 
             return new Sentence(str, words, spokenPhrases);

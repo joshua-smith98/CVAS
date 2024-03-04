@@ -1,11 +1,19 @@
-﻿namespace CVAS.DataStructure
+﻿using CVAS.AudioEngine;
+
+namespace CVAS.DataStructure
 {
     /// <summary>
-    /// Represents the inflection of a spoken word, i.e. whether it is spoken in the middle of or at the end of a sentence.
+    /// Represents a single inflection, including its type and relevant <see cref="IAudioClip"/>.
     /// </summary>
-    public enum Inflection
+    public class Inflection
     {
-        Middle,
-        End
+        public InflectionType InflectionType { get; }
+        public IAudioClip AudioClip { get; }
+
+        public Inflection(InflectionType inflectionType, IAudioClip audioClip)
+        {
+            InflectionType = inflectionType;
+            AudioClip = audioClip;
+        }
     }
 }

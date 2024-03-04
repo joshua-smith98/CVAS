@@ -12,18 +12,19 @@ namespace CVAS.FileFormats
         public char[] Header => "CVASLBCH".ToArray();
 
         private int NumPhrases;
-
         private PhraseTableRow[] PhraseTable;
+
         private struct PhraseTableRow
         {
             public string Str;
             public int NumInflections;
             public InflectionTableRow[] InflectionTable;
-            public struct InflectionTableRow
-            {
-                public int Inflection;
-                public string AudioFilePath;
-            }
+        }
+
+        private struct InflectionTableRow
+        {
+            public int Inflection;
+            public string AudioFilePath;
         }
 
         private LibraryCacheFile(string path, int numPhrases, PhraseTableRow[] phraseTable)
@@ -106,12 +107,12 @@ namespace CVAS.FileFormats
                         phraseTable[i] = new PhraseTableRow();
                         phraseTable[i].Str = br.ReadString();
                         phraseTable[i].NumInflections = br.ReadInt32();
-                        phraseTable[i].InflectionTable = new PhraseTableRow.InflectionTableRow[phraseTable[0].NumInflections];
+                        phraseTable[i].InflectionTable = new InflectionTableRow[phraseTable[0].NumInflections];
 
                         // Read inflections
                         for (int j = 0; j < phraseTable[0].NumInflections; j++)
                         {
-                            phraseTable[i].InflectionTable[j] = new PhraseTableRow.InflectionTableRow();
+                            phraseTable[i].InflectionTable[j] = new InflectionTableRow();
                             phraseTable[i].InflectionTable[j].Inflection = br.ReadInt32();
                             phraseTable[i].InflectionTable[j].AudioFilePath = br.ReadString();
                         }
@@ -138,13 +139,13 @@ namespace CVAS.FileFormats
                 PhraseTableRow phraseRow = new PhraseTableRow();
                 phraseRow.Str = phrase.Str;
 
-                List<PhraseTableRow.InflectionTableRow> inflectionTable = new List<PhraseTableRow.InflectionTableRow>();
+                List<InflectionTableRow> inflectionTable = new List<InflectionTableRow>();
                 foreach (InflectionType inflectionType in phrase.Inflections.Select(x => x.InflectionType))
                 {
                     // Check if this inflection isn't IAudioFile, if so and don't include
                     if (phrase.GetAudioClip(inflectionType) is not IAudioFile) continue;
                     
-                    var inflectionRow = new PhraseTableRow.InflectionTableRow();
+                    var inflectionRow = new InflectionTableRow();
                     inflectionRow.Inflection = (int)inflectionType;
                     inflectionRow.AudioFilePath = ((IAudioFile)phrase.GetAudioClip(inflectionType)).Path;
 
@@ -165,7 +166,7 @@ namespace CVAS.FileFormats
             foreach (PhraseTableRow phraseRow in PhraseTable)
             {
                 InflectionCollection inflections = new InflectionCollection();
-                foreach (PhraseTableRow.InflectionTableRow inflectionRow in phraseRow.InflectionTable)
+                foreach (InflectionTableRow inflectionRow in phraseRow.InflectionTable)
                 {
                     InflectionType inflectionType = (InflectionType)inflectionRow.Inflection;
                     IAudioClip audioClip = new AudioFileStreaming(inflectionRow.AudioFilePath);
@@ -199,7 +200,7 @@ namespace CVAS.FileFormats
                 {
                     bw.Write(phrase.Str);
                     bw.Write(phrase.NumInflections);
-                    foreach (PhraseTableRow.InflectionTableRow inflection in phrase.InflectionTable)
+                    foreach (InflectionTableRow inflection in phrase.InflectionTable)
                     {
                         bw.Write(inflection.Inflection);
                         bw.Write(inflection.AudioFilePath);

@@ -63,7 +63,7 @@ namespace CVAS.FileFormats
                     var filenames_string = "";
                     foreach (var filename in filenames)
                         filenames_string += filename;
-                    var folderHash = new byte[16];
+                    byte[] folderHash;
                     using (var md5 = MD5.Create())
                         folderHash = md5.ComputeHash(Encoding.ASCII.GetBytes(filenames_string));
 
@@ -194,7 +194,9 @@ namespace CVAS.FileFormats
                 var filenames_string = "";
                 foreach (var filename in filenames)
                     filenames_string += filename;
-                var folderHash = new byte[16];
+                byte[] folderHash;
+                using (var md5 = MD5.Create())
+                    folderHash = md5.ComputeHash(Encoding.ASCII.GetBytes(filenames_string));
                 bw.Write(folderHash);
 
                 // Write phrases & inflections

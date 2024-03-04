@@ -1,6 +1,6 @@
 ﻿namespace CVAS.FileFormats
 {
-    internal class InvalidFileHeaderException : Exception
+    public class InvalidFileHeaderException : Exception
     {
     }
 }

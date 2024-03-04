@@ -1,6 +1,6 @@
 ﻿namespace CVAS.FileFormats
 {
-    internal class InvalidFileFormatException : Exception
+    public class InvalidFileFormatException : Exception
     {
 
     }

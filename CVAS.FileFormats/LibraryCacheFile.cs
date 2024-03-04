@@ -170,9 +170,17 @@ namespace CVAS.FileFormats
             return new LibraryCacheFile(phraseTable.Count(), phraseTable.ToArray());
         }
 
-        public void Construct(ref object o)
+        public object Construct()
         {
-            throw new NotImplementedException();
+            // Construct phrases
+            List<Phrase> phrases = new List<Phrase>();
+            foreach (PhraseTableRow phraseRow in PhraseTable)
+            {
+                Phrase phrase;
+                if (phraseRow.NumInflections == 0) // Case: no included inflections (should never happen, but just in case)
+                    phrase = new Phrase(phraseRow.Str);
+                else if (phraseRow.NumInflections == 1)
+            }
         }
 
         public void SaveTo(string path)

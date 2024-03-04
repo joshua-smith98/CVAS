@@ -10,6 +10,6 @@
         public static abstract IFile Deconstruct(object o);
 
         public void SaveTo(string path);
-        public void Construct(ref object o);
+        public object Construct();
     }
 }

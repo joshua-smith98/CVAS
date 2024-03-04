@@ -1,10 +1,13 @@
 ﻿using CVAS.AudioEngine;
-using CVAS.FileFormats;
+using CVAS.DataStructure;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace CVAS.DataStructure
+namespace CVAS.FileFormats
 {
+    // I really wanted this to be in the CVAS.FileFormats project, but this and Library are coupled together, so it creates a cyclic project reference.
+    // I'm not sure if this needs a refactor, or we just embrace the coupling here. Ideally, LibraryCacheFile would simply wrap around Library.
+    // We will keep the FileFormats project and IFile though, as I can see them having some use in the future - particularly with Library archives.
     public class LibraryCacheFile : IFile<Library>
     {
         public string? Path { get; private set; }

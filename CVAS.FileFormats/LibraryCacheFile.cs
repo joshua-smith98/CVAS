@@ -11,7 +11,6 @@ namespace CVAS.FileFormats
 
         public char[] Header => "CVASLBCH".ToArray();
 
-        private byte[]? FolderHash;
         private int NumPhrases;
 
         private PhraseTableRow[] PhraseTable;
@@ -27,10 +26,9 @@ namespace CVAS.FileFormats
             }
         }
 
-        private LibraryCacheFile(string path, byte[] folderHash, int numPhrases, PhraseTableRow[] phraseTable)
+        private LibraryCacheFile(string path, int numPhrases, PhraseTableRow[] phraseTable)
         {
             Path = path;
-            FolderHash = folderHash;
             NumPhrases = numPhrases;
             PhraseTable = phraseTable;
         }
@@ -96,11 +94,8 @@ namespace CVAS.FileFormats
 
                 #region Load from file and construct
                 {
-                    // Skip 2 x 4 byte headers
-                    br.BaseStream.Position = 8;
-
-                    // Load folder hash
-                    byte[] folderHash = br.ReadBytes(16);
+                    // Skip 2 x 4 byte headers and 16 byte folder hash
+                    br.BaseStream.Position = 24;
 
                     // Read phrases
                     int numPhrases = br.ReadInt32();
@@ -122,7 +117,7 @@ namespace CVAS.FileFormats
                         }
                     }
 
-                    ret = new LibraryCacheFile(path, folderHash, numPhrases, phraseTable);
+                    ret = new LibraryCacheFile(path, numPhrases, phraseTable);
                 }
                 #endregion
             }

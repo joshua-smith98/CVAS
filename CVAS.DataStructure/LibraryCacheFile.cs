@@ -1,9 +1,9 @@
 ﻿using CVAS.AudioEngine;
-using CVAS.DataStructure;
+using CVAS.FileFormats;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace CVAS.FileFormats
+namespace CVAS.DataStructure
 {
     public class LibraryCacheFile : IFile<Library>
     {

@@ -1,4 +1,5 @@
-﻿using CVAS.DataStructure;
+﻿using CVAS.AudioEngine;
+using CVAS.DataStructure;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace CVAS.FileFormats
 
         public char[] Header => "CVASLBCH".ToArray();
 
-        private byte[] FolderHash;
+        private byte[]? FolderHash;
         private int NumPhrases;
 
         private PhraseTableRow[] PhraseTable;
@@ -36,9 +37,8 @@ namespace CVAS.FileFormats
             PhraseTable = phraseTable;
         }
 
-        private LibraryCacheFile(byte[] folderHash, int numPhrases, PhraseTableRow[] phraseTable)
+        private LibraryCacheFile(int numPhrases, PhraseTableRow[] phraseTable)
         {
-            FolderHash = folderHash;
             NumPhrases = numPhrases;
             PhraseTable = phraseTable;
         }
@@ -134,7 +134,40 @@ namespace CVAS.FileFormats
 
         public static IFile Deconstruct(object o)
         {
-            throw new NotImplementedException();
+            // Validity check: o is a Library
+            if (o is not Library) throw new InvalidObjectTypeException();
+
+            Library library = (Library)o;
+
+            // Initialise variables for LibraryCacheFile construction
+            // NOTE: We will need to use lists here for the phraseTable and inflectionTable, due to our need to exclude non-IAudioFile phrases and inflections
+            List<PhraseTableRow> phraseTable = new List<PhraseTableRow>();
+            foreach (Phrase phrase in library.Phrases)
+            {
+                // Check if this phrase contains only non-IAudioFiles and if so don't include
+                if (phrase.AudioClips.Values.Where(x => x is IAudioFile).Count() == 0) continue;
+                
+                PhraseTableRow phraseRow = new PhraseTableRow();
+                phraseRow.Str = phrase.Str;
+
+                List<PhraseTableRow.InflectionTableRow> inflectionTable = new List<PhraseTableRow.InflectionTableRow>();
+                foreach (Inflection inflection in phrase.AudioClips.Keys)
+                {
+                    // Check if this inflection isn't IAudioFile, if so and don't include
+                    if (phrase.AudioClips[inflection] is not IAudioFile) continue;
+                    
+                    var inflectionRow = new PhraseTableRow.InflectionTableRow();
+                    inflectionRow.Inflection = (int)inflection;
+                    inflectionRow.AudioFilePath = ((IAudioFile)phrase.AudioClips[inflection]).Path;
+
+                    inflectionTable.Add(inflectionRow);
+                }
+
+                phraseRow.InflectionTable = inflectionTable.ToArray();
+                phraseTable.Add(phraseRow);
+            }
+
+            return new LibraryCacheFile(phraseTable.Count(), phraseTable.ToArray());
         }
 
         public void Construct(ref object o)

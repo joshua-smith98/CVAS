@@ -5,11 +5,9 @@ using System.Text;
 
 namespace CVAS.FileFormats
 {
-    public class LibraryCacheFile : IFile
+    public class LibraryCacheFile : IFile<Library>
     {
         public string? Path { get; private set; }
-
-        public Type Type => typeof(Library);
 
         public char[] Header => "CVASLBCH".ToArray();
 
@@ -43,7 +41,7 @@ namespace CVAS.FileFormats
             PhraseTable = phraseTable;
         }
 
-        public static IFile LoadFrom(string path)
+        public static IFile<Library> LoadFrom(string path)
         {
             // Validity check: file exists
             if (!File.Exists(path)) throw new FileNotFoundException();
@@ -132,13 +130,8 @@ namespace CVAS.FileFormats
             return ret;
         }
 
-        public static IFile Deconstruct(object o)
+        public static IFile<Library> Deconstruct(Library library)
         {
-            // Validity check: o is a Library
-            if (o is not Library) throw new InvalidObjectTypeException();
-
-            Library library = (Library)o;
-
             // Initialise variables for LibraryCacheFile construction
             // NOTE: We will need to use lists here for the phraseTable and inflectionTable, due to our need to exclude non-IAudioFile phrases and inflections
             List<PhraseTableRow> phraseTable = new List<PhraseTableRow>();
@@ -170,7 +163,7 @@ namespace CVAS.FileFormats
             return new LibraryCacheFile(phraseTable.Count(), phraseTable.ToArray());
         }
 
-        public object Construct()
+        public Library Construct()
         {
             // Construct phrases
             List<Phrase> phrases = new List<Phrase>();

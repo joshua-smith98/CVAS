@@ -145,20 +145,20 @@ namespace CVAS.FileFormats
             foreach (Phrase phrase in library.Phrases)
             {
                 // Check if this phrase contains only non-IAudioFiles and if so don't include
-                if (phrase.AudioClips.Values.Where(x => x is IAudioFile).Count() == 0) continue;
+                if (phrase.Inflections.Select(x => x.AudioClip).Where(x => x is IAudioFile).Count() == 0) continue;
                 
                 PhraseTableRow phraseRow = new PhraseTableRow();
                 phraseRow.Str = phrase.Str;
 
                 List<PhraseTableRow.InflectionTableRow> inflectionTable = new List<PhraseTableRow.InflectionTableRow>();
-                foreach (Inflection inflection in phrase.AudioClips.Keys)
+                foreach (InflectionType inflectionType in phrase.Inflections.Select(x => x.InflectionType))
                 {
                     // Check if this inflection isn't IAudioFile, if so and don't include
-                    if (phrase.AudioClips[inflection] is not IAudioFile) continue;
+                    if (phrase.GetAudioClip(inflectionType) is not IAudioFile) continue;
                     
                     var inflectionRow = new PhraseTableRow.InflectionTableRow();
-                    inflectionRow.Inflection = (int)inflection;
-                    inflectionRow.AudioFilePath = ((IAudioFile)phrase.AudioClips[inflection]).Path;
+                    inflectionRow.Inflection = (int)inflectionType;
+                    inflectionRow.AudioFilePath = ((IAudioFile)phrase.GetAudioClip(inflectionType)).Path;
 
                     inflectionTable.Add(inflectionRow);
                 }

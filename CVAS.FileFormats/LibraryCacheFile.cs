@@ -176,11 +176,18 @@ namespace CVAS.FileFormats
             List<Phrase> phrases = new List<Phrase>();
             foreach (PhraseTableRow phraseRow in PhraseTable)
             {
-                Phrase phrase;
-                if (phraseRow.NumInflections == 0) // Case: no included inflections (should never happen, but just in case)
-                    phrase = new Phrase(phraseRow.Str);
-                else if (phraseRow.NumInflections == 1)
+                InflectionCollection inflections = new InflectionCollection();
+                foreach (PhraseTableRow.InflectionTableRow inflectionRow in phraseRow.InflectionTable)
+                {
+                    InflectionType inflectionType = (InflectionType)inflectionRow.Inflection;
+                    IAudioClip audioClip = new AudioFileStreaming(inflectionRow.AudioFilePath);
+                    inflections.Add(new Inflection(inflectionType, audioClip));
+                }
+
+                phrases.Add(new Phrase(phraseRow.Str, inflections.ToArray()));
             }
+
+            return new Library(phrases.ToArray());
         }
 
         public void SaveTo(string path)

@@ -13,7 +13,7 @@ namespace CVAS.DataStructure
         /// <summary>
         /// The collection of <see cref="IAudioClip"/>s associated with this phrase, mapped to their inflections.
         /// </summary>
-        private readonly Dictionary<Inflection, IAudioClip> audioClips = new();
+        public Dictionary<Inflection, IAudioClip> AudioClips { get; } = new();
         
         /// <summary>
         /// Constructs a new phrase with no associated audio.
@@ -35,7 +35,7 @@ namespace CVAS.DataStructure
         {
             Str = str;
             Words = getWords(str);
-            audioClips.Add(audioClipInflection, audioClip);
+            AudioClips.Add(audioClipInflection, audioClip);
         }
 
         /// <summary>
@@ -48,8 +48,8 @@ namespace CVAS.DataStructure
         {
             Str = str;
             Words = getWords(str);
-            audioClips.Add(Inflection.Middle, audioClip_Middle);
-            audioClips.Add(Inflection.End, audioClip_End);
+            AudioClips.Add(Inflection.Middle, audioClip_Middle);
+            AudioClips.Add(Inflection.End, audioClip_End);
         }
 
         /// <summary>
@@ -58,13 +58,13 @@ namespace CVAS.DataStructure
         /// <returns><see cref="Inflection.End"/> if available, otherwise <see cref="Inflection.Middle"/>. If there is no associated <see cref="IAudioClip"/>, this returns <see cref="Silence"/>.</returns>
         public IAudioClip GetAudioClip()
         {
-            if (audioClips.Keys.Contains(Inflection.End))
+            if (AudioClips.Keys.Contains(Inflection.End))
             {
-                return audioClips[Inflection.End];
+                return AudioClips[Inflection.End];
             }
-            else if (audioClips.Keys.Contains(Inflection.Middle))
+            else if (AudioClips.Keys.Contains(Inflection.Middle))
             {
-                return audioClips[Inflection.Middle];
+                return AudioClips[Inflection.Middle];
             }
             else return new Silence(0);
         }
@@ -76,9 +76,9 @@ namespace CVAS.DataStructure
         /// <returns></returns>
         public IAudioClip GetAudioClip(Inflection inflection)
         {
-            if (audioClips.Keys.Contains(inflection))
+            if (AudioClips.Keys.Contains(inflection))
             {
-                return audioClips[inflection];
+                return AudioClips[inflection];
             }
             else return GetAudioClip();
         }

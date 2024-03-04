@@ -1,4 +1,5 @@
 ﻿using CVAS.AudioEngine;
+using CVAS.FileFormats;
 
 namespace CVAS.DataStructure
 {
@@ -25,6 +26,19 @@ namespace CVAS.DataStructure
         {
             // Path validity checks
             if (!Directory.Exists(path)) throw new DirectoryNotFoundException();
+
+            // Try to load from cache file
+            string cachePath = Path.Combine(path, "cache.lbc");
+            try
+            {
+                return LibraryCacheFile.LoadFrom(cachePath).Construct();
+            }
+            // Case: Some known error with the cache file -> we will load manually and automatically rebuild
+            // Those commented out won't be once the library caching feature has finished testing
+            //catch (FileNotFoundException) { }
+            //catch (InvalidFileHeaderException) { }
+            //catch (InvalidFileFormatException) { }
+            catch (InvalidFileHashException) { }
 
             // Construct list of phrases to build library from
             List<Phrase> phrases = new List<Phrase>();
@@ -100,8 +114,13 @@ namespace CVAS.DataStructure
                 Console.WriteLine(file_end);
             }
 
-            // Construct and return library
-            return new Library(phrases.ToArray());
+            // Construct library
+            Library ret = new Library(phrases.ToArray());
+
+            // Build cache
+            LibraryCacheFile.Deconstruct(ret).SaveTo(cachePath);
+
+            return ret;
         }
 
         /// <summary>

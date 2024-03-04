@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CVAS.AudioEngine\CVAS.AudioEngine.csproj" />
+	  <ProjectReference Include="..\CVAS.FileFormats\CVAS.FileFormats.csproj" />
   </ItemGroup>
 
 </Project>

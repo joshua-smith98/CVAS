@@ -27,6 +27,17 @@ namespace CVAS.DataStructure
         }
 
         /// <summary>
+        /// Constructs a new phrase with a single associated <see cref="IAudioClip"/>, with <see cref="InflectionType.End"/>.
+        /// </summary>
+        /// <param name="str"></param>
+        public Phrase(string str, IAudioClip audioClip)
+        {
+            Str = str;
+            Words = getWords(str);
+            inflections.Add(new Inflection(InflectionType.End, audioClip));
+        }
+
+        /// <summary>
         /// Constructs a new phrase with the given <see cref="Inflection"/>s.
         /// </summary>
         /// <param name="str"></param>

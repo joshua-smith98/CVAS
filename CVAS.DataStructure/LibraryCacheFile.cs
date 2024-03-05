@@ -2,6 +2,7 @@
 using CVAS.DataStructure;
 using System.Security.Cryptography;
 using System.Text;
+using SysPath = System.IO.Path;
 
 namespace CVAS.FileFormats
 {
@@ -27,7 +28,7 @@ namespace CVAS.FileFormats
         private struct InflectionTableRow
         {
             public int Inflection;
-            public string AudioFilePath;
+            public string AudioFileName;
         }
 
         private LibraryCacheFile(string path, int numPhrases, PhraseTableRow[] phraseTable)
@@ -68,7 +69,7 @@ namespace CVAS.FileFormats
                     if (!br.ReadChars(8).SequenceEqual("CVASLBCH".ToArray())) throw new InvalidFileHeaderException();
 
                     // Validity check: folder hash
-                    var filenames = Directory.GetFiles(System.IO.Path.GetDirectoryName(path)).Select(x => System.IO.Path.GetFileName(x)); // TODO: handle possible null reference
+                    var filenames = Directory.GetFiles(SysPath.GetDirectoryName(path)).Select(x => SysPath.GetFileName(x)); // TODO: handle possible null reference
                     var filenames_string = "";
                     foreach (var filename in filenames)
                         filenames_string += filename;
@@ -127,7 +128,7 @@ namespace CVAS.FileFormats
                         {
                             phraseTable[i].InflectionTable[j] = new InflectionTableRow();
                             phraseTable[i].InflectionTable[j].Inflection = br.ReadInt32();
-                            phraseTable[i].InflectionTable[j].AudioFilePath = br.ReadString();
+                            phraseTable[i].InflectionTable[j].AudioFileName = br.ReadString();
                         }
                     }
 
@@ -169,7 +170,7 @@ namespace CVAS.FileFormats
                     
                     var inflectionRow = new InflectionTableRow();
                     inflectionRow.Inflection = (int)inflectionType;
-                    inflectionRow.AudioFilePath = ((IAudioFile)phrase.GetAudioClip(inflectionType)).Path;
+                    inflectionRow.AudioFileName = SysPath.GetFileName(((IAudioFile)phrase.GetAudioClip(inflectionType)).Path); // Gets the filename for the phrase's IAudioFile
 
                     inflectionTable.Add(inflectionRow);
                 }
@@ -198,7 +199,7 @@ namespace CVAS.FileFormats
                 foreach (InflectionTableRow inflectionRow in phraseRow.InflectionTable)
                 {
                     InflectionType inflectionType = (InflectionType)inflectionRow.Inflection;
-                    IAudioClip audioClip = new AudioFileStreaming(inflectionRow.AudioFilePath);
+                    IAudioClip audioClip = new AudioFileStreaming(SysPath.Combine(SysPath.GetDirectoryName(Path), inflectionRow.AudioFileName)); // Gets the path to the file, relative to this cache file's current directory.
                     inflections.Add(new Inflection(inflectionType, audioClip));
                 }
 
@@ -224,7 +225,7 @@ namespace CVAS.FileFormats
                 bw.Write("CVASLBCH".ToArray()); // Convert to char[] so that BinaryWriter doesn't write a length int before the header
 
                 // Compute and write folder hash
-                var filenames = Directory.GetFiles(System.IO.Path.GetDirectoryName(path)).Select(x => System.IO.Path.GetFileName(x)); // TODO: handle possible null reference
+                var filenames = Directory.GetFiles(SysPath.GetDirectoryName(path)).Select(x => SysPath.GetFileName(x)); // TODO: handle possible null reference
                 var filenames_string = "";
                 foreach (var filename in filenames)
                     filenames_string += filename;
@@ -242,7 +243,7 @@ namespace CVAS.FileFormats
                     foreach (InflectionTableRow inflection in phrase.InflectionTable)
                     {
                         bw.Write(inflection.Inflection);
-                        bw.Write(inflection.AudioFilePath);
+                        bw.Write(inflection.AudioFileName);
                     }
                 }
 

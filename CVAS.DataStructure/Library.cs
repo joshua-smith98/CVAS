@@ -17,7 +17,7 @@ namespace CVAS.DataStructure
         }
 
         /// <summary>
-        /// Constructs and loads a Library from the given directory. Assumes the directory contains audio files with correctly formatted file names.
+        /// Constructs and loads a Library from the given directory, using a cache file or creating one if it doesn't exist. Assumes the directory contains audio files with correctly formatted file names.
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
@@ -40,8 +40,6 @@ namespace CVAS.DataStructure
             {
                 Console.WriteLine("Performing first-time analysis... (this could take some time)");
             }
-            //catch (InvalidFileHeaderException) { }
-            //catch (InvalidFileFormatException) { }
             catch (InvalidFileHashException)
             {
                 Console.WriteLine("Folder has been altered! Rebuilding cache... (this could take some time)");

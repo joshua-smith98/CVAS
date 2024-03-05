@@ -5,10 +5,10 @@ using System.Text;
 
 namespace CVAS.FileFormats
 {
-    // I really wanted this to be in the CVAS.FileFormats project, but this and Library are coupled together, so it creates a cyclic project reference.
-    // I'm not sure if this needs a refactor, or we just embrace the coupling here. Ideally, LibraryCacheFile would simply wrap around Library.
-    // We will keep the FileFormats project and IFile though, as I can see them having some use in the future - particularly with Library archives.
-    public class LibraryCacheFile : IFile<Library>
+    /// <summary>
+    /// Represents the data contained within a Library Cache File. See CVAS Trello page for rough specification.
+    /// </summary>
+    public class LibraryCacheFile : IFile<Library> // This file will be moved back into CVAS.FileFormats (soon to be CVAS.IO) as part of an upcoming refactor.
     {
         public string? Path { get; private set; }
 
@@ -43,6 +43,15 @@ namespace CVAS.FileFormats
             PhraseTable = phraseTable;
         }
 
+        /// <summary>
+        /// Attempts to load an instance of <see cref="LibraryCacheFile"/> from the disk.
+        /// </summary>
+        /// <param name="path">The path of the file to load from.</param>
+        /// <returns></returns>
+        /// <exception cref="FileNotFoundException"></exception>
+        /// <exception cref="InvalidFileHeaderException"></exception>
+        /// <exception cref="InvalidFileHashException"></exception>
+        /// <exception cref="InvalidFileFormatException"></exception>
         public static IFile<Library> LoadFrom(string path)
         {
             // Validity check: file exists
@@ -84,7 +93,7 @@ namespace CVAS.FileFormats
                             }
                         }
                     }
-                    catch (EndOfStreamException) // Case: running through table 
+                    catch (EndOfStreamException) // Case: the table is shorter than expected
                     {
                         throw new InvalidFileFormatException();
                     }
@@ -93,9 +102,9 @@ namespace CVAS.FileFormats
                 }
                 #endregion
 
-                Console.WriteLine($"Loading from cache...");
                 // Reset position after checking file validity
                 br.BaseStream.Position = 0;
+                Console.WriteLine($"Loading from cache...");
 
                 #region Load from file and construct
                 {
@@ -122,6 +131,7 @@ namespace CVAS.FileFormats
                         }
                     }
 
+                    // Construct library
                     ret = new LibraryCacheFile(path, numPhrases, phraseTable);
                 }
                 #endregion
@@ -132,11 +142,18 @@ namespace CVAS.FileFormats
             return ret;
         }
 
+        /// <summary>
+        /// Deconstructs the given <see cref="Library"/> into an instance of <see cref="LibraryCacheFile"/>.
+        /// </summary>
+        /// <param name="library"></param>
+        /// <returns></returns>
         public static IFile<Library> Deconstruct(Library library)
         {
             // Initialise variables for LibraryCacheFile construction
             // NOTE: We will need to use lists here for the phraseTable and inflectionTable, due to our need to exclude non-IAudioFile phrases and inflections
             List<PhraseTableRow> phraseTable = new List<PhraseTableRow>();
+
+            // Deconstruct phrases
             foreach (Phrase phrase in library.Phrases)
             {
                 // Check if this phrase contains only non-IAudioFiles and if so don't include
@@ -145,6 +162,7 @@ namespace CVAS.FileFormats
                 PhraseTableRow phraseRow = new PhraseTableRow();
                 phraseRow.Str = phrase.Str;
 
+                // Deconstruct inflections
                 List<InflectionTableRow> inflectionTable = new List<InflectionTableRow>();
                 foreach (InflectionType inflectionType in phrase.Inflections.Select(x => x.InflectionType))
                 {
@@ -163,15 +181,21 @@ namespace CVAS.FileFormats
                 phraseTable.Add(phraseRow);
             }
 
+            // Construct and return
             return new LibraryCacheFile(phraseTable.Count(), phraseTable.ToArray());
         }
 
+        /// <summary>
+        /// Constructs a new instance of <see cref="Library"/> from this instance of <see cref="LibraryCacheFile"/>.
+        /// </summary>
+        /// <returns></returns>
         public Library Construct()
         {
             // Construct phrases
             List<Phrase> phrases = new List<Phrase>();
             foreach (PhraseTableRow phraseRow in PhraseTable)
             {
+                // Construct inflections
                 InflectionCollection inflections = new InflectionCollection();
                 foreach (InflectionTableRow inflectionRow in phraseRow.InflectionTable)
                 {
@@ -183,11 +207,17 @@ namespace CVAS.FileFormats
                 phrases.Add(new Phrase(phraseRow.Str, inflections.ToArray()));
             }
 
+            // Construct library and return
             return new Library(phrases.ToArray());
         }
 
+        /// <summary>
+        /// Saves this instance of <see cref="LibraryCacheFile"/> to the disk, overwriting the existing file or creating new one if it doesn't exist.
+        /// </summary>
+        /// <param name="path">The path of the file to save to.</param>
         public void SaveTo(string path)
         {
+            // Create file
             using (BinaryWriter bw = new(File.Create(path)))
             {
                 // Write headers
@@ -216,9 +246,11 @@ namespace CVAS.FileFormats
                     }
                 }
 
+                // Ensure file is ready to close
                 bw.Flush();
             }
 
+            // Change path of this instance
             Path = path;
         }
     }

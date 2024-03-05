@@ -3,6 +3,9 @@ using System.Collections;
 
 namespace CVAS.DataStructure
 {
+    /// <summary>
+    /// A collection of <see cref="Inflection"/>s. Used in <see cref="Phrase"/>.
+    /// </summary>
     public class InflectionCollection : ICollection<Inflection>
     {
         public int Count => inflections.Count();
@@ -11,6 +14,12 @@ namespace CVAS.DataStructure
 
         private List<Inflection> inflections = new List<Inflection>();
 
+        /// <summary>
+        /// Gets the <see cref="IAudioClip"/> associated with the given <see cref="InflectionType"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        /// <exception cref="KeyNotFoundException"></exception>
         public IAudioClip this[InflectionType type]
         {
             get
@@ -26,6 +35,10 @@ namespace CVAS.DataStructure
             inflections.Add(item);
         }
 
+        /// <summary>
+        /// Adds a range of items to this <see cref="InflectionCollection"/>.
+        /// </summary>
+        /// <param name="items"></param>
         public void AddRange(Inflection[] items)
         {
             inflections.AddRange(items);

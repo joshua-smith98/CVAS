@@ -13,7 +13,7 @@ If you're looking for a finished & working program, try this one - its quite nic
  - [x] Audio caching
  - [x] Inflection support
  - [x] Automatically load a library from a folder
- - [ ] Render spoken sentences to files
+ - [x] Render spoken sentences to files
  - [x] Library caching on the disk
  - [x] Perform functions via REPL
  - [ ] Perform functions via command line

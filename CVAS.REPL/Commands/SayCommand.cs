@@ -46,7 +46,7 @@ namespace CVAS.REPL
             var sentence_str = Arguments[0].Value as string;
             var sentence = REPL.Instance.CurrentLibrary.GetSentence(sentence_str);
 
-            AudioPlayer.Instance.Play(sentence.GetAudioClip());
+            AudioEngine.AudioEngine.Instance.Play(sentence.GetAudioClip());
         }
     }
 }

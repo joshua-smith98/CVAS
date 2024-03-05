@@ -16,7 +16,7 @@ namespace CVAS.AudioEngine
         {
             AudioClips = audioClips;
 
-            WaveFormat = AudioPlayer.Instance.WaveFormat;
+            WaveFormat = AudioEngine.Instance.WaveFormat;
         }
 
         public IWaveProvider ToWaveProvider()

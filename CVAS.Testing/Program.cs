@@ -48,11 +48,11 @@ while (testStr != "exit") {
         else if (audioClip is Silence)
             Console.WriteLine(((Silence)audioClip).Milliseconds);
     }
-    AudioPlayer.Instance.Play(playlist);
+    AudioEngine.Instance.Play(playlist);
 
     Console.ReadKey();
 
-    AudioPlayer.Instance.Play(testSentence.GetAudioClip());
+    AudioEngine.Instance.Play(testSentence.GetAudioClip());
 
     Console.ReadKey();
 }

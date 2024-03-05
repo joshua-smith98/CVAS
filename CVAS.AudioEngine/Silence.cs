@@ -7,7 +7,7 @@ namespace CVAS.AudioEngine
     /// </summary>
     public class Silence : IAudioClip
     {
-        public WaveFormat WaveFormat => AudioPlayer.Instance.WaveFormat; // Just automatically set this to the global WaveFormat
+        public WaveFormat WaveFormat => AudioEngine.Instance.WaveFormat; // Just automatically set this to the global WaveFormat
 
         public int Milliseconds { get; }
 
@@ -18,7 +18,7 @@ namespace CVAS.AudioEngine
 
         public IWaveProvider ToWaveProvider()
         {
-            return new SilenceSampleProvider(AudioPlayer.Instance.WaveFormat, Milliseconds).ToWaveProvider();
+            return new SilenceSampleProvider(AudioEngine.Instance.WaveFormat, Milliseconds).ToWaveProvider();
         }
 
         public void Dispose()

@@ -4,11 +4,11 @@ using NAudio.Wave.SampleProviders;
 namespace CVAS.AudioEngine
 {
     /// <summary>
-    /// Governs all audio mixing and playback. Non-constructable - use the static <see cref="AudioPlayer.Instance"/> to access.
+    /// Governs all audio mixing and playback. Non-constructable - use the static <see cref="AudioEngine.Instance"/> to access.
     /// </summary>
-    public class AudioPlayer : IDisposable
+    public class AudioEngine : IDisposable
     {
-        public static AudioPlayer Instance { get; } = new AudioPlayer();
+        public static AudioEngine Instance { get; } = new AudioEngine();
         
         public WaveFormat WaveFormat => sampleProvider.WaveFormat; // Not sure if I'll need this but good to have it anyway
 
@@ -17,7 +17,7 @@ namespace CVAS.AudioEngine
         private readonly MixingSampleProvider sampleProvider;
 
 
-        private AudioPlayer()
+        private AudioEngine()
         {
             // Initialise properties
             sampleProvider = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100, 2)); // TODO: Implement changing WaveFormat

@@ -45,8 +45,9 @@ namespace CVAS.REPL
             var sentence = REPL.Instance.CurrentLibrary.GetSentence((string)Arguments[0].Value);
             var path = (string)Arguments[1].Value;
 
-            // Validity check: path directory must exist
-            if (!Directory.Exists(Path.GetDirectoryName((string)Arguments[1].Value))) throw new DirectoryNotFoundException();
+            // Validity check: path directory must exist, or be empty
+            var directoryName = Path.GetDirectoryName(path);
+            if (directoryName != "" && !Directory.Exists(path)) throw new DirectoryNotFoundException();
 
             // Check for file exists and give option for overwriting
             if (File.Exists(path))

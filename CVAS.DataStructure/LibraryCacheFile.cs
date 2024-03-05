@@ -47,7 +47,6 @@ namespace CVAS.FileFormats
         {
             // Validity check: file exists
             if (!File.Exists(path)) throw new FileNotFoundException();
-            Console.WriteLine("Found cache file");
 
             LibraryCacheFile ret;
 
@@ -58,7 +57,6 @@ namespace CVAS.FileFormats
                 {
                     // Validity check: header
                     if (!br.ReadChars(8).SequenceEqual("CVASLBCH".ToArray())) throw new InvalidFileHeaderException();
-                    Console.WriteLine("Header valid");
 
                     // Validity check: folder hash
                     var filenames = Directory.GetFiles(System.IO.Path.GetDirectoryName(path)).Select(x => System.IO.Path.GetFileName(x)); // TODO: handle possible null reference
@@ -70,7 +68,6 @@ namespace CVAS.FileFormats
                         folderHash = md5.ComputeHash(Encoding.ASCII.GetBytes(filenames_string));
 
                     if (!br.ReadBytes(16).SequenceEqual(folderHash)) throw new InvalidFileHashException();
-                    Console.WriteLine("Folder hash valid");
 
                     // Validity check: table integrity (iterate through tables and check EOF)
                     try
@@ -93,10 +90,10 @@ namespace CVAS.FileFormats
                     }
 
                     if (br.BaseStream.Position != br.BaseStream.Length) throw new InvalidFileFormatException(); // Case: there is extra data in the file
-                    Console.WriteLine("Tables are valid");
                 }
                 #endregion
 
+                Console.WriteLine($"Loading from cache...");
                 // Reset position after checking file validity
                 br.BaseStream.Position = 0;
 
@@ -130,6 +127,8 @@ namespace CVAS.FileFormats
                 #endregion
             }
 
+            Console.WriteLine($"Loaded {ret.NumPhrases} phrases.");
+            Console.WriteLine();
             return ret;
         }
 
@@ -189,8 +188,6 @@ namespace CVAS.FileFormats
 
         public void SaveTo(string path)
         {
-            Console.WriteLine("WRITE CACHE FILE");
-            
             using (BinaryWriter bw = new(File.Create(path)))
             {
                 // Write headers

@@ -28,6 +28,7 @@ namespace CVAS.DataStructure
             if (!Directory.Exists(path)) throw new DirectoryNotFoundException();
 
             // Try to load from cache file
+            Console.WriteLine();
             string cachePath = Path.Combine(path, "cache.lbc");
             try
             {
@@ -35,10 +36,16 @@ namespace CVAS.DataStructure
             }
             // Case: Some known error with the cache file -> we will load manually and automatically rebuild
             // Those commented out won't be once the library caching feature has finished testing
-            catch (FileNotFoundException) { }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("Performing first-time analysis... (this could take some time)");
+            }
             //catch (InvalidFileHeaderException) { }
             //catch (InvalidFileFormatException) { }
-            catch (InvalidFileHashException) { }
+            catch (InvalidFileHashException)
+            {
+                Console.WriteLine("Folder has been altered! Rebuilding cache... (this could take some time)");
+            }
 
             // Construct list of phrases to build library from
             List<Phrase> phrases = new List<Phrase>();
@@ -64,8 +71,6 @@ namespace CVAS.DataStructure
                 }
                 catch { continue; }
 
-                Console.WriteLine(file_middle);
-
                 // Phrase.str is file name without extension
                 string str = Path.GetFileNameWithoutExtension(file_middle);
 
@@ -90,7 +95,6 @@ namespace CVAS.DataStructure
                 {
                     phrases.Add(new Phrase(str, new Inflection(InflectionType.End, audioClip_end), new Inflection(InflectionType.Middle, audioClip_middle)));
                     files_ends.Remove(file_end); // If we add an end inflection to a phrase, remove it from the list of end inflection files
-                    Console.WriteLine(file_end);
                 }
                 else phrases.Add(new Phrase(str, new Inflection(InflectionType.Middle, audioClip_middle)));
             }
@@ -111,14 +115,16 @@ namespace CVAS.DataStructure
                 str = str.Substring(0, str.Length - 2);
 
                 phrases.Add(new Phrase(str, new Inflection(InflectionType.End, audioClip_end)));
-                Console.WriteLine(file_end);
             }
 
             // Construct library
             Library ret = new Library(phrases.ToArray());
+            Console.WriteLine($"Successfully analysed {files.Length} files and loaded {ret.phrases.Count()} phrases.");
 
             // Build cache
             LibraryCacheFile.Deconstruct(ret).SaveTo(cachePath);
+            Console.WriteLine("Cache built. The next load will be much quicker!");
+            Console.WriteLine();
 
             return ret;
         }

@@ -114,10 +114,10 @@ namespace CVAS.FileFormats
                         phraseTable[i] = new PhraseTableRow();
                         phraseTable[i].Str = br.ReadString();
                         phraseTable[i].NumInflections = br.ReadInt32();
-                        phraseTable[i].InflectionTable = new InflectionTableRow[phraseTable[0].NumInflections];
+                        phraseTable[i].InflectionTable = new InflectionTableRow[phraseTable[i].NumInflections];
 
                         // Read inflections
-                        for (int j = 0; j < phraseTable[0].NumInflections; j++)
+                        for (int j = 0; j < phraseTable[i].NumInflections; j++)
                         {
                             phraseTable[i].InflectionTable[j] = new InflectionTableRow();
                             phraseTable[i].InflectionTable[j].Inflection = br.ReadInt32();

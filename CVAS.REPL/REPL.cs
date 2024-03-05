@@ -22,6 +22,7 @@ namespace CVAS.REPL
             new PreviewCommand(),
             new SayCommand(),
             new RenderCommand(),
+            new ClearCommand(),
             new ExitCommand(),
         };
 

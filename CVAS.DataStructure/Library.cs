@@ -35,7 +35,7 @@ namespace CVAS.DataStructure
             }
             // Case: Some known error with the cache file -> we will load manually and automatically rebuild
             // Those commented out won't be once the library caching feature has finished testing
-            //catch (FileNotFoundException) { }
+            catch (FileNotFoundException) { }
             //catch (InvalidFileHeaderException) { }
             //catch (InvalidFileFormatException) { }
             catch (InvalidFileHashException) { }

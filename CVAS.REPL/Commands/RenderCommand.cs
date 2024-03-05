@@ -55,7 +55,7 @@ namespace CVAS.REPL
                 // Prompt user
                 Console.WriteLine();
                 Console.WriteLine("File already exists! Overwrite (y/n)?");
-                Console.Write(">>");
+                Console.Write(">> ");
                 var response = Console.ReadLine();
                 if (response.ToLower() != "y")
                 {

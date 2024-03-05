@@ -9,7 +9,7 @@
 
         public string Description => "Gets the description and usage instructions for the given command, or lists all commands.";
 
-        public string Usage => "help\nhelp [command]";
+        public string[] Usage { get; } = { "help", "help [command]" };
 
         public ICommand? SubCommand { get; }
 

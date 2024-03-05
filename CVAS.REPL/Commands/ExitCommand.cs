@@ -9,7 +9,7 @@
 
         public string Description => "Exits the program.";
 
-        public string Usage => "exit";
+        public string[] Usage { get; } = { "exit" };
 
         public ICommand? SubCommand { get; }
 

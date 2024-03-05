@@ -9,9 +9,9 @@ namespace CVAS.REPL
     {
         public string Str => "render";
 
-        public string Description => "Renders the given sentence to a file, using the currently loaded library.";
+        public string Description => "Renders the given sentence to a file at the given path, using the currently loaded library.";
 
-        public string Usage => "render [sentence to render] [path to file]";
+        public string[] Usage { get; } = { "render [sentence] [path]" };
 
         public ICommand? SubCommand { get; }
 

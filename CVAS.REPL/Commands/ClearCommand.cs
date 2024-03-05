@@ -6,7 +6,7 @@
 
         public string Description => "Clears the currently loaded Library.";
 
-        public string Usage => "clear";
+        public string[] Usage { get; } = { "clear" };
 
         public ICommand? SubCommand { get; }
 

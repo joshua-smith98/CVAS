@@ -16,9 +16,9 @@
         public string Description { get; }
 
         /// <summary>
-        /// An example of the command's usage. Used in the 'help' command.
+        /// Examples of the command's usage. Used in the 'help' command.
         /// </summary>
-        public string Usage { get; }
+        public string[] Usage { get; }
 
         public ICommand? SubCommand { get; } // For potential future use - not yet implemented
 

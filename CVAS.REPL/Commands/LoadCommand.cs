@@ -11,7 +11,7 @@ namespace CVAS.REPL
 
         public string Description => "Loads a folder of audio files as a library of phrases.";
 
-        public string Usage => "load [path to library]";
+        public string[] Usage { get; } = { "load [path]" };
 
         public ICommand? SubCommand => null; // To be implemented at some point
 

@@ -78,7 +78,7 @@ namespace CVAS.FileFormats
                         int numPhrases = br.ReadInt32();
                         for (int i = 0; i < numPhrases; i++)
                         {
-                            br.ReadString(); // Phrase str
+                            var str = br.ReadString(); // Phrase str
                             int numInflections = br.ReadInt32();
                             for (int j = 0; j < numInflections; j++)
                             {
@@ -159,6 +159,7 @@ namespace CVAS.FileFormats
                     inflectionTable.Add(inflectionRow);
                 }
 
+                phraseRow.NumInflections = inflectionTable.Count();
                 phraseRow.InflectionTable = inflectionTable.ToArray();
                 phraseTable.Add(phraseRow);
             }

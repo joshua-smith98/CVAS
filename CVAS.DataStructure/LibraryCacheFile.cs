@@ -69,7 +69,7 @@ namespace CVAS.FileFormats
                     using (var md5 = MD5.Create())
                         folderHash = md5.ComputeHash(Encoding.ASCII.GetBytes(filenames_string));
 
-                    if (br.ReadBytes(16) != folderHash) throw new InvalidFileHashException();
+                    if (!br.ReadBytes(16).SequenceEqual(folderHash)) throw new InvalidFileHashException();
                     Console.WriteLine("Folder hash valid");
 
                     // Validity check: table integrity (iterate through tables and check EOF)
@@ -87,7 +87,7 @@ namespace CVAS.FileFormats
                             }
                         }
                     }
-                    catch (IndexOutOfRangeException) // Case: running through table 
+                    catch (EndOfStreamException) // Case: running through table 
                     {
                         throw new InvalidFileFormatException();
                     }

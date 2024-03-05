@@ -194,12 +194,55 @@ namespace CVAS.FileFormats
             List<Phrase> phrases = new List<Phrase>();
             foreach (PhraseTableRow phraseRow in PhraseTable)
             {
+                bool unknownErrorNotified = false; // For the BEEG unknown error below
+                
                 // Construct inflections
                 InflectionCollection inflections = new InflectionCollection();
                 foreach (InflectionTableRow inflectionRow in phraseRow.InflectionTable)
                 {
                     InflectionType inflectionType = (InflectionType)inflectionRow.Inflection;
-                    IAudioClip audioClip = new AudioFileStreaming(SysPath.Combine(SysPath.GetDirectoryName(Path), inflectionRow.AudioFileName)); // Gets the path to the file, relative to this cache file's current directory.
+                    IAudioClip audioClip;
+                    // In some specific circumstances the following statement throws a DirectoryNotFoundException, even if the directory is valid.
+                    // I don't know what causes this, it only happens with certain directory names. I see no issue with my code, perhaps this is a bug with NAudio?
+                    // I will print a message to the console notifying them to open an issue - if someone encounters it, it will be more information to diagnose with.
+                    try
+                    {
+                        audioClip = new AudioFileStreaming(SysPath.Combine(SysPath.GetDirectoryName(Path), inflectionRow.AudioFileName)); // Gets the path to the file, relative to this cache file's current directory.
+                    }
+                    catch (DirectoryNotFoundException)
+                    {
+                        if (!unknownErrorNotified)
+                        {
+                            Console.WriteLine();
+                            var consoleColor = Console.ForegroundColor;
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine($"Couldn't load file: \"{inflectionRow.AudioFileName}\"");
+                            Console.ForegroundColor = consoleColor;
+                            Console.WriteLine();
+                            Console.WriteLine("This problem is known and occurs sometimes after moving or renaming a cached directory.");
+                            Console.WriteLine();
+                            Console.WriteLine("If you encounter this message, please open an issue on Github and include:");
+                            Console.WriteLine("\t- The name of the folder this Library used to be in");
+                            Console.WriteLine("\t- The name of the folder this Library is now in");
+                            Console.WriteLine("Or if you haven't moved the folder, let me know as well. The more data I have, the closer I'll be to fixing this!");
+                            Console.WriteLine();
+                            Console.WriteLine("The library will continue to load, but this file will be ignored.");
+                            Console.WriteLine("You'll be notified of any further instances of this error.");
+                            Console.WriteLine();
+                            Console.Write("Press any key to continue...");
+                            Console.ReadKey();
+                            Console.CursorLeft = Console.CursorLeft - 1;
+                            Console.WriteLine(" ");
+                            Console.WriteLine();
+                            unknownErrorNotified = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Also couldn't load: {inflectionRow.AudioFileName}");
+                        }
+                        continue;
+                    }
+
                     inflections.Add(new Inflection(inflectionType, audioClip));
                 }
 

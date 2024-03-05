@@ -37,14 +37,8 @@ namespace CVAS.AudioEngine
             sampleProvider.AddMixerInput(resampler);
         }
 
-        public void Render(IAudioClip audioClip, string path, bool overwrite = false)
+        public void Render(IAudioClip audioClip, string path)
         {
-            // Validity check: directory exists
-            if (!Directory.Exists(Path.GetDirectoryName(path))) throw new DirectoryNotFoundException();
-
-            // Check if file exists, continue only if overwrite = true
-            if (File.Exists(path) && !overwrite) throw new AudioFileAlreadyExistsException();
-
             // Write wave file
             WaveFileWriter.CreateWaveFile16(path, audioClip.ToWaveProvider().ToSampleProvider());
         }

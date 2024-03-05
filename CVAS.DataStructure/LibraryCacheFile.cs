@@ -193,7 +193,7 @@ namespace CVAS.FileFormats
             using (BinaryWriter bw = new(File.Create(path)))
             {
                 // Write headers
-                bw.Write("CVASLBCH");
+                bw.Write("CVASLBCH".ToArray()); // Convert to char[] so that BinaryWriter doesn't write a length int before the header
 
                 // Compute and write folder hash
                 var filenames = Directory.GetFiles(System.IO.Path.GetDirectoryName(path)).Select(x => System.IO.Path.GetFileName(x)); // TODO: handle possible null reference

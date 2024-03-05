@@ -28,28 +28,18 @@
             // Case: there is no given argument for [command]
             if (str.Length == Str.Length)
             {
+                // Print command list
                 Console.WriteLine();
-
-                // Print list of commands
-                foreach (var command in REPL.Instance.CommandInstances)
+                foreach(ICommand command in REPL.Instance.CommandInstances)
                 {
-                    // Print str
                     Console.WriteLine($"{command.Str}:");
+                    Console.WriteLine($"\t{command.Description}");
 
-                    // Print description
-                    Console.WriteLine("\tDescription:");
-                    foreach (var line in command.Description.Split('\n'))
+                    // Print use cases
+                    foreach(string useCase in command.Usage)
                     {
-                        Console.WriteLine($"\t\t{line}");
+                        Console.WriteLine($"\t{useCase}");
                     }
-
-                    // Print usage
-                    Console.WriteLine("\tUsage:");
-                    foreach (var line in command.Usage.Split('\n'))
-                    {
-                        Console.WriteLine($"\t\t{line}");
-                    }
-
                     Console.WriteLine();
                 }
             }
@@ -69,24 +59,14 @@
                 var command = Arguments[0].Value as ICommand;
 
                 Console.WriteLine();
+                Console.WriteLine($"{command.Str}:");
+                Console.WriteLine($"\t{command.Description}");
 
-                // Print str
-                Console.WriteLine($"{command.Str}:"); // command should never be null at this point
-
-                // Print description
-                Console.WriteLine("\tDescription:");
-                foreach (var line in command.Description.Split('\n'))
+                // Print use cases
+                foreach (string useCase in command.Usage)
                 {
-                    Console.WriteLine($"\t\t{line}");
+                    Console.WriteLine($"\t{useCase}");
                 }
-
-                // Print usage
-                Console.WriteLine("\tUsage:");
-                foreach (var line in command.Usage.Split('\n'))
-                {
-                    Console.WriteLine($"\t\t{line}");
-                }
-
                 Console.WriteLine();
             }
         }

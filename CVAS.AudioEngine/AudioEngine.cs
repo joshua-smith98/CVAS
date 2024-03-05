@@ -4,7 +4,7 @@ using NAudio.Wave.SampleProviders;
 namespace CVAS.AudioEngine
 {
     /// <summary>
-    /// Governs all audio mixing and playback. Non-constructable - use the static <see cref="AudioEngine.Instance"/> to access.
+    /// Governs all audio mixing, rendering and playback. Non-constructable - use the static <see cref="AudioEngine.Instance"/> to access.
     /// </summary>
     public class AudioEngine : IDisposable
     {
@@ -37,6 +37,11 @@ namespace CVAS.AudioEngine
             sampleProvider.AddMixerInput(resampler);
         }
 
+        /// <summary>
+        /// Renders an <see cref="IAudioClip"/> to a new file at the given path. Assumes the directory exists, and overwrites any existing file.
+        /// </summary>
+        /// <param name="audioClip"></param>
+        /// <param name="path"></param>
         public void Render(IAudioClip audioClip, string path)
         {
             // Write wave file

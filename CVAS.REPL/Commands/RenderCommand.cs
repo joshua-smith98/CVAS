@@ -52,6 +52,7 @@ namespace CVAS.REPL
             // Check for file exists and give option for overwriting
             if (File.Exists(path))
             {
+                // Prompt user
                 Console.WriteLine();
                 Console.WriteLine("File already exists! Overwrite (y/n)?");
                 Console.Write(">>");
@@ -66,6 +67,7 @@ namespace CVAS.REPL
                 }
             }
 
+            // Render file
             AudioEngine.AudioEngine.Instance.Render(sentence.GetAudioClip(), path);
             Console.WriteLine();
             Console.WriteLine($"Rendered to: {path}");

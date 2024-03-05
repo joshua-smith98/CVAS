@@ -131,14 +131,12 @@ namespace CVAS.FileFormats
                         }
                     }
 
-                    // Construct library
+                    // Construct instance
                     ret = new LibraryCacheFile(path, numPhrases, phraseTable);
                 }
                 #endregion
             }
 
-            Console.WriteLine($"Loaded {ret.NumPhrases} phrases.");
-            Console.WriteLine();
             return ret;
         }
 
@@ -208,6 +206,8 @@ namespace CVAS.FileFormats
             }
 
             // Construct library and return
+            Console.WriteLine($"Loaded {phrases.Count()} phrases and {phrases.Select(x => x.Inflections.Length).Sum()} audio files.");
+            Console.WriteLine();
             return new Library(phrases.ToArray());
         }
 

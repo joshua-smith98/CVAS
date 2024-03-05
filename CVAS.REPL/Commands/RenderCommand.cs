@@ -1,4 +1,6 @@
-﻿namespace CVAS.REPL
+﻿using CVAS.AudioEngine;
+
+namespace CVAS.REPL
 {
     /// <summary>
     /// An <see cref="ICommand"/> that renders a given sentence to a file.
@@ -40,11 +42,33 @@
             // Validity check: CurrentLibrary must not be null
             if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException();
 
-            // JUST PRINTS DEBUG INFO FOR NOW
-            var sentence_str = Arguments[0].Value as string;
-            var path = Arguments[1].Value as string;
+            var sentence = REPL.Instance.CurrentLibrary.GetSentence((string)Arguments[0].Value);
+            var path = (string)Arguments[1].Value;
 
-            Console.WriteLine($"DEBUG: Rendering \"{sentence_str}\" to path:\n\t{path}"); // Debug print - file rendering is not yet implemented!
+            // Validity check: path directory must exist
+            if (!Directory.Exists(Path.GetDirectoryName((string)Arguments[1].Value))) throw new DirectoryNotFoundException();
+
+            // Check for file exists and give option for overwriting
+            if (File.Exists(path))
+            {
+                Console.WriteLine();
+                Console.WriteLine("File already exists! Overwrite (y/n)?");
+                Console.Write(">>");
+                var response = Console.ReadLine();
+                if (response.ToLower() != "y")
+                {
+                    // Cancel render on non-yes answer
+                    Console.WriteLine();
+                    Console.WriteLine("Render cancelled.");
+                    Console.WriteLine();
+                    return;
+                }
+            }
+
+            AudioEngine.AudioEngine.Instance.Render(sentence.GetAudioClip(), path);
+            Console.WriteLine();
+            Console.WriteLine($"Rendered to: {path}");
+            Console.WriteLine();
         }
     }
 }

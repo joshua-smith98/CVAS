@@ -1,4 +1,4 @@
-﻿using CVAS.DataStructure;
+﻿using CVAS.Core;
 
 namespace CVAS.REPL
 {

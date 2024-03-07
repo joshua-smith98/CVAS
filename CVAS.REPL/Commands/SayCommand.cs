@@ -1,7 +1,4 @@
-﻿using CVAS.AudioEngine;
-using CVAS.DataStructure;
-
-namespace CVAS.REPL
+﻿namespace CVAS.REPL
 {
     /// <summary>
     /// An <see cref="ICommand"/> that attempts to 'say' the given sentence.

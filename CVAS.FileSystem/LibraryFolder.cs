@@ -53,7 +53,6 @@ namespace CVAS.FileSystem
             }
 
             // Otherwise, load filenames from Directory.GetFiles(), checking for validity as audio files
-            Console.WriteLine("Loading files...");
             foreach (string fileName in Directory.GetFiles(path))
             {
                 try
@@ -70,15 +69,14 @@ namespace CVAS.FileSystem
 
         public Library Construct()
         {
-            Console.WriteLine();
-
             // Try to construct from LibraryCacheFile first
             if (LibraryCacheFile is not null)
             {
                 return LibraryCacheFile.Construct();
             }
 
-            Console.WriteLine("Performing phrase analysis... (this could take some time)");
+            Console.WriteLine();
+            Console.WriteLine("Performing phrase analysis...");
             
             // Straight copy-pasted from Library with a few changes. Once this refactor is done, it won't be there anymore!
 

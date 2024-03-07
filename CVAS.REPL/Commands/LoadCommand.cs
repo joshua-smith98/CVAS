@@ -1,4 +1,5 @@
 ﻿using CVAS.Core;
+using CVAS.FileSystem;
 
 namespace CVAS.REPL
 {
@@ -44,7 +45,7 @@ namespace CVAS.REPL
             if (!Directory.Exists(Path)) throw new ArgumentNotValidException();
 
             // Load library into REPL context
-            REPL.Instance.CurrentLibrary = Library.LoadFromFolder(Path);
+            REPL.Instance.CurrentLibrary = LibraryFolder.LoadFrom(Path).Construct();
         }
     }
 }

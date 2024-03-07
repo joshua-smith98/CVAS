@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CVAS.Core\CVAS.Core.csproj" />
+    <ProjectReference Include="..\CVAS.FileSystem\CVAS.FileSystem.csproj" />
   </ItemGroup>
 
 </Project>

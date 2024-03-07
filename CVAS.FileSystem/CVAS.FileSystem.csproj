@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CVAS.AudioEngine\CVAS.AudioEngine.csproj" />
+    <ProjectReference Include="..\CVAS.Core\CVAS.Core.csproj" />
+  </ItemGroup>
+
 </Project>

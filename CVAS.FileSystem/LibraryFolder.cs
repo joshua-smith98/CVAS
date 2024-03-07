@@ -75,7 +75,6 @@ namespace CVAS.FileSystem
             // Try to construct from LibraryCacheFile first
             if (LibraryCacheFile is not null)
             {
-                Console.WriteLine("Loading from cache...");
                 return LibraryCacheFile.Construct();
             }
 
@@ -92,19 +91,15 @@ namespace CVAS.FileSystem
             // Finally, add all remaining end inflection files to their own phrase and construct library.
 
             // Get files
-            List<string> files_ends = AudioFileNames.Where(x => SysPath.GetFileNameWithoutExtension(x).EndsWith(".f")).ToList(); // List of files with end inflection
-            string[] files_middles = AudioFileNames.Where(x => !files_ends.Contains(x)).ToArray(); // List of files with middle inflection (all that aren't an end)
+            string[] filePaths = AudioFileNames.Select(x => SysPath.Combine(Path, x)).ToArray(); // Convert filenames to full path
+            List<string> files_ends = filePaths.Where(x => SysPath.GetFileNameWithoutExtension(x).EndsWith(".f")).ToList(); // List of files with end inflection
+            string[] files_middles = filePaths.Where(x => !files_ends.Contains(x)).ToArray(); // List of files with middle inflection (all that aren't an end)
 
             // Iterate through all middle inflection files
             foreach (string file_middle in files_middles)
             {
-                // Audio file validity check
-                IAudioClip audioClip_middle;
-                try
-                {
-                    audioClip_middle = new AudioFileStreaming(file_middle);
-                }
-                catch { continue; }
+                // Don't need to do a validity check, because we already did that while loading AudioFileNames
+                IAudioClip audioClip_middle = new AudioFileStreaming(file_middle);
 
                 // Phrase.str is file name without extension
                 string str = SysPath.GetFileNameWithoutExtension(file_middle);
@@ -116,14 +111,8 @@ namespace CVAS.FileSystem
                     SysPath.GetExtension(file_middle)
                     );
 
-                // Try to load ending inflection
-                IAudioClip? audioClip_end = null;
-
-                try // If it doesn't exist, or isn't an audio file, audioClip_end = null
-                {
-                    audioClip_end = new AudioFileStreaming(file_end);
-                }
-                catch { }
+                // Load ending inflection if it exists, otherwise load null
+                IAudioClip? audioClip_end = files_ends.Contains(file_end) ? new AudioFileStreaming(file_end) : null;
 
                 // Construct new phrases and add to list
                 if (audioClip_end is not null)
@@ -154,7 +143,7 @@ namespace CVAS.FileSystem
 
             // Construct library
             Library ret = new Library(phrases.ToArray());
-            Console.WriteLine($"Successfully analysed {AudioFileNames.Length} files and loaded {ret.Phrases.Length} phrases.");
+            Console.WriteLine($"Successfully analysed {filePaths.Length} files and loaded {ret.Phrases.Length} phrases.");
 
             // Build cache
             LibraryCacheFile.Deconstruct(ret).SaveTo(SysPath.Combine(Path, LibraryCacheFile.DefaultPath)); // Path will never be null

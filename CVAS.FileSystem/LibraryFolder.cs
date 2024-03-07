@@ -23,6 +23,8 @@ namespace CVAS.FileSystem
             // Validity checks: path is a valid directory
             if (!Directory.Exists(path)) throw new DirectoryNotFoundException();
 
+            Console.WriteLine();
+
             LibraryCacheFile libraryCacheFile;
             List<string> audioFileNames  = new List<string>();
 
@@ -67,6 +69,15 @@ namespace CVAS.FileSystem
 
         public Library Construct()
         {
+            // Try to construct from LibraryCacheFile first
+            if (LibraryCacheFile is not null)
+            {
+                Console.WriteLine("Loading from cache...");
+                return LibraryCacheFile.Construct();
+            }
+
+            Console.WriteLine("Performing phrase analysis... (this could take some time)");
+            
             // Straight copy-pasted from Library with a few changes. Once this refactor is done, it won't be there anymore!
 
             // Construct list of phrases to build library from

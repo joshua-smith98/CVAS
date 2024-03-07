@@ -1,4 +1,4 @@
-﻿namespace CVAS.DataStructure
+﻿namespace CVAS.Core
 {
     /// <summary>
     /// Represents the inflection type of a spoken word, i.e. whether it is spoken in the middle of or at the end of a sentence.

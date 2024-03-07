@@ -1,7 +1,7 @@
 ﻿using CVAS.AudioEngine;
 using CVAS.FileSystem;
 
-namespace CVAS.DataStructure
+namespace CVAS.Core
 {
     /// <summary>
     /// A collection of <see cref="Phrase"/>s, including some default punctuation.

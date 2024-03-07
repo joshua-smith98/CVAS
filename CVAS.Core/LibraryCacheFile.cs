@@ -1,5 +1,5 @@
 ﻿using CVAS.AudioEngine;
-using CVAS.DataStructure;
+using CVAS.Core;
 using System.Security.Cryptography;
 using System.Text;
 using SysPath = System.IO.Path;

@@ -1,6 +1,6 @@
 ﻿using CVAS.AudioEngine;
 
-namespace CVAS.DataStructure
+namespace CVAS.Core
 {
     /// <summary>
     /// Interface representing a speakable phrase consisting of one or more words.

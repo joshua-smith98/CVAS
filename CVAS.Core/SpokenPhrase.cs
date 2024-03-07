@@ -1,9 +1,9 @@
 ﻿using CVAS.AudioEngine;
 
-namespace CVAS.DataStructure
+namespace CVAS.Core
 {
     /// <summary>
-    /// Represents a speakable phrase positioned within a sentence, with a single associated <see cref="DataStructure.InflectionType"/>.
+    /// Represents a speakable phrase positioned within a sentence, with a single associated <see cref="Core.InflectionType"/>.
     /// </summary>
     public class SpokenPhrase : IPhrase
     {
@@ -11,7 +11,7 @@ namespace CVAS.DataStructure
         public string[] Words { get; }
 
         /// <summary>
-        /// The <see cref="DataStructure.InflectionType"/> associated with this SpokenPhrase.
+        /// The <see cref="Core.InflectionType"/> associated with this SpokenPhrase.
         /// </summary>
         public InflectionType Inflection { get; }
 

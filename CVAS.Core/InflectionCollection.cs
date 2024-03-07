@@ -1,7 +1,7 @@
 ﻿using CVAS.AudioEngine;
 using System.Collections;
 
-namespace CVAS.DataStructure
+namespace CVAS.Core
 {
     /// <summary>
     /// A collection of <see cref="Inflection"/>s. Used in <see cref="Phrase"/>.

@@ -1,6 +1,6 @@
 ﻿using CVAS.AudioEngine;
 
-namespace CVAS.DataStructure
+namespace CVAS.Core
 {
     /// <summary>
     /// Represents a speakable sentence, made up of a sequence of <see cref="SpokenPhrase"/>s.

@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.Testing", "CVAS.Testing\CVAS.Testing.csproj", "{A9E6FE88-5EAE-4656-B5BE-CCEB401891CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.DataStructure", "CVAS.DataStructure\CVAS.DataStructure.csproj", "{A559CF5B-8924-4F51-9343-38C59B78C7C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.Core", "CVAS.Core\CVAS.Core.csproj", "{A559CF5B-8924-4F51-9343-38C59B78C7C6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.AudioEngine", "CVAS.AudioEngine\CVAS.AudioEngine.csproj", "{A29FCBE2-A7A8-4280-BA52-47153B6C6DDF}"
 EndProject
@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.REPL", "CVAS.REPL\CVAS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.Main", "CVAS.Main\CVAS.Main.csproj", "{2BDCB3FC-EB95-45A1-A381-6E29E62C83E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CVAS.FileSystem", "CVAS.FileSystem\CVAS.FileSystem.csproj", "{4390C8A4-E20B-4C1A-9535-456E1050AE4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.FileSystem", "CVAS.FileSystem\CVAS.FileSystem.csproj", "{4390C8A4-E20B-4C1A-9535-456E1050AE4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

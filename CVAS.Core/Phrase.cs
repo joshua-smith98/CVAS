@@ -1,6 +1,6 @@
 ﻿using CVAS.AudioEngine;
 
-namespace CVAS.DataStructure
+namespace CVAS.Core
 {
     /// <summary>
     /// Represents a string, made up of a set of words and punctuation. Can also contain a linked <see cref="IAudioClip"/>.

@@ -1,6 +1,6 @@
 ﻿using CVAS.AudioEngine;
 
-namespace CVAS.DataStructure
+namespace CVAS.Core
 {
     /// <summary>
     /// Represents a single inflection, including its type and relevant <see cref="IAudioClip"/>.

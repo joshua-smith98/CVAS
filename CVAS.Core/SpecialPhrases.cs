@@ -1,6 +1,6 @@
 ﻿using CVAS.AudioEngine;
 
-namespace CVAS.DataStructure
+namespace CVAS.Core
 {
     public partial class Phrase
     {

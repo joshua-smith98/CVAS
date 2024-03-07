@@ -1,4 +1,4 @@
-﻿namespace CVAS.FileFormats
+﻿namespace CVAS.FileSystem
 {
     /// <summary>
     /// Class representing some file, which can be transformed into or built from an object of class <see cref="T"/>.

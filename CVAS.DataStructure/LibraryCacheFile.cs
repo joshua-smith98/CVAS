@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using SysPath = System.IO.Path;
 
-namespace CVAS.FileFormats
+namespace CVAS.FileSystem
 {
     /// <summary>
     /// Represents the data contained within a Library Cache File. See CVAS Trello page for rough specification.

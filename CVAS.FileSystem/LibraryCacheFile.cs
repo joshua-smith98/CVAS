@@ -15,17 +15,17 @@ namespace CVAS.FileSystem
 
         public char[] Header => "CVASLBCH".ToArray();
 
-        private int NumPhrases;
-        private PhraseTableRow[] PhraseTable;
+        internal int NumPhrases { get; private set; }
+        internal PhraseTableRow[] PhraseTable { get; private set; }
 
-        private struct PhraseTableRow
+        internal struct PhraseTableRow
         {
             public string Str;
             public int NumInflections;
             public InflectionTableRow[] InflectionTable;
         }
 
-        private struct InflectionTableRow
+        internal struct InflectionTableRow
         {
             public int Inflection;
             public string AudioFileName;

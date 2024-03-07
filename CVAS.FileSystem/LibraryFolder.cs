@@ -45,14 +45,15 @@ namespace CVAS.FileSystem
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("A cache does not exist for this folder: a first-time analysis will be performed.");
+                Console.WriteLine("A cache does not exist for this folder.");
             }
             catch (InvalidFileHashException)
             {
-                Console.WriteLine("The folder contents have changed: a cache will be rebuilt.");
+                Console.WriteLine("The folder contents have changed.");
             }
 
             // Otherwise, load filenames from Directory.GetFiles(), checking for validity as audio files
+            Console.WriteLine("Loading files...");
             foreach (string fileName in Directory.GetFiles(path))
             {
                 try
@@ -69,6 +70,8 @@ namespace CVAS.FileSystem
 
         public Library Construct()
         {
+            Console.WriteLine();
+
             // Try to construct from LibraryCacheFile first
             if (LibraryCacheFile is not null)
             {

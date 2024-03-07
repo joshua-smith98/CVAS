@@ -17,7 +17,7 @@ namespace CVAS.FileSystem
             AudioFileNames = audioFileNames;
         }
 
-        public IFolder<Library> LoadFrom(string path)
+        public static IFolder<Library> LoadFrom(string path)
         {
             // Validity checks: path is a valid directory
             if (!Directory.Exists(path)) throw new DirectoryNotFoundException();
@@ -69,7 +69,7 @@ namespace CVAS.FileSystem
             throw new NotImplementedException();
         }
 
-        public IFolder<Library> Deconstruct(Library Object)
+        public static IFolder<Library> Deconstruct(Library Object)
         {
             throw new TransmutationNotAllowedException();
         }

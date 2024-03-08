@@ -4,13 +4,16 @@ using SysPath = System.IO.Path;
 
 namespace CVAS.FileSystem
 {
+    /// <summary>
+    /// Represents a folder of audio files, which can be loaded into a <see cref="Library"/>
+    /// </summary>
     public class LibraryFolder : IFolder<Library>
     {
         public string? Path { get; private set; }
 
-        public string[] AudioFileNames { get; }
+        internal string[] AudioFileNames { get; }
 
-        public LibraryCacheFile? LibraryCacheFile { get; private set; }
+        internal LibraryCacheFile? LibraryCacheFile { get; private set; }
 
         private LibraryFolder(string path, string[] audioFileNames)
         {
@@ -18,6 +21,12 @@ namespace CVAS.FileSystem
             AudioFileNames = audioFileNames;
         }
 
+        /// <summary>
+        /// Attempts to load an instance of <see cref="LibraryFolder"/> from the folder at the given path.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        /// <exception cref="DirectoryNotFoundException"></exception>
         public static IFolder<Library> LoadFrom(string path)
         {
             // Validity checks: path is a valid directory
@@ -25,6 +34,7 @@ namespace CVAS.FileSystem
 
             Console.WriteLine();
 
+            // Construct neccesary variables
             LibraryCacheFile libraryCacheFile;
             List<string> audioFileNames  = new List<string>();
 
@@ -61,12 +71,16 @@ namespace CVAS.FileSystem
 
                     audioFileNames.Add(SysPath.GetFileName(fileName));
                 }
-                catch { }
+                catch { } // Ignore all non-audiofiles
             }
 
             return new LibraryFolder(path, audioFileNames.ToArray());
         }
 
+        /// <summary>
+        /// Constructs a <see cref="Library"/> using the current instance of <see cref="LibraryFolder"/>.
+        /// </summary>
+        /// <returns></returns>
         public Library Construct()
         {
             // Try to construct from LibraryCacheFile first
@@ -151,11 +165,21 @@ namespace CVAS.FileSystem
             return ret;
         }
 
+        /// <summary>
+        /// Note: this action is not allowed, and will throw a <see cref="TransmutationNotAllowedException"/>.
+        /// </summary>
+        /// <param name="Object"></param>
+        /// <returns></returns>
+        /// <exception cref="TransmutationNotAllowedException"></exception>
         public static IFolder<Library> Deconstruct(Library Object)
         {
             throw new TransmutationNotAllowedException();
         }
-
+        /// <summary>
+        /// Note: this action is not allowed, and will throw a <see cref="TransmutationNotAllowedException"/>.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <exception cref="TransmutationNotAllowedException"></exception>
         public void SaveTo(string path)
         {
             throw new TransmutationNotAllowedException();

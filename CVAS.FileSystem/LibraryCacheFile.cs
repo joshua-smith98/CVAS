@@ -12,6 +12,9 @@ namespace CVAS.FileSystem
     public class LibraryCacheFile : IFile<Library> // This file will be moved back into CVAS.FileFormats (soon to be CVAS.IO) as part of an upcoming refactor.
     {
         public string? Path { get; private set; }
+        /// <summary>
+        /// The default path for every <see cref="LibraryCacheFile"/> in a <see cref="LibraryFolder"/>.
+        /// </summary>
         public const string DefaultPath = "cache.lbc";
 
         public char[] Header => "CVASLBCH".ToArray();

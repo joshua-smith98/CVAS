@@ -56,19 +56,22 @@ namespace CVAS.REPL
                 {
                     RunFrom(command); // Since we're reading from the console, command will never be null
                 }
-                catch (CommandNotValidException)
+                catch (CommandNotValidException e)
                 {
-                    Console.WriteLine("Failed to execute: Command was not valid!"); // TODO: make this more detailed
+                    Console.WriteLine();
+                    Console.WriteLine($"{e.Message}");
                     Console.WriteLine();
                 }
-                catch (ArgumentNotValidException)
+                catch (ArgumentNotValidException e)
                 {
-                    Console.WriteLine("Failed to execute: Argument was not valid!"); // TODO: make this more detailed
+                    Console.WriteLine();
+                    Console.WriteLine($"{e.Message}");
                     Console.WriteLine();
                 }
-                catch (ContextNotValidException)
+                catch (ContextNotValidException e)
                 {
-                    Console.WriteLine("Failed to execute: Context was not valid! (Have you loaded a library yet?)");
+                    Console.WriteLine();
+                    Console.WriteLine($"{e.Message}");
                     Console.WriteLine();
                 }
             }
@@ -92,7 +95,7 @@ namespace CVAS.REPL
                 catch (CommandNotValidException) { } // Case: the current command is not valid
             }
 
-            throw new CommandNotValidException(); // Case: no valid commands found
+            throw new CommandNotValidException($"Command '{str.Split().First()}' does not exist!"); // Case: no valid commands found
         }
     }
 }

@@ -17,8 +17,8 @@ namespace CVAS.REPL
 
         public IArgument[] Arguments { get; } =
         {
-            new StringArgument(), // Sentence
-            new StringArgument(), // Path to file
+            new StringArgument("sentence"), // Sentence
+            new StringArgument("path"), // Path to file
         };
 
         internal RenderCommand() { }
@@ -26,7 +26,7 @@ namespace CVAS.REPL
         public void RunFrom(string str)
         {
             // Validity check: str must begin with "load"
-            if (!str.StartsWith(Str)) throw new CommandNotValidException();
+            if (!str.StartsWith(Str)) throw new CommandNotValidException("Command does not match. This message should never be printed - if it was, open an issue on Github!");
 
             // Try to read arguments
             var temp_str = str.Substring(Str.Length).TrimStart();
@@ -37,10 +37,10 @@ namespace CVAS.REPL
             }
 
             // Validity check: str must be empty after all arguments are read
-            if (temp_str != "") throw new ArgumentNotValidException();
+            if (temp_str != "") throw new ArgumentNotValidException($"Expected end of command, found: '{temp_str}'!");
 
             // Validity check: CurrentLibrary must not be null
-            if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException();
+            if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException("No library is currenty loaded.");
 
             var sentence = REPL.Instance.CurrentLibrary.GetSentence((string)Arguments[0].Value);
             var path = (string)Arguments[1].Value;

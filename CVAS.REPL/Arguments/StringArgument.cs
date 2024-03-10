@@ -7,16 +7,21 @@ namespace CVAS.REPL
     /// </summary>
     internal class StringArgument : IArgument
     {
+        public string Name { get; }
+        
         public object? Value { get; private set; }
 
         public Type ValueType => typeof(string);
 
-        internal StringArgument() { }
+        internal StringArgument(string name)
+        {
+            Name = name;
+        }
 
         public void ReadFrom(ref string str)
         {
             // Validity check: str must not be empty
-            if (str == "") throw new ArgumentNotValidException();
+            if (str == "") throw new ArgumentNotValidException($"Expected argument [{Name}], found nothing!");
 
             StringBuilder valueBuilder = new StringBuilder();
 
@@ -30,7 +35,7 @@ namespace CVAS.REPL
 
                     valueBuilder.Append(str[i]);
 
-                    if (i == str.Length - 1) throw new ArgumentNotValidException(); // Validity check: str must contain a second set of double quotes
+                    if (i == str.Length - 1) throw new ArgumentNotValidException($"Expected second set of double-quotes (\") in argument: [{Name}]"); // Validity check: str must contain a second set of double quotes
                 }
 
                 Value = valueBuilder.ToString();

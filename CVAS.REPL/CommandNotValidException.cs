@@ -3,8 +3,8 @@
     /// <summary>
     /// Represents an error caused by a command not existing, or being written incorrectly.
     /// </summary>
-    public class CommandNotValidException : Exception
+    internal class CommandNotValidException : Exception
     {
-        // There may be something here in the future
+        public CommandNotValidException(string message) : base(message) { }
     }
 }

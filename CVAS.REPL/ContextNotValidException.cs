@@ -5,6 +5,6 @@
     /// </summary>
     internal class ContextNotValidException : Exception
     {
-        // There might be something here somewhere
+        public ContextNotValidException(string message) : base(message) { }
     }
 }

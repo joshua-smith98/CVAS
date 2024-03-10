@@ -6,6 +6,11 @@
     internal interface IArgument
     {
         /// <summary>
+        /// The name of this <see cref="IArgument"/> instance. Used to refer to this argument when attempting to read it via an <see cref="ICommand"/>.
+        /// </summary>
+        public string Name { get; }
+        
+        /// <summary>
         /// Value of the argument. Will be <see cref="null"/> until read.
         /// </summary>
         public object? Value { get; }

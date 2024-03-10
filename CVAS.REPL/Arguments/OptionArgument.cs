@@ -5,16 +5,22 @@
     /// </summary>
     internal class OptionArgument : IArgument
     {
+        public string Name { get; }
+        
         public object? Value { get; private set; }
 
         public Type ValueType => typeof(string);
 
-        internal OptionArgument() { }
+        internal OptionArgument(string name)
+        {
+            Name = name;
+        }
 
         public void ReadFrom(ref string str)
         {
             // Validity check: string must not be empty, and must start with '-'
-            if (str == "" || str[0] != '-') throw new ArgumentNotValidException();
+            if (str == "") throw new ArgumentNotValidException($"Expected argument [{Name}], found nothing!");
+            if (str[0] != '-') throw new ArgumentNotValidException($"[{Name}] is of type OptionArgument, and must begin with a hyphen (-).");
 
             // Get option, and remove '-' from the beginning
             var option = str.Split().First().Substring(1);

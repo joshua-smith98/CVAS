@@ -18,7 +18,7 @@ namespace CVAS.REPL
 
         public IArgument[] Arguments { get; } =
         {
-            new StringArgument(), // Library path
+            new StringArgument("path"), // Library path
         };
 
         internal LoadCommand() { }
@@ -26,7 +26,7 @@ namespace CVAS.REPL
         public void RunFrom(string str)
         {
             // Validity check: str must begin with "load"
-            if (!str.StartsWith(Str)) throw new CommandNotValidException();
+            if (!str.StartsWith(Str)) throw new CommandNotValidException("Command does not match. This message should never be printed - if it was, open an issue on Github!");
 
             // Try to read arguments
             var temp_str = str.Substring(Str.Length).TrimStart();
@@ -37,12 +37,12 @@ namespace CVAS.REPL
             }
 
             // Validity check: str must be empty after all arguments are read
-            if (temp_str != "") throw new ArgumentNotValidException();
+            if (temp_str != "") throw new ArgumentNotValidException($"Expected end of command, found: '{temp_str}'!");
 
             var Path = Arguments[0].Value as string;
 
             // Validity check: path must point to a folder
-            if (!Directory.Exists(Path)) throw new ArgumentNotValidException();
+            if (!Directory.Exists(Path)) throw new ArgumentNotValidException($"Couldn't find directory: '{Path}'");
 
             // Load library into REPL context
             REPL.Instance.CurrentLibrary = LibraryFolder.LoadFrom(Path).Construct();

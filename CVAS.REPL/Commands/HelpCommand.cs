@@ -15,7 +15,7 @@
 
         public IArgument[] Arguments { get; } =
         {
-            new CommandArgument(),
+            new CommandArgument("command"),
         };
 
         internal HelpCommand() { }
@@ -23,7 +23,7 @@
         public void RunFrom(string str)
         {
             // Validity check: str must begin with "load"
-            if (!str.StartsWith(Str)) throw new CommandNotValidException();
+            if (!str.StartsWith(Str)) throw new CommandNotValidException("Command does not match. This message should never be printed - if it was, open an issue on Github!");
 
             // Case: there is no given argument for [command]
             if (str.Length == Str.Length)
@@ -53,7 +53,7 @@
                     argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
                 }
                 // Validity check: str must be empty after all arguments are read
-                if (temp_str != "") throw new ArgumentNotValidException();
+                if (temp_str != "") throw new ArgumentNotValidException($"Expected end of command, found: '{temp_str}'!");
 
                 // Get command and print details
                 var command = Arguments[0].Value as ICommand;

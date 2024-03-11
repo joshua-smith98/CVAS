@@ -15,6 +15,7 @@ namespace CVAS.Terminal
         {
             Console.Write(prompt);
             string? ret = Console.ReadLine();
+            Console.WriteLine();
             if (ret is null) throw new NullReferenceException(); // Should never be null, but just in case...
             return ret;
         }
@@ -24,6 +25,7 @@ namespace CVAS.Terminal
             Console.ReadKey();
             Console.CursorLeft = Console.CursorLeft - 1;
             Console.Write(" ");
+            Console.WriteLine();
         }
 
         public static void AwaitKey(string message)
@@ -74,6 +76,7 @@ namespace CVAS.Terminal
                 throw new TerminalException("Tried to close a message block, when no message block was active!");
 
             Status = TerminalBlockStatus.NoBlockActive;
+            Console.WriteLine();
         }
 
         public static void BeginReport()
@@ -114,6 +117,7 @@ namespace CVAS.Terminal
                 throw new TerminalException("Tried to close a report block, when no report block was active!");
 
             Status = TerminalBlockStatus.NoBlockActive;
+            Console.WriteLine();
         }
     }
 }

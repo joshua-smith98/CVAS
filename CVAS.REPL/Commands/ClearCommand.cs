@@ -1,4 +1,6 @@
-﻿namespace CVAS.REPL
+﻿using CVAS.TerminalInterface;
+
+namespace CVAS.REPL
 {
     internal class ClearCommand : ICommand
     {
@@ -27,9 +29,9 @@
 
             // Clear current library
             REPL.Instance.CurrentLibrary = null;
-            Console.WriteLine();
-            Console.WriteLine("Current library cleared.");
-            Console.WriteLine();
+            Terminal.BeginMessage();
+            Terminal.Message("Current library cleared.");
+            Terminal.EndMessage();
         }
     }
 }

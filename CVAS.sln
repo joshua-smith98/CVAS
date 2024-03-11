@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.Main", "CVAS.Main\CVAS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.FileSystem", "CVAS.FileSystem\CVAS.FileSystem.csproj", "{4390C8A4-E20B-4C1A-9535-456E1050AE4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CVAS.Terminal", "CVAS.Terminal\CVAS.Terminal.csproj", "{471C84FE-518D-4D40-BBA2-92FC204E09C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.TerminalInterface", "CVAS.Terminal\CVAS.TerminalInterface.csproj", "{471C84FE-518D-4D40-BBA2-92FC204E09C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

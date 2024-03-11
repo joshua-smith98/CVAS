@@ -1,5 +1,6 @@
 ﻿using CVAS.AudioEngine;
 using CVAS.Core;
+using CVAS.TerminalInterface;
 using SysPath = System.IO.Path;
 
 namespace CVAS.FileSystem
@@ -32,8 +33,6 @@ namespace CVAS.FileSystem
             // Validity checks: path is a valid directory
             if (!Directory.Exists(path)) throw new DirectoryNotFoundException();
 
-            Console.WriteLine();
-
             // Construct neccesary variables
             LibraryCacheFile libraryCacheFile;
             List<string> audioFileNames  = new List<string>();
@@ -55,11 +54,15 @@ namespace CVAS.FileSystem
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("A cache does not exist for this folder.");
+                Terminal.BeginMessage();
+                Terminal.Message("A cache does not exist for this folder.");
+                Terminal.EndMessage();
             }
             catch (InvalidFileHashException)
             {
-                Console.WriteLine("The folder contents have changed.");
+                Terminal.BeginMessage();
+                Terminal.Message("The folder contents have changed.");
+                Terminal.EndMessage();
             }
 
             // Otherwise, load filenames from Directory.GetFiles(), checking for validity as audio files
@@ -89,8 +92,7 @@ namespace CVAS.FileSystem
                 return LibraryCacheFile.Construct();
             }
 
-            Console.WriteLine();
-            Console.WriteLine("Performing phrase analysis...");
+            Terminal.BeginReport("Performing phrase analysis...");
             
             // Straight copy-pasted from Library with a few changes. Once this refactor is done, it won't be there anymore!
 
@@ -108,19 +110,26 @@ namespace CVAS.FileSystem
             string[] files_middles = filePaths.Where(x => !files_ends.Contains(x)).ToArray(); // List of files with middle inflection (all that aren't an end)
 
             // Iterate through all middle inflection files
-            foreach (string file_middle in files_middles)
+            for (int i = 0; i < files_middles.Length; i++)
             {
+                if (i % 10 == 0)
+                {
+                    float percent = (float)(i + 1) / files_middles.Length;
+                    percent *= 100f;
+                    Terminal.Report($"(1/2) Analysing middle inflections... [{percent.ToString("0")}%]");
+                }
+
                 // Don't need to do a validity check, because we already did that while loading AudioFileNames
-                IAudioClip audioClip_middle = new AudioFileStreaming(file_middle);
+                IAudioClip audioClip_middle = new AudioFileStreaming(files_middles[i]);
 
                 // Phrase.str is file name without extension
-                string str = SysPath.GetFileNameWithoutExtension(file_middle);
+                string str = SysPath.GetFileNameWithoutExtension(files_middles[i]);
 
                 // Check for ending inflection: construct new file path using directory, filename without extension, ".f" and extension
                 string file_end = SysPath.Combine(
                     Path, // directory name - NOTE: Path will never be null
-                    SysPath.GetFileNameWithoutExtension(file_middle) + ".f" + // Filename + ending suffice
-                    SysPath.GetExtension(file_middle)
+                    SysPath.GetFileNameWithoutExtension(files_middles[i]) + ".f" + // Filename + ending suffice
+                    SysPath.GetExtension(files_middles[i])
                     );
 
                 // Load ending inflection if it exists, otherwise load null
@@ -136,18 +145,25 @@ namespace CVAS.FileSystem
             }
 
             // Add all remaining end inflection files to their own phrase
-            foreach (string file_end in files_ends)
+            for (int i = 0; i < files_ends.Count; i++)
             {
+                if (i % 10 == 0)
+                {
+                    float percent = (float)(i + 1) / files_ends.Count;
+                    percent *= 100f;
+                    Terminal.Report($"(2/2) Analysing end inflections... [{percent.ToString("0")}%]");
+                }
+
                 // Audio file validity check
                 IAudioClip audioClip_end;
 
                 try
                 {
-                    audioClip_end = new AudioFileStreaming(file_end);
+                    audioClip_end = new AudioFileStreaming(files_ends[i]);
                 }
                 catch { continue; }
 
-                string str = SysPath.GetFileNameWithoutExtension(file_end);
+                string str = SysPath.GetFileNameWithoutExtension(files_ends[i]);
                 str = str.Substring(0, str.Length - 2);
 
                 phrases.Add(new Phrase(str, new Inflection(InflectionType.End, audioClip_end)));
@@ -155,12 +171,13 @@ namespace CVAS.FileSystem
 
             // Construct library
             Library ret = new Library(phrases.ToArray());
-            Console.WriteLine($"Successfully analysed {filePaths.Length} files and loaded {ret.Phrases.Length} phrases.");
+            Terminal.EndReport($"Successfully analysed {filePaths.Length} files and loaded {ret.Phrases.Length} phrases.");
 
             // Build cache
             LibraryCacheFile.Deconstruct(ret).SaveTo(SysPath.Combine(Path, LibraryCacheFile.DefaultPath)); // Path will never be null
-            Console.WriteLine("Cache built. The next load will be much quicker!");
-            Console.WriteLine();
+            Terminal.BeginMessage();
+            Terminal.Message("Cache built. The next load will be much quicker!");
+            Terminal.EndMessage();
 
             return ret;
         }

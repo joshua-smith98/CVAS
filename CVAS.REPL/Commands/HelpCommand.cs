@@ -1,4 +1,6 @@
-﻿namespace CVAS.REPL
+﻿using CVAS.TerminalInterface;
+
+namespace CVAS.REPL
 {
     /// <summary>
     /// An <see cref="ICommand"/> that either prints the description and usage for a given command, or lists all commands.
@@ -29,18 +31,18 @@
             if (str.Length == Str.Length)
             {
                 // Print command list
-                Console.WriteLine();
                 foreach(ICommand command in REPL.Instance.CommandInstances)
                 {
-                    Console.WriteLine($"{command.Str}:");
-                    Console.WriteLine($"\t{command.Description}");
+                    Terminal.BeginMessage();
+                    Terminal.Message($"{command.Str}:");
+                    Terminal.Message($"\t{command.Description}");
 
                     // Print use cases
                     foreach(string useCase in command.Usage)
                     {
-                        Console.WriteLine($"\t{useCase}");
+                        Terminal.Message($"\t{useCase}");
                     }
-                    Console.WriteLine();
+                    Terminal.EndMessage();
                 }
             }
             else // Case: there is one or more argument given
@@ -58,16 +60,16 @@
                 // Get command and print details
                 var command = Arguments[0].Value as ICommand;
 
-                Console.WriteLine();
-                Console.WriteLine($"{command.Str}:");
-                Console.WriteLine($"\t{command.Description}");
+                Terminal.BeginMessage();
+                Terminal.Message($"{command.Str}:");
+                Terminal.Message($"\t{command.Description}");
 
                 // Print use cases
                 foreach (string useCase in command.Usage)
                 {
-                    Console.WriteLine($"\t{useCase}");
+                    Terminal.Message($"\t{useCase}");
                 }
-                Console.WriteLine();
+                Terminal.EndMessage();
             }
         }
     }

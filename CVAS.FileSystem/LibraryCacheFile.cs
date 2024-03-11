@@ -1,5 +1,6 @@
 ﻿using CVAS.AudioEngine;
 using CVAS.Core;
+using CVAS.TerminalInterface;
 using System.Security.Cryptography;
 using System.Text;
 using SysPath = System.IO.Path;
@@ -109,7 +110,9 @@ namespace CVAS.FileSystem
 
                 // Reset position after checking file validity
                 br.BaseStream.Position = 0;
-                Console.WriteLine($"Loading from cache...");
+                Terminal.BeginMessage();
+                Terminal.Message($"Loading from cache...");
+                Terminal.EndMessage();
 
                 #region Load from file and construct
                 {
@@ -217,32 +220,27 @@ namespace CVAS.FileSystem
                     {
                         if (!unknownErrorNotified)
                         {
-                            Console.WriteLine();
-                            var consoleColor = Console.ForegroundColor;
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine($"Couldn't load file: \"{inflectionRow.AudioFileName}\"");
-                            Console.ForegroundColor = consoleColor;
-                            Console.WriteLine();
-                            Console.WriteLine("This problem is known and occurs sometimes after moving or renaming a cached directory.");
-                            Console.WriteLine();
-                            Console.WriteLine("If you encounter this message, please open an issue on Github and include:");
-                            Console.WriteLine("\t- The name of the folder this Library used to be in");
-                            Console.WriteLine("\t- The name of the folder this Library is now in");
-                            Console.WriteLine("Or if you haven't moved the folder, let me know as well. The more data I have, the closer I'll be to fixing this!");
-                            Console.WriteLine();
-                            Console.WriteLine("The library will continue to load, but this file will be ignored.");
-                            Console.WriteLine("You'll be notified of any further instances of this error.");
-                            Console.WriteLine();
-                            Console.Write("Press any key to continue...");
-                            Console.ReadKey();
-                            Console.CursorLeft = Console.CursorLeft - 1;
-                            Console.WriteLine(" ");
-                            Console.WriteLine();
+                            Terminal.BeginMessage();
+                            Terminal.Message($"Couldn't load file: \"{inflectionRow.AudioFileName}\"", ConsoleColor.Red);
+                            Terminal.Message("\n");
+                            Terminal.Message("This problem is known and occurs sometimes after moving or renaming a cached directory.");
+                            Terminal.Message("\n");
+                            Terminal.Message("If you encounter this message, please open an issue on Github and include:");
+                            Terminal.Message("\t- The name of the folder this Library used to be in");
+                            Terminal.Message("\t- The name of the folder this Library is now in");
+                            Terminal.Message("Or if you haven't moved the folder, let me know as well. The more data I have, the closer I'll be to fixing this!");
+                            Terminal.Message("\n");
+                            Terminal.Message("The library will continue to load, but this file will be ignored.");
+                            Terminal.Message("You'll be notified of any further instances of this error.");
+                            Terminal.EndMessage();
+                            Terminal.AwaitKey("Press any key to continue...");
                             unknownErrorNotified = true;
                         }
                         else
                         {
-                            Console.WriteLine($"Also couldn't load: {inflectionRow.AudioFileName}");
+                            Terminal.BeginMessage();
+                            Terminal.Message($"Also couldn't load: {inflectionRow.AudioFileName}", ConsoleColor.Yellow);
+                            Terminal.EndMessage();
                         }
                         continue;
                     }
@@ -254,8 +252,9 @@ namespace CVAS.FileSystem
             }
 
             // Construct library and return
-            Console.WriteLine($"Loaded {phrases.Count()} phrases and {phrases.Select(x => x.Inflections.Length).Sum()} audio files.");
-            Console.WriteLine();
+            Terminal.BeginMessage();
+            Terminal.Message($"Loaded {phrases.Count()} phrases and {phrases.Select(x => x.Inflections.Length).Sum()} audio files.");
+            Terminal.EndMessage();
             return new Library(phrases.ToArray());
         }
 

@@ -1,4 +1,5 @@
 ﻿using CVAS.AudioEngine;
+using CVAS.TerminalInterface;
 
 namespace CVAS.REPL
 {
@@ -45,14 +46,14 @@ namespace CVAS.REPL
             var sentence_str = Arguments[0].Value as string;
             var sentence = REPL.Instance.CurrentLibrary.GetSentence(sentence_str);
 
-            Console.WriteLine();
+            Terminal.BeginMessage();
 
             foreach (var phrase in sentence.spokenPhrases)
             {
-                Console.WriteLine($"[{phrase.Str}] : {phrase.Inflection}");
+                Terminal.Message($"[{phrase.Str}] : {phrase.Inflection}");
             }
 
-            Console.WriteLine();
+            Terminal.EndMessage();
         }
     }
 }

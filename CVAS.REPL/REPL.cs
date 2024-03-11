@@ -1,4 +1,5 @@
 ﻿using CVAS.Core;
+using CVAS.TerminalInterface;
 
 namespace CVAS.REPL
 {
@@ -40,16 +41,16 @@ namespace CVAS.REPL
             isRunning = true;
 
             // Write REPL header
-            Console.WriteLine("----CVAS v0.5 REPL----");
-            Console.WriteLine("Type 'help' for a list of commands.");
-            Console.WriteLine();
+            Terminal.BeginMessage();
+            Terminal.Message("----CVAS v0.5 REPL----");
+            Terminal.Message("Type 'help' for a list of commands.");
+            Terminal.EndMessage();
 
             // Main REPL loop
             while (isRunning)
             {
                 // Prompt user
-                Console.Write(">> ");
-                var command = Console.ReadLine();
+                var command = Terminal.Prompt(">> ");
 
                 // Attempt to run command, and handle exceptions.
                 try
@@ -58,21 +59,21 @@ namespace CVAS.REPL
                 }
                 catch (CommandNotValidException e)
                 {
-                    Console.WriteLine();
-                    Console.WriteLine($"{e.Message}");
-                    Console.WriteLine();
+                    Terminal.BeginMessage();
+                    Terminal.Message(e.Message, ConsoleColor.Red);
+                    Terminal.EndMessage();
                 }
                 catch (ArgumentNotValidException e)
                 {
-                    Console.WriteLine();
-                    Console.WriteLine($"{e.Message}");
-                    Console.WriteLine();
+                    Terminal.BeginMessage();
+                    Terminal.Message(e.Message, ConsoleColor.Red);
+                    Terminal.EndMessage();
                 }
                 catch (ContextNotValidException e)
                 {
-                    Console.WriteLine();
-                    Console.WriteLine($"{e.Message}");
-                    Console.WriteLine();
+                    Terminal.BeginMessage();
+                    Terminal.Message(e.Message, ConsoleColor.Red);
+                    Terminal.EndMessage();
                 }
             }
         }

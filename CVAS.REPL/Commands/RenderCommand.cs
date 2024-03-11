@@ -1,4 +1,5 @@
 ﻿using CVAS.AudioEngine;
+using CVAS.TerminalInterface;
 
 namespace CVAS.REPL
 {
@@ -53,25 +54,25 @@ namespace CVAS.REPL
             if (File.Exists(path))
             {
                 // Prompt user
-                Console.WriteLine();
-                Console.WriteLine("File already exists! Overwrite (y/n)?");
-                Console.Write(">> ");
-                var response = Console.ReadLine();
+                Terminal.BeginMessage();
+                Terminal.Message("File already exists! Overwrite (y/n)?", ConsoleColor.Yellow);
+                var response = Terminal.Prompt(">> ");
+                Terminal.EndMessage();
                 if (response.ToLower() != "y")
                 {
                     // Cancel render on non-yes answer
-                    Console.WriteLine();
-                    Console.WriteLine("Render cancelled.");
-                    Console.WriteLine();
+                    Terminal.BeginMessage();
+                    Terminal.Message("Render cancelled by user.");
+                    Terminal.EndMessage();
                     return;
                 }
             }
 
             // Render file
             AudioEngine.AudioEngine.Instance.Render(sentence.GetAudioClip(), path);
-            Console.WriteLine();
-            Console.WriteLine($"Rendered to: {path}");
-            Console.WriteLine();
+            Terminal.BeginMessage();
+            Terminal.Message($"Rendered to: {path}");
+            Terminal.EndMessage();
         }
     }
 }

@@ -105,7 +105,7 @@ namespace CVAS.TerminalInterface
                 throw new TerminalException("Tried to post a report outside a report block!");
 
             Console.CursorLeft = 0;
-            Console.Write(Enumerable.Repeat(" ", Console.WindowWidth));
+            Console.Write(string.Concat(Enumerable.Repeat(" ", Console.WindowWidth)));
             Console.CursorLeft = 0;
             Console.Write(message);
         }

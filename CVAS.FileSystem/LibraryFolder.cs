@@ -55,27 +55,39 @@ namespace CVAS.FileSystem
             catch (FileNotFoundException)
             {
                 Terminal.BeginMessage();
-                Terminal.Message("A cache does not exist for this folder.");
+                Terminal.Message("A cache does not exist for this folder - a first time analysis will be executed.", ConsoleColor.Yellow);
                 Terminal.EndMessage();
             }
             catch (InvalidFileHashException)
             {
                 Terminal.BeginMessage();
-                Terminal.Message("The folder contents have changed.");
+                Terminal.Message("The folder contents have changed - the cache file will be rebuilt.", ConsoleColor.Yellow);
                 Terminal.EndMessage();
             }
 
             // Otherwise, load filenames from Directory.GetFiles(), checking for validity as audio files
-            foreach (string fileName in Directory.GetFiles(path))
+            Terminal.BeginReport("Searching for audio files...");
+            var files = Directory.GetFiles(path);
+
+            for (int i = 0; i < files.Length; i++)
             {
+                // Make report
+                if (i % 100 == 0)
+                {
+                    float percent = (float)(i + 1) / files.Length;
+                    percent *= 100f;
+                    Terminal.Report($"[{percent.ToString("0")}%]");
+                }
+
                 try
                 {
-                    using var a = new AudioFileStreaming(fileName) ; // Test to see if it is a valid audio file
+                    using var a = new AudioFileStreaming(files[i]) ; // Test to see if it is a valid audio file
 
-                    audioFileNames.Add(SysPath.GetFileName(fileName));
+                    audioFileNames.Add(SysPath.GetFileName(files[i]));
                 }
                 catch { } // Ignore all non-audiofiles
             }
+            Terminal.EndReport($"Successfully found {audioFileNames.Count} audio files.");
 
             return new LibraryFolder(path, audioFileNames.ToArray());
         }
@@ -112,11 +124,11 @@ namespace CVAS.FileSystem
             // Iterate through all middle inflection files
             for (int i = 0; i < files_middles.Length; i++)
             {
-                if (i % 10 == 0)
+                if (i % 100 == 0)
                 {
                     float percent = (float)(i + 1) / files_middles.Length;
                     percent *= 100f;
-                    Terminal.Report($"(1/2) Analysing middle inflections... [{percent.ToString("0")}%]");
+                    Terminal.Report($"[{percent:0}%] (1/2) Analysing middle inflections...");
                 }
 
                 // Don't need to do a validity check, because we already did that while loading AudioFileNames
@@ -147,11 +159,11 @@ namespace CVAS.FileSystem
             // Add all remaining end inflection files to their own phrase
             for (int i = 0; i < files_ends.Count; i++)
             {
-                if (i % 10 == 0)
+                if (i % 100 == 0)
                 {
                     float percent = (float)(i + 1) / files_ends.Count;
                     percent *= 100f;
-                    Terminal.Report($"(2/2) Analysing end inflections... [{percent.ToString("0")}%]");
+                    Terminal.Report($"[{percent:0}%] (2/2) Analysing end inflections...");
                 }
 
                 // Audio file validity check

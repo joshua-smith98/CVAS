@@ -118,6 +118,7 @@ namespace CVAS.TerminalInterface
 
             Status = TerminalBlockStatus.NoBlockActive;
             Console.WriteLine();
+            Console.WriteLine();
         }
     }
 }

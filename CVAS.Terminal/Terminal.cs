@@ -117,6 +117,7 @@ namespace CVAS.TerminalInterface
                 throw new TerminalException("Tried to close a report block, when no report block was active!");
 
             Status = TerminalBlockStatus.NoBlockActive;
+            Report(message);
             Console.WriteLine();
             Console.WriteLine();
         }

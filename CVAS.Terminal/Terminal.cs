@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace CVAS.Terminal
+namespace CVAS.TerminalInterface
 {
     public static class Terminal
     {

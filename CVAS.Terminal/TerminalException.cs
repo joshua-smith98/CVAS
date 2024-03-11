@@ -1,4 +1,4 @@
-﻿namespace CVAS.Terminal
+﻿namespace CVAS.TerminalInterface
 {
     public class TerminalException : Exception
     {

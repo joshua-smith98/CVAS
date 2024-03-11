@@ -4,8 +4,7 @@ namespace CVAS.Terminal
 {
     public static class Terminal
     {
-        private static bool MessageBlockActive = false;
-        private static bool ReportBlockActive = false;
+        private static TerminalBlockStatus Status = TerminalBlockStatus.NoBlockActive;
 
         public static string Prompt()
         {

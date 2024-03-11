@@ -8,62 +8,112 @@ namespace CVAS.Terminal
 
         public static string Prompt()
         {
-            throw new NotImplementedException();
+            return Prompt(">> ");
         }
 
         public static string Prompt(string prompt)
         {
-            throw new NotImplementedException();
+            Console.Write(prompt);
+            string? ret = Console.ReadLine();
+            if (ret is null) throw new NullReferenceException(); // Should never be null, but just in case...
+            return ret;
         }
 
         public static void AwaitKey()
         {
-            throw new NotImplementedException();
+            Console.ReadKey();
+            Console.CursorLeft = Console.CursorLeft - 1;
+            Console.Write(" ");
         }
 
         public static void AwaitKey(string message)
         {
-            throw new NotImplementedException();
+            Console.Write(message);
+            AwaitKey();
         }
 
         public static void BeginMessage()
         {
-            throw new NotImplementedException();
+            // Check Status
+            if (Status is not TerminalBlockStatus.NoBlockActive)
+            {
+                if (Status is TerminalBlockStatus.MessageBlockActive)
+                    throw new TerminalException("Tried to open a message block twice in a row!");
+                    
+                throw new TerminalException("Tried to open a message block when a another block type is currently active!");
+            }
+
+            Status = TerminalBlockStatus.MessageBlockActive;
         }
 
         public static void Message(string message)
         {
-            throw new NotImplementedException();
+            // Check Status
+            if (Status is not TerminalBlockStatus.MessageBlockActive)
+                throw new TerminalException("Tried to post a message outside a message block!");
+
+            Console.WriteLine(message);
         }
 
         public static void Message(string message, ConsoleColor colour)
         {
-            throw new NotImplementedException();
+            // Check Status
+            if (Status is not TerminalBlockStatus.MessageBlockActive)
+                throw new TerminalException("Tried to post a message outside a message block!");
+
+            var defaultColour = Console.ForegroundColor;
+            Console.ForegroundColor = colour;
+            Console.WriteLine(message);
+            Console.ForegroundColor = defaultColour;
         }
 
         public static void EndMessage()
         {
-            throw new NotImplementedException();
+            // Check status
+            if (Status is not TerminalBlockStatus.MessageBlockActive)
+                throw new TerminalException("Tried to close a message block, when no message block was active!");
+
+            Status = TerminalBlockStatus.NoBlockActive;
         }
 
         public static void BeginReport()
         {
-            throw new NotImplementedException();
+            // Check Status
+            if (Status is not TerminalBlockStatus.NoBlockActive)
+            {
+                if (Status is TerminalBlockStatus.ReportBlockActive)
+                    throw new TerminalException("Tried to open a report block twice in a row!");
+
+                throw new TerminalException("Tried to open a report block when a another block type is currently active!");
+            }
+
+            Status = TerminalBlockStatus.ReportBlockActive;
         }
 
         public static void BeginReport(string reportHeader)
         {
-            throw new NotImplementedException();
+            BeginReport();
+            Console.WriteLine(reportHeader);
         }
 
         public static void Report(string message)
         {
-            throw new NotImplementedException();
+            if (Status is not TerminalBlockStatus.ReportBlockActive)
+                throw new TerminalException("Tried to post a report outside a report block!");
+
+            Console.CursorLeft = 0;
+            Console.Write(Enumerable.Repeat(" ", Console.WindowWidth));
+            Console.CursorLeft = 0;
+            Console.Write(message);
         }
 
         public static void EndReport(string message)
         {
-            throw new NotImplementedException();
+            // Check status
+            if (Status is not TerminalBlockStatus.ReportBlockActive)
+                throw new TerminalException("Tried to close a report block, when no report block was active!");
+
+            Status = TerminalBlockStatus.NoBlockActive;
         }
     }
 }

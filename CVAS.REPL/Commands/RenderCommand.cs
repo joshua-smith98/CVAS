@@ -50,22 +50,21 @@ namespace CVAS.REPL
             var directoryName = Path.GetDirectoryName(path);
             if (directoryName != "" && !Directory.Exists(path)) throw new DirectoryNotFoundException();
 
-            // Check for file exists and give option for overwriting
-            if (File.Exists(path))
+            // Warn user about non-wav files
+            if (!path.ToLower().EndsWith(".wav") && Terminal.GetUserApproval("Warning: specified path does not include '.wav' extension, this could cause the file to not be played properly.\nWould you like to automatically append '.wav' (y/n)?"))
             {
-                // Prompt user
+                // Append extension
+                path += ".wav";
+            }
+
+            // Check for file exists and give option for overwriting
+            if (File.Exists(path) && !Terminal.GetUserApproval("File already exists! Overwrite (y/n)?"))
+            {
+                // Cancel render on non-yes answer
                 Terminal.BeginMessage();
-                Terminal.Message("File already exists! Overwrite (y/n)?", ConsoleColor.Yellow);
-                var response = Terminal.Prompt(">> ");
+                Terminal.Message("Render cancelled by user.", ConsoleColor.Red);
                 Terminal.EndMessage();
-                if (response.ToLower() != "y")
-                {
-                    // Cancel render on non-yes answer
-                    Terminal.BeginMessage();
-                    Terminal.Message("Render cancelled by user.");
-                    Terminal.EndMessage();
-                    return;
-                }
+                return;
             }
 
             // Render file

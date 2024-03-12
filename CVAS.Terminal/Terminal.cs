@@ -44,25 +44,38 @@ namespace CVAS.TerminalInterface
         /// <summary>
         /// Waits for the user to press any key before continuing.
         /// </summary>
-        public static void AwaitKey()
+        public static char AwaitKey()
         {
             Console.CursorVisible = true;
-            Console.ReadKey();
+            var keyinfo = Console.ReadKey();
             Console.CursorVisible = false;
             Console.CursorLeft = Console.CursorLeft - 1;
             Console.Write(" ");
             Console.WriteLine();
             Console.WriteLine();
+
+            return keyinfo.KeyChar;
         }
 
         /// <summary>
         /// Prints the given message, and then waits for the user to press a key before continuing.
         /// </summary>
         /// <param name="message"></param>
-        public static void AwaitKey(string message)
+        public static char AwaitKey(string message)
         {
             Console.Write(message);
-            AwaitKey();
+            return AwaitKey();
+        }
+
+        /// <summary>
+        /// Prompts the user for a y/n response to the given prompt.
+        /// </summary>
+        /// <param name="prompt"></param>
+        /// <returns><see cref="true"/> if user answers 'y', or <see cref="false"/> otherwise.</returns>
+        public static bool GetUserApproval(string prompt)
+        {
+            var response = AwaitKey(prompt);
+            return char.ToLower(response) == 'y';
         }
 
         /// <summary>

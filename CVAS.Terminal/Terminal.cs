@@ -52,6 +52,7 @@ namespace CVAS.TerminalInterface
             Console.CursorLeft = Console.CursorLeft - 1;
             Console.Write(" ");
             Console.WriteLine();
+            Console.WriteLine();
         }
 
         /// <summary>

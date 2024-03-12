@@ -230,8 +230,8 @@ namespace CVAS.FileSystem
                             Terminal.Message("\t- The name of the folder this Library is now in");
                             Terminal.Message("Or if you haven't moved the folder, let me know as well. The more data I have, the closer I'll be to fixing this!");
                             Terminal.Message();
-                            Terminal.Message("The library will continue to load, but this file will be ignored.");
-                            Terminal.Message("You'll be notified of any further instances of this error.");
+                            Terminal.Message("The library will continue to load, but this file will be ignored.", ConsoleColor.Yellow);
+                            Terminal.Message("You'll be notified of any further instances of this error.", ConsoleColor.Yellow);
                             Terminal.EndMessage();
                             Terminal.AwaitKey("Press any key to continue...");
                             unknownErrorNotified = true;

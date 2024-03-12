@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.Testing", "CVAS.Testing\CVAS.Testing.csproj", "{A9E6FE88-5EAE-4656-B5BE-CCEB401891CE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.Core", "CVAS.Core\CVAS.Core.csproj", "{A559CF5B-8924-4F51-9343-38C59B78C7C6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.AudioEngine", "CVAS.AudioEngine\CVAS.AudioEngine.csproj", "{A29FCBE2-A7A8-4280-BA52-47153B6C6DDF}"
@@ -23,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A9E6FE88-5EAE-4656-B5BE-CCEB401891CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A9E6FE88-5EAE-4656-B5BE-CCEB401891CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A9E6FE88-5EAE-4656-B5BE-CCEB401891CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A9E6FE88-5EAE-4656-B5BE-CCEB401891CE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A559CF5B-8924-4F51-9343-38C59B78C7C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A559CF5B-8924-4F51-9343-38C59B78C7C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A559CF5B-8924-4F51-9343-38C59B78C7C6}.Release|Any CPU.ActiveCfg = Release|Any CPU

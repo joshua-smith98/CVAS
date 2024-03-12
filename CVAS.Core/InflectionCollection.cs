@@ -6,7 +6,7 @@ namespace CVAS.Core
     /// <summary>
     /// A collection of <see cref="Inflection"/>s. Used in <see cref="Phrase"/>.
     /// </summary>
-    public class InflectionCollection : ICollection<Inflection>
+    public class InflectionCollection : ICollection<Inflection>, IDisposable
     {
         public int Count => inflections.Count();
 
@@ -72,6 +72,11 @@ namespace CVAS.Core
         IEnumerator IEnumerable.GetEnumerator()
         {
             return inflections.GetEnumerator();
+        }
+
+        public void Dispose()
+        {
+            foreach (var inflection in inflections) inflection.Dispose();
         }
     }
 }

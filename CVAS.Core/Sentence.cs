@@ -30,5 +30,10 @@ namespace CVAS.Core
         {
             return new Playlist(spokenPhrases.Select(x => x.GetAudioClip()).ToArray());
         }
+
+        public void Dispose()
+        {
+            foreach (var spokenPhrase in spokenPhrases) spokenPhrase.Dispose();
+        }
     }
 }

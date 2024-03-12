@@ -5,7 +5,7 @@ namespace CVAS.Core
     /// <summary>
     /// A collection of <see cref="Phrase"/>s, including some default punctuation.
     /// </summary>
-    public partial class Library
+    public partial class Library : IDisposable
     {
         public Phrase[] Phrases => phrases.ToArray(); //public get only
         private readonly List<Phrase> phrases = DefaultPhrases.ToList(); // All Libraries include the special phrases by default
@@ -129,6 +129,11 @@ namespace CVAS.Core
             }
 
             return subPhrase;
+        }
+
+        public void Dispose()
+        {
+            foreach (var phrase in phrases) phrase.Dispose();
         }
     }
 }

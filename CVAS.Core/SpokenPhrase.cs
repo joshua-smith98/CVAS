@@ -30,5 +30,10 @@ namespace CVAS.Core
         /// </summary>
         /// <returns></returns>
         public IAudioClip GetAudioClip() => audioClip;
+
+        public void Dispose()
+        {
+            audioClip.Dispose();
+        }
     }
 }

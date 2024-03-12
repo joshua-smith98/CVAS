@@ -124,5 +124,10 @@ namespace CVAS.Core
 
             return words.ToArray();
         }
+
+        public void Dispose()
+        {
+            inflections.Dispose();
+        }
     }
 }

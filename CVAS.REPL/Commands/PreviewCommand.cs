@@ -1,4 +1,5 @@
 ﻿using CVAS.AudioEngine;
+using CVAS.Core;
 using CVAS.TerminalInterface;
 
 namespace CVAS.REPL
@@ -48,9 +49,19 @@ namespace CVAS.REPL
 
             Terminal.BeginMessage();
 
-            foreach (var phrase in sentence.spokenPhrases)
+            foreach (var phrase in sentence.spokenPhrases.Where(x => !x.IsSpecialPhrase()))
             {
+                // Print NULL phrases (the ones that couldn't be found) in red
+                if (phrase.IsEmptyPhrase())
+                {
+                    Terminal.Message($"[{phrase.Str}] : {phrase.Inflection}", ConsoleColor.Red);
+                    continue;
+                }
+
                 Terminal.Message($"[{phrase.Str}] : {phrase.Inflection}");
+
+                // New line at the end of every sentence.
+                if (phrase != sentence.spokenPhrases.Where(x => !x.IsSpecialPhrase()).Last() && phrase.Inflection is InflectionType.End) Terminal.Message();
             }
 
             Terminal.EndMessage();

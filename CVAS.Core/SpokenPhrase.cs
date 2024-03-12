@@ -31,6 +31,24 @@ namespace CVAS.Core
         /// <returns></returns>
         public IAudioClip GetAudioClip() => audioClip;
 
+        /// <summary>
+        /// Determines whether this <see cref="SpokenPhrase"/> is one of the special phrases used for punctuation.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsSpecialPhrase()
+        {
+            return Phrase.SpecialPhrases.Values.Any(x => x.ToString() == Str);
+        }
+
+        /// <summary>
+        /// Determines whether this <see cref="SpokenPhrase"/> is empty.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsEmptyPhrase()
+        {
+            return Str == "NULL";
+        }
+
         public void Dispose()
         {
             audioClip.Dispose();

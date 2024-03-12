@@ -83,6 +83,14 @@ namespace CVAS.TerminalInterface
         }
 
         /// <summary>
+        /// Prints an empty line to the console. Throws <see cref="TerminalException"/> if a message block is not currently active.
+        /// </summary>
+        public static void Message()
+        {
+            Message("");
+        }
+
+        /// <summary>
         /// Prints the given message to the console. Throws <see cref="TerminalException"/> if a message block is not currently active.
         /// </summary>
         /// <param name="message"></param>

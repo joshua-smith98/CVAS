@@ -222,14 +222,14 @@ namespace CVAS.FileSystem
                         {
                             Terminal.BeginMessage();
                             Terminal.Message($"Couldn't load file: \"{inflectionRow.AudioFileName}\"", ConsoleColor.Red);
-                            Terminal.Message("\n");
+                            Terminal.Message();
                             Terminal.Message("This problem is known and occurs sometimes after moving or renaming a cached directory.");
-                            Terminal.Message("\n");
+                            Terminal.Message();
                             Terminal.Message("If you encounter this message, please open an issue on Github and include:");
                             Terminal.Message("\t- The name of the folder this Library used to be in");
                             Terminal.Message("\t- The name of the folder this Library is now in");
                             Terminal.Message("Or if you haven't moved the folder, let me know as well. The more data I have, the closer I'll be to fixing this!");
-                            Terminal.Message("\n");
+                            Terminal.Message();
                             Terminal.Message("The library will continue to load, but this file will be ignored.");
                             Terminal.Message("You'll be notified of any further instances of this error.");
                             Terminal.EndMessage();

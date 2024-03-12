@@ -27,8 +27,13 @@ namespace CVAS.REPL
             // Validity check: str must be empty after all arguments are read
             if (temp_str != "") throw new ArgumentNotValidException($"Expected end of command, found: '{temp_str}'!");
 
+            // Validity check: a library must be loaded
+            if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException("No library is currently loaded.");
+
             // Clear current library
+            REPL.Instance.CurrentLibrary.Dispose();
             REPL.Instance.CurrentLibrary = null;
+            GC.Collect(); // To free up any memory used by the library
             Terminal.BeginMessage();
             Terminal.Message("Current library cleared.");
             Terminal.EndMessage();

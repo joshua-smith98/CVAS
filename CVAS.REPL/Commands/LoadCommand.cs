@@ -45,6 +45,7 @@ namespace CVAS.REPL
             if (!Directory.Exists(Path)) throw new ArgumentNotValidException($"Couldn't find directory: '{Path}'");
 
             // Load library into REPL context
+            REPL.Instance.CurrentLibrary?.Dispose();
             REPL.Instance.CurrentLibrary = LibraryFolder.LoadFrom(Path).Construct();
         }
     }

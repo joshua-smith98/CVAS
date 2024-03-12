@@ -9,6 +9,11 @@ namespace CVAS.TerminalInterface
     {
         private static TerminalBlockStatus Status = TerminalBlockStatus.NoBlockActive;
 
+        static Terminal()
+        {
+            Console.CursorVisible = false;
+        }
+
         /// <summary>
         /// Prompts the user for a string, using ">> " as the prompt.
         /// </summary>
@@ -27,8 +32,11 @@ namespace CVAS.TerminalInterface
         public static string Prompt(string prompt)
         {
             Console.Write(prompt);
+            Console.CursorVisible = true;
             string? ret = Console.ReadLine();
+            Console.CursorVisible = false;
             Console.WriteLine();
+
             if (ret is null) throw new NullReferenceException(); // Should never be null, but just in case...
             return ret;
         }
@@ -38,7 +46,9 @@ namespace CVAS.TerminalInterface
         /// </summary>
         public static void AwaitKey()
         {
+            Console.CursorVisible = true;
             Console.ReadKey();
+            Console.CursorVisible = false;
             Console.CursorLeft = Console.CursorLeft - 1;
             Console.Write(" ");
             Console.WriteLine();

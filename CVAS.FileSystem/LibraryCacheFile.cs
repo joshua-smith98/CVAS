@@ -65,6 +65,12 @@ namespace CVAS.FileSystem
 
             LibraryCacheFile ret;
 
+            // Terminal feedback
+            // We'll just use a message here, since the process is far too quick to report progress.
+            Terminal.BeginMessage();
+            Terminal.Message("Cache file found.", ConsoleColor.Yellow);
+            Terminal.EndMessage();
+
             // Open File
             using (BinaryReader br = new(File.OpenRead(path)))
             {
@@ -110,9 +116,6 @@ namespace CVAS.FileSystem
 
                 // Reset position after checking file validity
                 br.BaseStream.Position = 0;
-                Terminal.BeginMessage();
-                Terminal.Message($"Loading from cache...");
-                Terminal.EndMessage();
 
                 #region Load from file and construct
                 {
@@ -197,15 +200,24 @@ namespace CVAS.FileSystem
         /// <returns></returns>
         public Library Construct()
         {
+            Terminal.BeginReport("Building from cache...");
+            
             // Construct phrases
             List<Phrase> phrases = new List<Phrase>();
-            foreach (PhraseTableRow phraseRow in PhraseTable)
+            for (int i = 0; i < PhraseTable.Length; i++)
             {
+                // Report progress
+                if (i % 100 == 0)
+                {
+                    float percent = ((float)i / PhraseTable.Length) * 100;
+                    Terminal.Report($"[{percent:0}%]");
+                }
+                
                 bool unknownErrorNotified = false; // For the BEEG unknown error below
                 
                 // Construct inflections
                 InflectionCollection inflections = new InflectionCollection();
-                foreach (InflectionTableRow inflectionRow in phraseRow.InflectionTable)
+                foreach (InflectionTableRow inflectionRow in PhraseTable[i].InflectionTable)
                 {
                     InflectionType inflectionType = (InflectionType)inflectionRow.Inflection;
                     IAudioClip audioClip;
@@ -218,6 +230,9 @@ namespace CVAS.FileSystem
                     }
                     catch (DirectoryNotFoundException)
                     {
+                        // Pause report
+                        Terminal.EndReport("--Build Paused--");
+
                         if (!unknownErrorNotified)
                         {
                             Terminal.BeginMessage();
@@ -242,19 +257,21 @@ namespace CVAS.FileSystem
                             Terminal.Message($"Also couldn't load: {inflectionRow.AudioFileName}", ConsoleColor.Yellow);
                             Terminal.EndMessage();
                         }
+
+                        // Resume report & continue
+                        Terminal.BeginReport("Continuing to build from cache...");
+
                         continue;
                     }
 
                     inflections.Add(new Inflection(inflectionType, audioClip));
                 }
 
-                phrases.Add(new Phrase(phraseRow.Str, inflections.ToArray()));
+                phrases.Add(new Phrase(PhraseTable[i].Str, inflections.ToArray()));
             }
 
             // Construct library and return
-            Terminal.BeginMessage();
-            Terminal.Message($"Loaded {phrases.Count()} phrases and {phrases.Select(x => x.Inflections.Length).Sum()} audio files.");
-            Terminal.EndMessage();
+            Terminal.EndReport($"Successfully loaded {phrases.Count} phrases and {phrases.Select(x => x.Inflections.Length).Sum()} audio files.");
             return new Library(phrases.ToArray());
         }
 

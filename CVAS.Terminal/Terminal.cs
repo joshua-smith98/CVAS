@@ -68,6 +68,16 @@ namespace CVAS.TerminalInterface
         }
 
         /// <summary>
+        /// Prints the given message with the given ConsoleColor, and then waits for the user to press a key before continuing.
+        /// </summary>
+        /// <param name="message"></param>
+        public static char AwaitKey(string message, ConsoleColor colour)
+        {
+            WriteWithColour(message, colour);
+            return AwaitKey();
+        }
+
+        /// <summary>
         /// Prompts the user for a y/n response to the given prompt.
         /// </summary>
         /// <param name="prompt"></param>
@@ -75,6 +85,17 @@ namespace CVAS.TerminalInterface
         public static bool GetUserApproval(string prompt)
         {
             var response = AwaitKey(prompt);
+            return char.ToLower(response) == 'y';
+        }
+
+        /// <summary>
+        /// Prompts the user for a y/n response to the given prompt. Prints the prompt in the given colour.
+        /// </summary>
+        /// <param name="prompt"></param>
+        /// <returns><see cref="true"/> if user answers 'y', or <see cref="false"/> otherwise.</returns>
+        public static bool GetUserApproval(string prompt, ConsoleColor colour)
+        {
+            var response = AwaitKey(prompt, colour);
             return char.ToLower(response) == 'y';
         }
 
@@ -130,10 +151,7 @@ namespace CVAS.TerminalInterface
             if (Status is not TerminalBlockStatus.MessageBlockActive)
                 throw new TerminalException("Tried to post a message outside a message block!");
 
-            var defaultColour = Console.ForegroundColor;
-            Console.ForegroundColor = colour;
-            Console.WriteLine(message);
-            Console.ForegroundColor = defaultColour;
+            WriteLineWithColour(message, colour);
         }
 
         /// <summary>
@@ -179,6 +197,16 @@ namespace CVAS.TerminalInterface
         }
 
         /// <summary>
+        /// Begins a report (changing text on a single line - e.g. a progress report) with the given header, in the given colour. Throws a <see cref="TerminalException"/> if another block is already active.
+        /// </summary>
+        /// <param name="reportHeader"></param>
+        public static void BeginReport(string reportHeader, ConsoleColor colour)
+        {
+            BeginReport();
+            WriteLineWithColour(reportHeader, colour);
+        }
+
+        /// <summary>
         /// Clears the current line and prints a report message to the console. Throws <see cref="TerminalException"/> if a report block is not currently active.
         /// </summary>
         /// <param name="message"></param>
@@ -192,6 +220,22 @@ namespace CVAS.TerminalInterface
             Console.Write(string.Concat(Enumerable.Repeat(" ", Console.WindowWidth)));
             Console.CursorLeft = 0;
             Console.Write(message);
+        }
+
+        /// <summary>
+        /// Clears the current line and prints a report message to the console in the given colour. Throws <see cref="TerminalException"/> if a report block is not currently active.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <exception cref="TerminalException"></exception>
+        public static void Report(string message, ConsoleColor colour)
+        {
+            if (Status is not TerminalBlockStatus.ReportBlockActive)
+                throw new TerminalException("Tried to post a report outside a report block!");
+
+            Console.CursorLeft = 0;
+            Console.Write(string.Concat(Enumerable.Repeat(" ", Console.WindowWidth)));
+            Console.CursorLeft = 0;
+            WriteWithColour(message, colour);
         }
 
         /// <summary>
@@ -209,6 +253,39 @@ namespace CVAS.TerminalInterface
             Status = TerminalBlockStatus.NoBlockActive;
             Console.WriteLine();
             Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Makes a final report in the given colour, before ending the block. Throws <see cref="TerminalException"/> if a report block is not currently active.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <exception cref="TerminalException"></exception>
+        public static void EndReport(string message, ConsoleColor colour)
+        {
+            // Check status
+            if (Status is not TerminalBlockStatus.ReportBlockActive)
+                throw new TerminalException("Tried to close a report block, when no report block was active!");
+
+            Report(message, colour);
+            Status = TerminalBlockStatus.NoBlockActive;
+            Console.WriteLine();
+            Console.WriteLine();
+        }
+
+        private static void WriteLineWithColour(string str, ConsoleColor colour)
+        {
+            var defaultColour = Console.ForegroundColor;
+            Console.ForegroundColor = colour;
+            Console.WriteLine(str);
+            Console.ForegroundColor = defaultColour;
+        }
+
+        private static void WriteWithColour(string str, ConsoleColor colour)
+        {
+            var defaultColour = Console.ForegroundColor;
+            Console.ForegroundColor = colour;
+            Console.Write(str);
+            Console.ForegroundColor = defaultColour;
         }
     }
 }

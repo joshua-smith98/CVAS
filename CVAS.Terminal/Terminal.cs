@@ -33,11 +33,9 @@ namespace CVAS.TerminalNS
         {
             Console.Write(prompt);
             Console.CursorVisible = true;
-            string? ret = Console.ReadLine();
+            string ret = Console.ReadLine()!; // Console.ReadLine() will never be null
             Console.CursorVisible = false;
             Console.WriteLine();
-
-            if (ret is null) throw new NullReferenceException(); // Should never be null, but just in case...
             return ret;
         }
 

@@ -169,6 +169,30 @@ namespace CVAS.TerminalInterface
         }
 
         /// <summary>
+        /// Prints a single message to the console, automatically opening and closing the required message block.
+        /// Throws <see cref="TerminalException"/> if another block type is currently active.
+        /// </summary>
+        /// <param name="message"></param>
+        public static void MessageSingle(string message)
+        {
+            BeginMessage();
+            Message(message);
+            EndMessage();
+        }
+
+        /// <summary>
+        /// Prints a single message to the console in the given colour, automatically opening and closing the required message block.
+        /// Throws <see cref="TerminalException"/> if another block type is currently active.
+        /// </summary>
+        /// <param name="message"></param>
+        public static void MessageSingle(string message, ConsoleColor colour)
+        {
+            BeginMessage();
+            Message(message, colour);
+            EndMessage();
+        }
+
+        /// <summary>
         /// Begins a report (changing text on a single line - e.g. a progress report). Throws a <see cref="TerminalException"/> if another block is already active.
         /// </summary>
         /// <exception cref="TerminalException"></exception>

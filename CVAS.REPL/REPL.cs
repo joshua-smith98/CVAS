@@ -29,16 +29,16 @@ namespace CVAS.REPL
 
         public Library? CurrentLibrary { get; internal set; }
 
-        public bool isRunning { get; internal set; } = false;
+        public bool IsRunning { get; internal set; } = false;
 
         private REPL() { } // Non-constructable
 
         /// <summary>
-        /// Begins the REPL loop. Set <see cref="REPL.isRunning"/> = <see cref="false"/> to end.
+        /// Begins the REPL loop. Set <see cref="IsRunning"/> = <see cref="false"/> to end.
         /// </summary>
         public void Start()
         {
-            isRunning = true;
+            IsRunning = true;
 
             // Write REPL header
             Terminal.BeginMessage();
@@ -47,7 +47,7 @@ namespace CVAS.REPL
             Terminal.EndMessage();
 
             // Main REPL loop
-            while (isRunning)
+            while (IsRunning)
             {
                 // Prompt user
                 var command = Terminal.Prompt(">> ");

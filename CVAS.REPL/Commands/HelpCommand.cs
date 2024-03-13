@@ -48,7 +48,7 @@ namespace CVAS.REPL
             else // Case: there is one or more argument given
             {
                 // Try to read arguments
-                var temp_str = str.Substring(Str.Length).TrimStart();
+                var temp_str = str[Str.Length..].TrimStart();
 
                 foreach (IArgument argument in Arguments)
                 {

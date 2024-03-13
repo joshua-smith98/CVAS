@@ -26,7 +26,7 @@
             if (!str.StartsWith(Str)) throw new CommandNotValidException("Command does not match. This message should never be printed - if it was, open an issue on Github!");
 
             // Try to read arguments
-            var temp_str = str.Substring(Str.Length).TrimStart();
+            var temp_str = str[Str.Length..].TrimStart();
 
             foreach (IArgument argument in Arguments)
             {

@@ -49,7 +49,7 @@ namespace CVAS.TerminalNS
             Console.CursorVisible = true;
             var keyinfo = Console.ReadKey();
             Console.CursorVisible = false;
-            Console.CursorLeft = Console.CursorLeft - 1;
+            Console.CursorLeft--;
             Console.Write(" ");
             Console.WriteLine();
             Console.WriteLine();

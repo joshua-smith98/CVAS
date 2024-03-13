@@ -1,7 +1,7 @@
 ﻿namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="ICommand"/> that sets <see cref="REPL.isRunning"/> to <see cref="false"/>, and therefore halts the REPL.
+    /// An <see cref="ICommand"/> that sets <see cref="REPL.IsRunning"/> to <see cref="false"/>, and therefore halts the REPL.
     /// </summary>
     internal class ExitCommand : ICommand
     {
@@ -31,7 +31,7 @@
             if (temp_str != "") throw new ArgumentNotValidException($"Expected end of command, found: '{temp_str}'!");
 
             // End REPL loop
-            REPL.Instance.isRunning = false;
+            REPL.Instance.IsRunning = false;
         }
     }
 }

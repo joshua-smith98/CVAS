@@ -42,7 +42,7 @@ namespace CVAS.REPL
 
             // Write REPL header
             Terminal.BeginMessage();
-            Terminal.Message("----CVAS v0.5 REPL----");
+            Terminal.Message("----CVAS v0.5.0 REPL----");
             Terminal.Message("Type 'help' for a list of commands.");
             Terminal.EndMessage();
 

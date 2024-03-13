@@ -48,6 +48,14 @@ namespace CVAS.AudioEngine
             WaveFileWriter.CreateWaveFile16(path, audioClip.ToWaveProvider().ToSampleProvider());
         }
 
+        /// <summary>
+        /// Stops all audio playback.
+        /// </summary>
+        public void StopAll()
+        {
+            sampleProvider.RemoveAllMixerInputs();
+        }
+
         public void Dispose()
         {
             waveOutEvent.Stop();

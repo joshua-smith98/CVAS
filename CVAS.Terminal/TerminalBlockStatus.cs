@@ -1,4 +1,4 @@
-﻿namespace CVAS.TerminalInterface
+﻿namespace CVAS.TerminalNS
 {
     /// <summary>
     /// Determines which block type is currently active in the <see cref="Terminal"/>.

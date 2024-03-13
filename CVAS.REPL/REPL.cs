@@ -1,5 +1,5 @@
 ﻿using CVAS.Core;
-using CVAS.TerminalInterface;
+using CVAS.TerminalNS;
 
 namespace CVAS.REPL
 {

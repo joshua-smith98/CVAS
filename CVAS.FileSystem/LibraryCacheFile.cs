@@ -1,6 +1,6 @@
 ﻿using CVAS.AudioEngine;
 using CVAS.Core;
-using CVAS.TerminalInterface;
+using CVAS.TerminalNS;
 using System.Security.Cryptography;
 using System.Text;
 using SysPath = System.IO.Path;

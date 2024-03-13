@@ -1,6 +1,6 @@
 ﻿using CVAS.AudioEngine;
 using CVAS.Core;
-using CVAS.TerminalInterface;
+using CVAS.TerminalNS;
 using SysPath = System.IO.Path;
 
 namespace CVAS.FileSystem

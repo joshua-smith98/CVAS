@@ -61,17 +61,13 @@ namespace CVAS.REPL
             if (File.Exists(path) && !Terminal.GetUserApproval("File already exists! Overwrite (y/n)?", ConsoleColor.DarkYellow))
             {
                 // Cancel render on non-yes answer
-                Terminal.BeginMessage();
-                Terminal.Message("Render cancelled by user.", ConsoleColor.Red);
-                Terminal.EndMessage();
+                Terminal.MessageSingle("Render cancelled by user.", ConsoleColor.Red);
                 return;
             }
 
             // Render file
             AudioEngine.AudioEngine.Instance.Render(sentence.GetAudioClip(), path);
-            Terminal.BeginMessage();
-            Terminal.Message($"Rendered to: {path}");
-            Terminal.EndMessage();
+            Terminal.MessageSingle($"Rendered to: {path}");
         }
     }
 }

@@ -59,21 +59,15 @@ namespace CVAS.REPL
                 }
                 catch (CommandNotValidException e)
                 {
-                    Terminal.BeginMessage();
-                    Terminal.Message(e.Message, ConsoleColor.Red);
-                    Terminal.EndMessage();
+                    Terminal.MessageSingle(e.Message, ConsoleColor.Red);
                 }
                 catch (ArgumentNotValidException e)
                 {
-                    Terminal.BeginMessage();
-                    Terminal.Message(e.Message, ConsoleColor.Red);
-                    Terminal.EndMessage();
+                    Terminal.MessageSingle(e.Message, ConsoleColor.Red);
                 }
                 catch (ContextNotValidException e)
                 {
-                    Terminal.BeginMessage();
-                    Terminal.Message(e.Message, ConsoleColor.Red);
-                    Terminal.EndMessage();
+                    Terminal.MessageSingle(e.Message, ConsoleColor.Red);
                 }
             }
         }

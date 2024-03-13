@@ -67,9 +67,7 @@ namespace CVAS.FileSystem
 
             // Terminal feedback
             // We'll just use a message here, since the process is far too quick to report progress.
-            Terminal.BeginMessage();
-            Terminal.Message("Cache file found.", ConsoleColor.Yellow);
-            Terminal.EndMessage();
+            Terminal.MessageSingle("Cache file found.", ConsoleColor.Yellow);
 
             // Open File
             using (BinaryReader br = new(File.OpenRead(path)))
@@ -253,9 +251,7 @@ namespace CVAS.FileSystem
                         }
                         else
                         {
-                            Terminal.BeginMessage();
-                            Terminal.Message($"Also couldn't load: {inflectionRow.AudioFileName}", ConsoleColor.Yellow);
-                            Terminal.EndMessage();
+                            Terminal.MessageSingle($"Also couldn't load: {inflectionRow.AudioFileName}", ConsoleColor.Yellow);
                         }
 
                         // Resume report & continue

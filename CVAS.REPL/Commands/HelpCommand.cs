@@ -58,7 +58,7 @@ namespace CVAS.REPL
                 if (temp_str != "") throw new ArgumentNotValidException($"Expected end of command, found: '{temp_str}'!");
 
                 // Get command and print details
-                var command = Arguments[0].Value as ICommand;
+                var command = (ICommand)Arguments[0].Value!;
 
                 Terminal.BeginMessage();
                 Terminal.Message($"{command.Str}:");

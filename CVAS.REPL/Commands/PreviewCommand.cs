@@ -44,7 +44,7 @@ namespace CVAS.REPL
             if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException($"No library is currently loaded.");
 
             // Get sentence and print phrases & inflections.
-            var sentence_str = Arguments[0].Value as string;
+            var sentence_str = (string)Arguments[0].Value!;
             var sentence = REPL.Instance.CurrentLibrary.GetSentence(sentence_str);
 
             Terminal.BeginMessage();

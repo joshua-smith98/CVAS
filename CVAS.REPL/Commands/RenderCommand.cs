@@ -43,8 +43,8 @@ namespace CVAS.REPL
             // Validity check: CurrentLibrary must not be null
             if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException("No library is currenty loaded.");
 
-            var sentence = REPL.Instance.CurrentLibrary.GetSentence((string)Arguments[0].Value);
-            var path = (string)Arguments[1].Value;
+            var sentence = REPL.Instance.CurrentLibrary.GetSentence((string)Arguments[0].Value!);
+            var path = (string)Arguments[1].Value!;
 
             // Validity check: path directory must exist, or be empty
             var directoryName = Path.GetDirectoryName(path);

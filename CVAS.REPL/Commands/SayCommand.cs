@@ -40,7 +40,7 @@
             if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException("No library is currently loaded.");
 
             // Run Command
-            var sentence_str = Arguments[0].Value as string;
+            var sentence_str = (string)Arguments[0].Value!;
             var sentence = REPL.Instance.CurrentLibrary.GetSentence(sentence_str);
 
             AudioEngine.AudioEngine.Instance.Play(sentence.GetAudioClip());

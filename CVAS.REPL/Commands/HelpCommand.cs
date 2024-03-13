@@ -35,12 +35,12 @@ namespace CVAS.REPL
                 {
                     Terminal.BeginMessage();
                     Terminal.Message($"{command.Str}:");
-                    Terminal.Message($"\t{command.Description}");
+                    Terminal.Message($"\t{command.Description}", ConsoleColor.Yellow);
 
                     // Print use cases
                     foreach(string useCase in command.Usage)
                     {
-                        Terminal.Message($"\t{useCase}");
+                        Terminal.Message($"\t>> {useCase}", ConsoleColor.DarkYellow);
                     }
                     Terminal.EndMessage();
                 }
@@ -62,12 +62,12 @@ namespace CVAS.REPL
 
                 Terminal.BeginMessage();
                 Terminal.Message($"{command.Str}:");
-                Terminal.Message($"\t{command.Description}");
+                Terminal.Message($"\t{command.Description}", ConsoleColor.Yellow);
 
                 // Print use cases
                 foreach (string useCase in command.Usage)
                 {
-                    Terminal.Message($"\t{useCase}");
+                    Terminal.Message($"\t>> {useCase}", ConsoleColor.DarkYellow);
                 }
                 Terminal.EndMessage();
             }

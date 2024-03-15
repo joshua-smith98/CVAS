@@ -1,4 +1,5 @@
 ﻿using CVAS.AudioEngine;
+using CVAS.Core;
 using CVAS.TerminalNS;
 
 namespace CVAS.REPL
@@ -8,42 +9,42 @@ namespace CVAS.REPL
     /// </summary>
     internal class RenderCommand : Command
     {
-        public string Str => "render";
+        public override string Str => "render";
 
-        public string Description => "Renders the given sentence to a file at the given path, using the currently loaded library.";
+        public override string Description => "Renders the given sentence to a file at the given path, using the currently loaded library.";
 
-        public string[] Usage { get; } = { "render [sentence] [path]" };
+        public override string[] Usage { get; } = { "render [sentence] [path]" };
 
-        public Command? SubCommand { get; }
+        public override Command[] SubCommands { get; } = { };
 
-        public Argument[] Arguments { get; } =
+        public override Argument[] Arguments { get; } =
         {
-            new StringArgument("sentence"), // Sentence
-            new StringArgument("path"), // Path to file
+            new StringArgument("sentence", false), // Sentence or Path if sentence path failed to read
+            new StringArgument("path", true), // Path to file
         };
 
-        internal RenderCommand() { }
-
-        public void RunFrom(string str)
+        protected override void VerifyArgsAndRun()
         {
-            // Validity check: str must begin with "load"
-            if (!str.StartsWith(Str)) throw new CommandNotValidException("Command does not match. This message should never be printed - if it was, open an issue on Github!");
-
-            // Try to read arguments
-            var temp_str = str[Str.Length..].TrimStart();
-
-            foreach (Argument argument in Arguments)
-            {
-                argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
-            }
-
-            // Validity check: str must be empty after all arguments are read
-            if (temp_str != "") throw new ArgumentNotValidException($"Expected end of command, found: '{temp_str}'!");
-
             // Validity check: CurrentLibrary must not be null
             if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException("No library is currenty loaded.");
 
-            var sentence = REPL.Instance.CurrentLibrary.GetSentence((string)Arguments[0].Value!);
+            // Case: Sentence not included in Args
+            if (Arguments[0].Value is null)
+            {
+                // Validity check: CurrentSentence must not be null
+                if (REPL.Instance.CurrentSentence is null) throw new ContextNotValidException("No sentence is current memorised, please provide one.");
+                
+                TryRenderSentence(REPL.Instance.CurrentSentence);
+            }
+            else
+            {
+                var sentence = REPL.Instance.CurrentLibrary.GetSentence((string)Arguments[0].Value!);;
+                TryRenderSentence(sentence);
+            }
+        }
+
+        private void TryRenderSentence(Sentence sentence)
+        {
             var path = (string)Arguments[1].Value!;
 
             // Validity check: path directory must exist, or be empty

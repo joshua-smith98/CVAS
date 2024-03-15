@@ -5,29 +5,21 @@
     /// </summary>
     internal class OptionArgument : Argument
     {
-        public string Name { get; }
-        
-        public object? Value { get; private set; }
+        public override Type ValueType => typeof(string);
 
-        public Type ValueType => typeof(string);
+        public OptionArgument(string name, bool isCompulsory) : base(name, isCompulsory) { }
 
-        internal OptionArgument(string name)
+        protected override string ReadFromImpl(string str)
         {
-            Name = name;
-        }
-
-        public void ReadFrom(ref string str)
-        {
-            // Validity check: string must not be empty, and must start with '-'
-            if (str == "") throw new ArgumentNotValidException($"Expected argument [{Name}], found nothing!");
+            // Validity check: string must start with '-'
             if (str[0] != '-') throw new ArgumentNotValidException($"[{Name}] is of type OptionArgument, and must begin with a hyphen (-).");
 
             // Get option, and remove '-' from the beginning
             var option = str.Split().First().Substring(1);
             Value = option;
 
-            // Trim ref str
-            str = str.Substring(option.Length + 1).TrimStart();
+            // Return trimmed str
+            return str.Substring(option.Length + 1).TrimStart();
         }
     }
 }

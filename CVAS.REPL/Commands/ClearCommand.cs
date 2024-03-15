@@ -4,29 +4,18 @@ namespace CVAS.REPL
 {
     internal class ClearCommand : Command
     {
-        public string Str => "clear";
+        public override string Str => "clear";
 
-        public string Description => "Clears the currently loaded Library.";
+        public override string Description => "Clears the currently loaded Library.";
 
-        public string[] Usage { get; } = { "clear" };
+        public override string[] Usage { get; } = { "clear" };
 
-        public Command? SubCommand { get; }
+        public override Command[] SubCommands { get; } = { };
 
-        public Argument[] Arguments { get; } = { };
+        public override Argument[] Arguments { get; } = { };
 
-        public void RunFrom(string str)
+        protected override void VerifyArgsAndRun()
         {
-            // Validity check: str must begin with "load"
-            if (!str.StartsWith(Str)) throw new CommandNotValidException("Command does not match. This message should never be printed - if it was, open an issue on Github!");
-
-            // Try to read arguments
-            var temp_str = str.Substring(Str.Length).TrimStart();
-
-            foreach (Argument argument in Arguments) argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
-
-            // Validity check: str must be empty after all arguments are read
-            if (temp_str != "") throw new ArgumentNotValidException($"Expected end of command, found: '{temp_str}'!");
-
             // Validity check: a library must be loaded
             if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException("No library is currently loaded.");
 

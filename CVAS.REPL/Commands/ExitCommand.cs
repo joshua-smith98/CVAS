@@ -5,31 +5,18 @@
     /// </summary>
     internal class ExitCommand : Command
     {
-        public string Str => "exit";
+        public override string Str => "exit";
 
-        public string Description => "Exits the program.";
+        public override string Description => "Exits the program.";
 
-        public string[] Usage { get; } = { "exit" };
+        public override string[] Usage { get; } = { "exit" };
 
-        public Command? SubCommand { get; }
+        public override Command[] SubCommands { get; } = { };
 
-        public Argument[] Arguments { get; } = { };
+        public override Argument[] Arguments { get; } = { };
 
-        internal ExitCommand() { }
-
-        public void RunFrom(string str)
+        protected override void VerifyArgsAndRun()
         {
-            // Validity check: str must begin with "load"
-            if (!str.StartsWith(Str)) throw new CommandNotValidException("Command does not match. This message should never be printed - if it was, open an issue on Github!");
-
-            // Try to read arguments
-            var temp_str = str.Substring(Str.Length).TrimStart();
-
-            foreach (Argument argument in Arguments) argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
-
-            // Validity check: str must be empty after all arguments are read
-            if (temp_str != "") throw new ArgumentNotValidException($"Expected end of command, found: '{temp_str}'!");
-
             // End REPL loop
             REPL.Instance.IsRunning = false;
         }

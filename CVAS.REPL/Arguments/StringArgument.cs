@@ -7,22 +7,12 @@ namespace CVAS.REPL
     /// </summary>
     internal class StringArgument : Argument
     {
-        public string Name { get; }
-        
-        public object? Value { get; private set; }
+        public override Type ValueType => typeof(string);
 
-        public Type ValueType => typeof(string);
+        public StringArgument(string name, bool isCompulsory) : base(name, isCompulsory) { }
 
-        internal StringArgument(string name)
+        protected override string ReadFromImpl(string str)
         {
-            Name = name;
-        }
-
-        public void ReadFrom(ref string str)
-        {
-            // Validity check: str must not be empty
-            if (str == "") throw new ArgumentNotValidException($"Expected argument [{Name}], found nothing!");
-
             StringBuilder valueBuilder = new StringBuilder();
 
             // Case: str begins with double quotes
@@ -40,8 +30,8 @@ namespace CVAS.REPL
 
                 Value = valueBuilder.ToString();
 
-                // Trim ref str
-                str = str.Substring(valueBuilder.Length + 2).TrimStart();
+                // Return trimmed str
+                return str.Substring(valueBuilder.Length + 2).TrimStart();
             }
             else // Case: str doesn't begin with quotes
             {
@@ -55,8 +45,8 @@ namespace CVAS.REPL
 
                 Value = valueBuilder.ToString();
 
-                // Trim ref str
-                str = str.Substring(valueBuilder.Length).TrimStart();
+                // Return trimmed str
+                return str.Substring(valueBuilder.Length).TrimStart();
             }
         }
     }

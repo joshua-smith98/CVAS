@@ -8,38 +8,22 @@ namespace CVAS.REPL
     /// </summary>
     internal class LoadCommand : Command
     {
-        public string Str => "load";
+        public override string Str => "load";
 
-        public string Description => "Loads a folder of audio files as a library of phrases.";
+        public override string Description => "Loads a folder of audio files as a library of phrases.";
 
-        public string[] Usage { get; } = { "load [path]" };
+        public override string[] Usage { get; } = { "load [path]" };
 
-        public Command? SubCommand => null; // To be implemented at some point
+        public override Command[] SubCommands { get; } = { };
 
-        public Argument[] Arguments { get; } =
+        public override Argument[] Arguments { get; } =
         {
-            new StringArgument("path"), // Library path
+            new StringArgument("path", true), // Library path
         };
 
-        internal LoadCommand() { }
-
-        public void RunFrom(string str)
+        protected override void VerifyArgsAndRun()
         {
-            // Validity check: str must begin with "load"
-            if (!str.StartsWith(Str)) throw new CommandNotValidException("Command does not match. This message should never be printed - if it was, open an issue on Github!");
-
-            // Try to read arguments
-            var temp_str = str.Substring(Str.Length).TrimStart();
-
-            foreach (Argument argument in Arguments)
-            {
-                argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
-            }
-
-            // Validity check: str must be empty after all arguments are read
-            if (temp_str != "") throw new ArgumentNotValidException($"Expected end of command, found: '{temp_str}'!");
-
-            var Path = Arguments[0].Value as string;
+            var Path = (string)Arguments[0].Value!;
 
             // Validity check: path must point to a folder
             if (!Directory.Exists(Path)) throw new ArgumentNotValidException($"Couldn't find directory: '{Path}'");

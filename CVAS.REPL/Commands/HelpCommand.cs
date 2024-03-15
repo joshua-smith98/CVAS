@@ -7,70 +7,50 @@ namespace CVAS.REPL
     /// </summary>
     internal class HelpCommand : Command
     {
-        public string Str => "help";
+        public override string Str => "help";
 
-        public string Description => "Gets the description and usage instructions for the given command, or lists all commands.";
+        public override string Description => "Gets the description and usage instructions for the given command, or lists all commands.";
 
-        public string[] Usage { get; } = { "help", "help [command]" };
+        public override string[] Usage { get; } = { "help", "help [command]" };
 
-        public Command? SubCommand { get; }
+        public override Command[] SubCommands { get; } = { };
 
-        public Argument[] Arguments { get; } =
+        public override Argument[] Arguments { get; } =
         {
-            new CommandArgument("command"),
+            new CommandArgument("command", false),
         };
 
-        internal HelpCommand() { }
-
-        public void RunFrom(string str)
+        protected override void VerifyArgsAndRun()
         {
-            // Validity check: str must begin with "load"
-            if (!str.StartsWith(Str)) throw new CommandNotValidException("Command does not match. This message should never be printed - if it was, open an issue on Github!");
-
             // Case: there is no given argument for [command]
-            if (str.Length == Str.Length)
+            if (Arguments[0].Value is null)
             {
                 // Print command list
                 foreach(Command command in REPL.Instance.CommandInstances)
                 {
-                    Terminal.BeginMessage();
-                    Terminal.Message($"{command.Str}:");
-                    Terminal.Message($"\t{command.Description}", ConsoleColor.Yellow);
-
-                    // Print use cases
-                    foreach(string useCase in command.Usage)
-                    {
-                        Terminal.Message($"\t>> {useCase}", ConsoleColor.DarkYellow);
-                    }
-                    Terminal.EndMessage();
+                    PrintCommandDetails(command);
                 }
             }
             else // Case: there is one or more argument given
             {
-                // Try to read arguments
-                var temp_str = str[Str.Length..].TrimStart();
-
-                foreach (Argument argument in Arguments)
-                {
-                    argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
-                }
-                // Validity check: str must be empty after all arguments are read
-                if (temp_str != "") throw new ArgumentNotValidException($"Expected end of command, found: '{temp_str}'!");
-
                 // Get command and print details
                 var command = (Command)Arguments[0].Value!;
-
-                Terminal.BeginMessage();
-                Terminal.Message($"{command.Str}:");
-                Terminal.Message($"\t{command.Description}", ConsoleColor.Yellow);
-
-                // Print use cases
-                foreach (string useCase in command.Usage)
-                {
-                    Terminal.Message($"\t>> {useCase}", ConsoleColor.DarkYellow);
-                }
-                Terminal.EndMessage();
+                PrintCommandDetails(command);
             }
+        }
+
+        private void PrintCommandDetails(Command command)
+        {
+            Terminal.BeginMessage();
+            Terminal.Message($"{command.Str}:");
+            Terminal.Message($"\t{command.Description}", ConsoleColor.Yellow);
+
+            // Print use cases
+            foreach (string useCase in command.Usage)
+            {
+                Terminal.Message($"\t>> {useCase}", ConsoleColor.DarkYellow);
+            }
+            Terminal.EndMessage();
         }
     }
 }

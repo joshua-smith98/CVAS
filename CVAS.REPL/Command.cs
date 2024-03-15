@@ -20,7 +20,7 @@
         /// </summary>
         public abstract string[] Usage { get; }
 
-        public abstract Command[] SubCommand { get; } // For potential future use - not yet implemented
+        public abstract Command[] SubCommands { get; } // For potential future use - not yet implemented
 
         /// <summary>
         /// The list of argument instances which need to be given for this command to work.

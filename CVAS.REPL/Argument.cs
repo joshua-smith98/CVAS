@@ -20,9 +20,12 @@
         /// </summary>
         public abstract Type ValueType { get; }
 
-        public Argument(string name)
+        public bool IsCompulsory { get; }
+
+        public Argument(string name, bool isCompulsory)
         {
             Name = name;
+            IsCompulsory = isCompulsory;
         }
 
         /// <summary>

@@ -13,7 +13,7 @@
         /// <summary>
         /// Value of the argument. Will be <see cref="null"/> until read.
         /// </summary>
-        public object? Value { get; }
+        public object? Value { get; protected set; }
 
         /// <summary>
         /// The <see cref="Type"/> of this argument's value.
@@ -41,6 +41,8 @@
             }
             catch(REPLException e)
             {
+                Value = null;
+                
                 if (IsCompulsory) throw e;
                 else return str;
             }

@@ -1,15 +1,15 @@
 ﻿namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="IArgument"/> that attempts to read an <see cref="ICommand"/>. Used primarily in the 'help' command.
+    /// An <see cref="Argument"/> that attempts to read an <see cref="Command"/>. Used primarily in the 'help' command.
     /// </summary>
-    internal class CommandArgument : IArgument
+    internal class CommandArgument : Argument
     {
         public string Name { get; }
 
         public object? Value { get; private set; }
 
-        public Type ValueType => typeof(ICommand);
+        public Type ValueType => typeof(Command);
 
         internal CommandArgument(string name)
         {

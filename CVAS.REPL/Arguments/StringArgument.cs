@@ -3,9 +3,9 @@
 namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="IArgument"/> that attempts to read a string surrounded by whitespace or double quotes (").
+    /// An <see cref="Argument"/> that attempts to read a string surrounded by whitespace or double quotes (").
     /// </summary>
-    internal class StringArgument : IArgument
+    internal class StringArgument : Argument
     {
         public string Name { get; }
         

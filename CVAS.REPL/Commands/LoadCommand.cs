@@ -4,9 +4,9 @@ using CVAS.FileSystem;
 namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="ICommand"/> that loads a library from a folder into the current REPL context.
+    /// An <see cref="Command"/> that loads a library from a folder into the current REPL context.
     /// </summary>
-    internal class LoadCommand : ICommand
+    internal class LoadCommand : Command
     {
         public string Str => "load";
 
@@ -14,9 +14,9 @@ namespace CVAS.REPL
 
         public string[] Usage { get; } = { "load [path]" };
 
-        public ICommand? SubCommand => null; // To be implemented at some point
+        public Command? SubCommand => null; // To be implemented at some point
 
-        public IArgument[] Arguments { get; } =
+        public Argument[] Arguments { get; } =
         {
             new StringArgument("path"), // Library path
         };
@@ -31,7 +31,7 @@ namespace CVAS.REPL
             // Try to read arguments
             var temp_str = str.Substring(Str.Length).TrimStart();
 
-            foreach (IArgument argument in Arguments)
+            foreach (Argument argument in Arguments)
             {
                 argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
             }

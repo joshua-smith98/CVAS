@@ -1,9 +1,9 @@
 ﻿namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="ICommand"/> that attempts to 'say' the given sentence.
+    /// An <see cref="Command"/> that attempts to 'say' the given sentence.
     /// </summary>
-    internal class SayCommand : ICommand
+    internal class SayCommand : Command
     {
         public string Str => "say";
 
@@ -11,9 +11,9 @@
 
         public string[] Usage { get; } = { "say [sentence]" };
 
-        public ICommand? SubCommand { get; }
+        public Command? SubCommand { get; }
 
-        public IArgument[] Arguments { get; } =
+        public Argument[] Arguments { get; } =
         {
             new StringArgument("sentence"),
         };
@@ -28,7 +28,7 @@
             // Try to read arguments
             var temp_str = str[Str.Length..].TrimStart();
 
-            foreach (IArgument argument in Arguments)
+            foreach (Argument argument in Arguments)
             {
                 argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
             }

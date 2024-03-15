@@ -1,9 +1,9 @@
 ﻿namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="IArgument"/> that attempts to read a string prefixed by a dash (-). E.g. "command -option".
+    /// An <see cref="Argument"/> that attempts to read a string prefixed by a dash (-). E.g. "command -option".
     /// </summary>
-    internal class OptionArgument : IArgument
+    internal class OptionArgument : Argument
     {
         public string Name { get; }
         

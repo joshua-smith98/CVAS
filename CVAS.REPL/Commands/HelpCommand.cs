@@ -3,9 +3,9 @@
 namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="ICommand"/> that either prints the description and usage for a given command, or lists all commands.
+    /// An <see cref="Command"/> that either prints the description and usage for a given command, or lists all commands.
     /// </summary>
-    internal class HelpCommand : ICommand
+    internal class HelpCommand : Command
     {
         public string Str => "help";
 
@@ -13,9 +13,9 @@ namespace CVAS.REPL
 
         public string[] Usage { get; } = { "help", "help [command]" };
 
-        public ICommand? SubCommand { get; }
+        public Command? SubCommand { get; }
 
-        public IArgument[] Arguments { get; } =
+        public Argument[] Arguments { get; } =
         {
             new CommandArgument("command"),
         };
@@ -31,7 +31,7 @@ namespace CVAS.REPL
             if (str.Length == Str.Length)
             {
                 // Print command list
-                foreach(ICommand command in REPL.Instance.CommandInstances)
+                foreach(Command command in REPL.Instance.CommandInstances)
                 {
                     Terminal.BeginMessage();
                     Terminal.Message($"{command.Str}:");
@@ -50,7 +50,7 @@ namespace CVAS.REPL
                 // Try to read arguments
                 var temp_str = str[Str.Length..].TrimStart();
 
-                foreach (IArgument argument in Arguments)
+                foreach (Argument argument in Arguments)
                 {
                     argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
                 }
@@ -58,7 +58,7 @@ namespace CVAS.REPL
                 if (temp_str != "") throw new ArgumentNotValidException($"Expected end of command, found: '{temp_str}'!");
 
                 // Get command and print details
-                var command = (ICommand)Arguments[0].Value!;
+                var command = (Command)Arguments[0].Value!;
 
                 Terminal.BeginMessage();
                 Terminal.Message($"{command.Str}:");

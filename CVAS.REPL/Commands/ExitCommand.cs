@@ -1,9 +1,9 @@
 ﻿namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="ICommand"/> that sets <see cref="REPL.IsRunning"/> to <see cref="false"/>, and therefore halts the REPL.
+    /// An <see cref="Command"/> that sets <see cref="REPL.IsRunning"/> to <see cref="false"/>, and therefore halts the REPL.
     /// </summary>
-    internal class ExitCommand : ICommand
+    internal class ExitCommand : Command
     {
         public string Str => "exit";
 
@@ -11,9 +11,9 @@
 
         public string[] Usage { get; } = { "exit" };
 
-        public ICommand? SubCommand { get; }
+        public Command? SubCommand { get; }
 
-        public IArgument[] Arguments { get; } = { };
+        public Argument[] Arguments { get; } = { };
 
         internal ExitCommand() { }
 
@@ -25,7 +25,7 @@
             // Try to read arguments
             var temp_str = str.Substring(Str.Length).TrimStart();
 
-            foreach (IArgument argument in Arguments) argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
+            foreach (Argument argument in Arguments) argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
 
             // Validity check: str must be empty after all arguments are read
             if (temp_str != "") throw new ArgumentNotValidException($"Expected end of command, found: '{temp_str}'!");

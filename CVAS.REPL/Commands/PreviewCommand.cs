@@ -5,9 +5,9 @@ using CVAS.TerminalNS;
 namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="ICommand"/> that prints a list of a given sentence's subphrases.
+    /// An <see cref="Command"/> that prints a list of a given sentence's subphrases.
     /// </summary>
-    internal class PreviewCommand : ICommand
+    internal class PreviewCommand : Command
     {
         public string Str => "preview";
 
@@ -15,9 +15,9 @@ namespace CVAS.REPL
 
         public string[] Usage { get; } = { "preview [sentence]" };
 
-        public ICommand? SubCommand { get; }
+        public Command? SubCommand { get; }
 
-        public IArgument[] Arguments { get; } =
+        public Argument[] Arguments { get; } =
         {
             new StringArgument("sentence"),
         };
@@ -32,7 +32,7 @@ namespace CVAS.REPL
             // Try to read arguments
             var temp_str = str[Str.Length..].TrimStart();
 
-            foreach (IArgument argument in Arguments)
+            foreach (Argument argument in Arguments)
             {
                 argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
             }

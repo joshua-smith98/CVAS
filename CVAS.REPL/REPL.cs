@@ -16,7 +16,7 @@ namespace CVAS.REPL
         /// <summary>
         /// A list of all top-level commands that can be used in the REPL.
         /// </summary>
-        internal ICommand[] CommandInstances { get; } =
+        internal Command[] CommandInstances { get; } =
         {
             new HelpCommand(),
             new LoadCommand(),
@@ -81,7 +81,7 @@ namespace CVAS.REPL
         internal void RunFrom(string str)
         {
             // Iterate over all commands and check validity
-            foreach (ICommand command in CommandInstances)
+            foreach (Command command in CommandInstances)
             {
                 try
                 {

@@ -2,7 +2,7 @@
 
 namespace CVAS.REPL
 {
-    internal class ClearCommand : ICommand
+    internal class ClearCommand : Command
     {
         public string Str => "clear";
 
@@ -10,9 +10,9 @@ namespace CVAS.REPL
 
         public string[] Usage { get; } = { "clear" };
 
-        public ICommand? SubCommand { get; }
+        public Command? SubCommand { get; }
 
-        public IArgument[] Arguments { get; } = { };
+        public Argument[] Arguments { get; } = { };
 
         public void RunFrom(string str)
         {
@@ -22,7 +22,7 @@ namespace CVAS.REPL
             // Try to read arguments
             var temp_str = str.Substring(Str.Length).TrimStart();
 
-            foreach (IArgument argument in Arguments) argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
+            foreach (Argument argument in Arguments) argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
 
             // Validity check: str must be empty after all arguments are read
             if (temp_str != "") throw new ArgumentNotValidException($"Expected end of command, found: '{temp_str}'!");

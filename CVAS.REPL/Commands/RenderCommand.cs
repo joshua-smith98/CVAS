@@ -4,9 +4,9 @@ using CVAS.TerminalNS;
 namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="ICommand"/> that renders a given sentence to a file.
+    /// An <see cref="Command"/> that renders a given sentence to a file.
     /// </summary>
-    internal class RenderCommand : ICommand
+    internal class RenderCommand : Command
     {
         public string Str => "render";
 
@@ -14,9 +14,9 @@ namespace CVAS.REPL
 
         public string[] Usage { get; } = { "render [sentence] [path]" };
 
-        public ICommand? SubCommand { get; }
+        public Command? SubCommand { get; }
 
-        public IArgument[] Arguments { get; } =
+        public Argument[] Arguments { get; } =
         {
             new StringArgument("sentence"), // Sentence
             new StringArgument("path"), // Path to file
@@ -32,7 +32,7 @@ namespace CVAS.REPL
             // Try to read arguments
             var temp_str = str[Str.Length..].TrimStart();
 
-            foreach (IArgument argument in Arguments)
+            foreach (Argument argument in Arguments)
             {
                 argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
             }

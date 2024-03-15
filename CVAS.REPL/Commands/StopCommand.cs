@@ -1,9 +1,9 @@
 ﻿namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="ICommand"/> that stops all audio playback.
+    /// An <see cref="Command"/> that stops all audio playback.
     /// </summary>
-    internal class StopCommand : ICommand
+    internal class StopCommand : Command
     {
         public string Str => "stop";
 
@@ -11,9 +11,9 @@
 
         public string[] Usage { get; } = { "stop" };
 
-        public ICommand? SubCommand { get; }
+        public Command? SubCommand { get; }
 
-        public IArgument[] Arguments { get; } = { };
+        public Argument[] Arguments { get; } = { };
 
         internal StopCommand() { }
 
@@ -25,7 +25,7 @@
             // Try to read arguments
             var temp_str = str[Str.Length..].TrimStart();
 
-            foreach (IArgument argument in Arguments)
+            foreach (Argument argument in Arguments)
             {
                 argument.ReadFrom(ref temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
             }

@@ -38,6 +38,10 @@
                 var sentence = REPL.Instance.CurrentLibrary.GetSentence(sentence_str);
 
                 AudioEngine.AudioEngine.Instance.Play(sentence.GetAudioClip());
+
+                // Memorise sentence
+                REPL.Instance.CurrentSentence?.Dispose();
+                REPL.Instance.CurrentSentence = sentence;
             }
         }
     }

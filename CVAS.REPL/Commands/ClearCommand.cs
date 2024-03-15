@@ -19,6 +19,10 @@ namespace CVAS.REPL
             // Validity check: a library must be loaded
             if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException("No library is currently loaded.");
 
+            // Clear current sentence
+            REPL.Instance.CurrentSentence?.Dispose();
+            REPL.Instance.CurrentSentence = null;
+
             // Clear current library
             REPL.Instance.CurrentLibrary.Dispose();
             REPL.Instance.CurrentLibrary = null;

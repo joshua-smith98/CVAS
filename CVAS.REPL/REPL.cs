@@ -29,6 +29,7 @@ namespace CVAS.REPL
         };
 
         public Library? CurrentLibrary { get; internal set; }
+        public Sentence? CurrentSentence { get; internal set; }
 
         public bool IsRunning { get; internal set; } = false;
 

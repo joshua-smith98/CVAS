@@ -40,6 +40,10 @@ namespace CVAS.REPL
             {
                 var sentence = REPL.Instance.CurrentLibrary.GetSentence((string)Arguments[0].Value!);;
                 TryRenderSentence(sentence);
+
+                // Memorise sentence
+                REPL.Instance.CurrentSentence?.Dispose();
+                REPL.Instance.CurrentSentence = sentence;
             }
         }
 

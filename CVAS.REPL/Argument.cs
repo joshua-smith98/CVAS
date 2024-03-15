@@ -32,6 +32,25 @@
         /// Validates, and attempts to read an argument from the given string. When successful, will also trim this argument from the given string.
         /// </summary>
         /// <param name="str"></param>
-        public abstract void ReadFrom(ref string str);
+        public string ReadFrom(string str)
+        {
+            try
+            {
+                VerifyFrom(str);
+                return ReadFromImpl(str);
+            }
+            catch(REPLException e)
+            {
+                if (IsCompulsory) throw e;
+                else return str;
+            }
+        }
+
+        private void VerifyFrom(string str)
+        {
+            if (str == "") throw new ArgumentNotValidException($"Expected argument [{Name}], found nothing!");
+        }
+
+        protected abstract string ReadFromImpl(string str);
     }
 }

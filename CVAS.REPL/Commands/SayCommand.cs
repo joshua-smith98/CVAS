@@ -31,12 +31,14 @@
 
                 AudioEngine.AudioEngine.Instance.Play(REPL.Instance.CurrentSentence.GetAudioClip());
             }
+            else
+            {
+                // Get sentence and print phrases & inflections.
+                var sentence_str = (string)Arguments[0].Value!;
+                var sentence = REPL.Instance.CurrentLibrary.GetSentence(sentence_str);
 
-            // Get sentence and print phrases & inflections.
-            var sentence_str = (string)Arguments[0].Value!;
-            var sentence = REPL.Instance.CurrentLibrary.GetSentence(sentence_str);
-
-            AudioEngine.AudioEngine.Instance.Play(sentence.GetAudioClip());
+                AudioEngine.AudioEngine.Instance.Play(sentence.GetAudioClip());
+            }
         }
     }
 }

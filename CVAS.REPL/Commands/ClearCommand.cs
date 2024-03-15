@@ -6,7 +6,7 @@ namespace CVAS.REPL
     {
         public override string Str => "clear";
 
-        public override string Description => "Clears the currently loaded Library.";
+        public override string Description => "Clears the currently loaded Library and any memorised Sentence.";
 
         public override string[] Usage { get; } = { "clear" };
 

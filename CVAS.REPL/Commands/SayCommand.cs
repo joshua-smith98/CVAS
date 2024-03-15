@@ -7,9 +7,9 @@
     {
         public override string Str => "say";
 
-        public override string Description => "Says the given sentence, using the currently loaded library.";
+        public override string Description => "Says the given sentence, and commits it to memory.";
 
-        public override string[] Usage { get; } = { "say [sentence]" };
+        public override string[] Usage { get; } = { "say [sentence]", "say" };
 
         public override Command[] SubCommands { get; } = { };
 

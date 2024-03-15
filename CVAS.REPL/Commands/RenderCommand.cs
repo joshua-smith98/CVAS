@@ -11,9 +11,9 @@ namespace CVAS.REPL
     {
         public override string Str => "render";
 
-        public override string Description => "Renders the given sentence to a file at the given path, using the currently loaded library.";
+        public override string Description => "Renders the given sentence to a file at the given path, and commits that sentence to memory.";
 
-        public override string[] Usage { get; } = { "render [sentence] [path]" };
+        public override string[] Usage { get; } = { "render [sentence] [path]", "render [path]" };
 
         public override Command[] SubCommands { get; } = { };
 

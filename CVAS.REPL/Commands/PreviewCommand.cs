@@ -11,7 +11,7 @@ namespace CVAS.REPL
     {
         public override string Str => "preview";
 
-        public override string Description => "Displays the phrases that would be used to speak a given sentence, using the currently loaded library.";
+        public override string Description => "Displays the phrases that would be used to speak a given sentence, and commits that sentence to memory.";
 
         public override string[] Usage { get; } = { "preview [sentence]", "preview" };
 

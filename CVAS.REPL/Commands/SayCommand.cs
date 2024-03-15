@@ -1,4 +1,6 @@
-﻿namespace CVAS.REPL
+﻿using CVAS.TerminalNS;
+
+namespace CVAS.REPL
 {
     /// <summary>
     /// An <see cref="Command"/> that attempts to 'say' the given sentence.
@@ -42,6 +44,7 @@
                 // Memorise sentence
                 REPL.Instance.CurrentSentence?.Dispose();
                 REPL.Instance.CurrentSentence = sentence;
+                Terminal.MessageSingle("Sentence was committed to memory.", ConsoleColor.Yellow);
             }
         }
     }

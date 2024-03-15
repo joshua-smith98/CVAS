@@ -13,14 +13,14 @@ namespace CVAS.REPL
 
         public override string Description => "Renders the given sentence to a file at the given path, and commits that sentence to memory.";
 
-        public override string[] Usage { get; } = { "render [sentence] [path]", "render [path]" };
+        public override string[] Usage { get; } = { "render [path] [sentence]", "render [path]" };
 
         public override Command[] SubCommands { get; } = { };
 
         public override Argument[] Arguments { get; } =
         {
-            new StringArgument("sentence", false), // Sentence or Path if sentence path failed to read
             new StringArgument("path", true), // Path to file
+            new StringArgument("sentence", false), // Sentence or Path if sentence path failed to read
         };
 
         protected override void VerifyArgsAndRun()
@@ -29,16 +29,16 @@ namespace CVAS.REPL
             if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException("No library is currenty loaded.");
 
             // Case: Sentence not included in Args
-            if (Arguments[0].Value is null)
+            if (Arguments[1].Value is null)
             {
                 // Validity check: CurrentSentence must not be null
                 if (REPL.Instance.CurrentSentence is null) throw new ContextNotValidException("No sentence is current memorised, please provide one.");
-                
+
                 TryRenderSentence(REPL.Instance.CurrentSentence);
             }
             else
             {
-                var sentence = REPL.Instance.CurrentLibrary.GetSentence((string)Arguments[0].Value!);;
+                var sentence = REPL.Instance.CurrentLibrary.GetSentence((string)Arguments[1].Value!);;
                 TryRenderSentence(sentence);
 
                 // Memorise sentence
@@ -49,7 +49,7 @@ namespace CVAS.REPL
 
         private void TryRenderSentence(Sentence sentence)
         {
-            var path = (string)Arguments[1].Value!;
+            var path = (string)Arguments[0].Value!;
 
             // Validity check: path directory must exist, or be empty
             var directoryName = Path.GetDirectoryName(path);

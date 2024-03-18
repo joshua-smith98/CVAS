@@ -7,13 +7,13 @@ namespace CVAS.REPL
     /// <summary>
     /// A <see cref="Command"/> that prints a list of a given sentence's subphrases.
     /// </summary>
-    internal class PreviewCommand : Command
+    internal class TestCommand : Command
     {
-        public override string Str => "preview";
+        public override string Str => "test";
 
-        public override string Description => "Displays the phrases that would be used to speak a given sentence, and commits that sentence to memory.";
+        public override string Description => "Displays the given sentence and any phrases that couldn't be found. Also commits that sentence to memory.";
 
-        public override string[] Usage { get; } = { "preview [sentence]", "preview" };
+        public override string[] Usage { get; } = { "test [sentence]", "test" };
 
         public override Command[] SubCommands { get; } = { };
 

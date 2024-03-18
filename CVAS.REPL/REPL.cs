@@ -20,7 +20,7 @@ namespace CVAS.REPL
         {
             new HelpCommand(),
             new LoadCommand(),
-            new PreviewCommand(),
+            new TestCommand(),
             new SayCommand(),
             new RenderCommand(),
             new StopCommand(),

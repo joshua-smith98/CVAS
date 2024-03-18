@@ -1,7 +1,7 @@
 ﻿namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="Command"/> that stops all audio playback.
+    /// A <see cref="Command"/> that stops all audio playback.
     /// </summary>
     internal class StopCommand : Command
     {

@@ -1,7 +1,7 @@
 ﻿namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="Command"/> that sets <see cref="REPL.IsRunning"/> to <see cref="false"/>, and therefore halts the REPL.
+    /// A <see cref="Command"/> that sets <see cref="REPL.IsRunning"/> to <see cref="false"/>, and therefore halts the REPL.
     /// </summary>
     internal class ExitCommand : Command
     {

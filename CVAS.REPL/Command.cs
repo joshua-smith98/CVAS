@@ -1,7 +1,7 @@
 ﻿namespace CVAS.REPL
 {
     /// <summary>
-    /// Interface representing a REPL command which performs an action, optionally taking arguments as input.
+    /// Represents a REPL command which performs an action, optionally taking arguments as input.
     /// </summary>
     internal abstract class Command
     {
@@ -23,7 +23,7 @@
         public abstract Command[] SubCommands { get; } // For potential future use - not yet implemented
 
         /// <summary>
-        /// The list of argument instances which need to be given for this command to work.
+        /// The collection of argument instances which need to be given for this command to work.
         /// </summary>
         public abstract Argument[] Arguments { get; }
 
@@ -38,12 +38,22 @@
             VerifyArgsAndRun();
         }
 
+        /// <summary>
+        /// Verifies that the given string calls this command.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <exception cref="CommandNotValidException"></exception>
         private void VerifyStr(string str)
         {
             // Validity check: str must begin with "Str"
             if (!str.StartsWith(Str)) throw new CommandNotValidException("Command does not match. This message should never be printed - if it was, open an issue on Github!");
         }
 
+        /// <summary>
+        /// Reads the arguments from the given string into this Command's <see cref="Arguments"/>.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <exception cref="ArgumentNotValidException"></exception>
         private void ReadArguments(string str)
         {
             // Try to read arguments
@@ -55,6 +65,9 @@
             if (temp_str != "") throw new ArgumentNotValidException($"Expected end of command, found: '{temp_str}'!");
         }
 
+        /// <summary>
+        /// Abstract method that performs the actions associated with the Command, and/or any additional validations.
+        /// </summary>
         protected abstract void VerifyArgsAndRun();
     }
 }

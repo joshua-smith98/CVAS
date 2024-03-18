@@ -2,6 +2,9 @@
 
 namespace CVAS.REPL
 {
+    /// <summary>
+    /// A <see cref="Command"/> that clears the current context.
+    /// </summary>
     internal class ClearCommand : Command
     {
         public override string Str => "clear";

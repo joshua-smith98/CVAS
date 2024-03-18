@@ -1,7 +1,7 @@
 ﻿namespace CVAS.REPL
 {
     /// <summary>
-    /// Interface representing an argument for a command, which can be read from a string.
+    /// Represents an argument for a command which can be read from a string.
     /// </summary>
     internal abstract class Argument
     {
@@ -20,6 +20,9 @@
         /// </summary>
         public abstract Type ValueType { get; }
 
+        /// <summary>
+        /// Determines whether this argument is required by the parent command. When set to <see cref="false"/>, no exceptions will be thrown if invalid.
+        /// </summary>
         public bool IsCompulsory { get; }
 
         public Argument(string name, bool isCompulsory)
@@ -32,6 +35,7 @@
         /// Validates, and attempts to read an argument from the given string. When successful, will also trim this argument from the given string.
         /// </summary>
         /// <param name="str"></param>
+        /// <exception cref="ArgumentNotValidException"/>
         public string ReadFrom(string str)
         {
             try
@@ -48,11 +52,21 @@
             }
         }
 
+        /// <summary>
+        /// Verifies that this argument exists.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <exception cref="ArgumentNotValidException"></exception>
         private void VerifyFrom(string str)
         {
             if (str == "") throw new ArgumentNotValidException($"Expected argument [{Name}], found nothing!");
         }
 
+        /// <summary>
+        /// Abstract method that provides the implementation for reading this argument, along with any further validation.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         protected abstract string ReadFromImpl(string str);
     }
 }

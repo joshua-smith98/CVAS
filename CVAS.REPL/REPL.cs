@@ -28,7 +28,13 @@ namespace CVAS.REPL
             new ExitCommand(),
         };
 
+        /// <summary>
+        /// The currently loaded library for this REPL.
+        /// </summary>
         public Library? CurrentLibrary { get; internal set; }
+        /// <summary>
+        /// The currently memorised sentence for this REPL.
+        /// </summary>
         public Sentence? CurrentSentence { get; internal set; }
 
         public bool IsRunning { get; internal set; } = false;
@@ -59,7 +65,7 @@ namespace CVAS.REPL
                 {
                     RunFrom(command); // Since we're reading from the console, command will never be null
                 }
-                catch (CommandNotValidException e)
+                catch (CommandNotValidException e) // TODO: this can be simplified with REPLException
                 {
                     Terminal.MessageSingle(e.Message, ConsoleColor.Red);
                 }

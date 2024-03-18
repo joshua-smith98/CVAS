@@ -5,7 +5,7 @@ using CVAS.TerminalNS;
 namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="Command"/> that renders a given sentence to a file.
+    /// A <see cref="Command"/> that renders a given sentence to a file.
     /// </summary>
     internal class RenderCommand : Command
     {
@@ -34,10 +34,12 @@ namespace CVAS.REPL
                 // Validity check: CurrentSentence must not be null
                 if (REPL.Instance.CurrentSentence is null) throw new ContextNotValidException("No sentence is current memorised, please provide one.");
 
+                // Render memorised sentence
                 TryRenderSentence(REPL.Instance.CurrentSentence);
             }
             else
             {
+                // Find sentence, and render
                 var sentence = REPL.Instance.CurrentLibrary.GetSentence((string)Arguments[1].Value!);;
                 TryRenderSentence(sentence);
 
@@ -48,8 +50,14 @@ namespace CVAS.REPL
             }
         }
 
+        /// <summary>
+        /// Tries to render the given sentence to the path specified in the arguments.
+        /// </summary>
+        /// <param name="sentence"></param>
+        /// <exception cref="DirectoryNotFoundException"></exception>
         private void TryRenderSentence(Sentence sentence)
         {
+            // Get render path from relevant argument
             var path = (string)Arguments[0].Value!;
 
             // Validity check: path directory must exist, or be empty

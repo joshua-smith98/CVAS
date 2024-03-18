@@ -3,7 +3,7 @@
 namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="Command"/> that attempts to 'say' the given sentence.
+    /// A <see cref="Command"/> that attempts to 'say' the given sentence.
     /// </summary>
     internal class SayCommand : Command
     {
@@ -31,11 +31,12 @@ namespace CVAS.REPL
                 // Validity check: CurrentSentence must not be null
                 if (REPL.Instance.CurrentSentence is null) throw new ContextNotValidException($"No sentence is currently memorised, please provide one.");
 
+                // Play memorised sentence
                 AudioEngine.AudioEngine.Instance.Play(REPL.Instance.CurrentSentence.GetAudioClip());
             }
             else
             {
-                // Get sentence and print phrases & inflections.
+                // Get sentence and play
                 var sentence_str = (string)Arguments[0].Value!;
                 var sentence = REPL.Instance.CurrentLibrary.GetSentence(sentence_str);
 

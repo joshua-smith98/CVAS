@@ -3,7 +3,7 @@
 namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="Command"/> that either prints the description and usage for a given command, or lists all commands.
+    /// A <see cref="Command"/> that either prints the description and usage for a given command, or lists all commands.
     /// </summary>
     internal class HelpCommand : Command
     {
@@ -39,8 +39,13 @@ namespace CVAS.REPL
             }
         }
 
+        /// <summary>
+        /// Prints the Str, Description and Usage details for the given command.
+        /// </summary>
+        /// <param name="command"></param>
         private void PrintCommandDetails(Command command)
         {
+            // Print Str and Description
             Terminal.BeginMessage();
             Terminal.Message($"{command.Str}:");
             Terminal.Message($"\t{command.Description}", ConsoleColor.Yellow);

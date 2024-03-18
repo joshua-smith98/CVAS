@@ -4,7 +4,7 @@ using CVAS.FileSystem;
 namespace CVAS.REPL
 {
     /// <summary>
-    /// An <see cref="Command"/> that loads a library from a folder into the current REPL context.
+    /// A <see cref="Command"/> that loads a library from a folder into the current REPL context.
     /// </summary>
     internal class LoadCommand : Command
     {
@@ -23,6 +23,7 @@ namespace CVAS.REPL
 
         protected override void VerifyArgsAndRun()
         {
+            // Get library path from relevant argument
             var Path = (string)Arguments[0].Value!;
 
             // Validity check: path must point to a folder

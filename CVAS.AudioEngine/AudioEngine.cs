@@ -8,7 +8,15 @@ namespace CVAS.AudioEngine
     /// </summary>
     public class AudioEngine : IDisposable
     {
-        public static AudioEngine Instance { get; } = new AudioEngine();
+        public static AudioEngine Instance
+        {
+            get
+            {
+                if (instance is null) throw new NullReferenceException();
+                else return instance;
+            }
+        }
+        private static AudioEngine? instance;
         
         public WaveFormat WaveFormat => sampleProvider.WaveFormat; // Not sure if I'll need this but good to have it anyway
 
@@ -25,6 +33,13 @@ namespace CVAS.AudioEngine
             waveOutEvent = new WaveOutEvent();
             waveOutEvent.Init(sampleProvider);
             waveOutEvent.Play();
+        }
+
+        public static void Init()
+        {
+            // Check if already initialised
+            if (instance is not null) throw new Exception("AudioEngine cannot be initialised twice!");
+            instance = new AudioEngine();
         }
 
         /// <summary>

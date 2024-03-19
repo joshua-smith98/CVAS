@@ -11,7 +11,15 @@ namespace CVAS.REPL
         /// <summary>
         /// Static instance of the REPL application.
         /// </summary>
-        public static REPL Instance { get; } = new REPL();
+        public static REPL Instance
+        {
+            get
+            {
+                if (instance is null) throw new NullReferenceException();
+                else return instance;
+            }
+        }
+        private static REPL? instance;
 
         /// <summary>
         /// A list of all top-level commands that can be used in the REPL.
@@ -40,6 +48,13 @@ namespace CVAS.REPL
         public bool IsRunning { get; internal set; } = false;
 
         private REPL() { } // Non-constructable
+
+        public static void Init()
+        {
+            // Check if already initialised
+            if (instance is not null) throw new Exception("REPL cannot be initialised twice!");
+            instance = new REPL();
+        }
 
         /// <summary>
         /// Begins the REPL loop. Set <see cref="IsRunning"/> = <see cref="false"/> to end.

@@ -7,8 +7,6 @@ namespace CVAS.AudioEngine
     /// </summary>
     public class Silence : IAudioClip
     {
-        public WaveFormat WaveFormat => AudioEngine.Instance.WaveFormat; // Just automatically set this to the global WaveFormat
-
         public int Milliseconds { get; }
 
         public Silence(int milliseconds)

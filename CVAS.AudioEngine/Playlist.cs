@@ -8,15 +8,11 @@ namespace CVAS.AudioEngine
     /// </summary>
     public class Playlist : IAudioClip
     {
-        public WaveFormat WaveFormat { get; }
-
         public IAudioClip[] AudioClips { get; }
 
         public Playlist(params IAudioClip[] audioClips)
         {
             AudioClips = audioClips;
-
-            WaveFormat = AudioEngine.Instance.WaveFormat;
         }
 
         public IWaveProvider ToWaveProvider()
@@ -30,9 +26,9 @@ namespace CVAS.AudioEngine
                 IWaveProvider waveProvider = AudioClips[i].ToWaveProvider();
 
                 // Check for resampling
-                if (!waveProvider.WaveFormat.Equals(WaveFormat))
+                if (!waveProvider.WaveFormat.Equals(AudioEngine.Instance.WaveFormat))
                 {
-                    waveProvider = new MediaFoundationResampler(waveProvider, WaveFormat);
+                    waveProvider = new MediaFoundationResampler(waveProvider, AudioEngine.Instance.WaveFormat);
                 }
 
                 // Assign to waveProviders

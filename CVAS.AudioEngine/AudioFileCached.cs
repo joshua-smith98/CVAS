@@ -7,14 +7,12 @@ namespace CVAS.AudioEngine
     /// </summary>
     public class AudioFileCached : IAudioFile
     {
-        public WaveFormat WaveFormat { get; }
+        public WaveFormat WaveFormat { get; } // We need this here in order to load the wavestream from memory
 
         /// <summary>
         /// Path to the originating file.
         /// </summary>
         public string Path { get; }
-        public long Offset { get; } // See: AudioFileStreaming
-        public long Length { get; }
 
         private readonly MemoryStream masterCache;
 
@@ -22,13 +20,11 @@ namespace CVAS.AudioEngine
         {
             // Initialise properties
             Path = path;
-            Offset = 0;
 
             // Gather metadata & copy wave data
             using (var tempAudioFileReader = new AudioFileReader(path))
             {
                 WaveFormat = tempAudioFileReader.WaveFormat;
-                Length = tempAudioFileReader.Length;
 
                 masterCache = new MemoryStream();
                 masterCache.SetLength(tempAudioFileReader.Length);

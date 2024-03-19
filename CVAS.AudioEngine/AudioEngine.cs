@@ -42,6 +42,25 @@ namespace CVAS.AudioEngine
             instance = new AudioEngine();
         }
 
+        public static void PlayOnce(IAudioClip audioClip)
+        {
+            // Initialise new WaveOutEvent and play
+            WaveOutEvent waveOutEvent = new WaveOutEvent();
+            waveOutEvent.Init(audioClip.ToWaveProvider());
+            waveOutEvent.Play();
+
+            // Hang until playback is complete
+            while (true)
+            {
+                if (waveOutEvent.PlaybackState is PlaybackState.Stopped)
+                    break;
+
+                Task.Delay(100); // Only check every 100ms
+            }
+
+            waveOutEvent.Dispose();
+        }
+
         /// <summary>
         /// Plays the given <see cref="IAudioClip"/>, with automatic resampling.
         /// </summary>

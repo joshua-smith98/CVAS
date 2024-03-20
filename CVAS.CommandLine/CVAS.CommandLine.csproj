@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CVAS.AudioEngine\CVAS.AudioEngine.csproj" />
+    <ProjectReference Include="..\CVAS.Core\CVAS.Core.csproj" />
+    <ProjectReference Include="..\CVAS.FileSystem\CVAS.FileSystem.csproj" />
+  </ItemGroup>
+
+</Project>

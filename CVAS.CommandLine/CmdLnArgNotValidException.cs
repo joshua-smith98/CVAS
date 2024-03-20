@@ -1,6 +1,6 @@
 ﻿namespace CVAS.CommandLine
 {
-    internal class CmdLnArgNotValidException : Exception
+    internal class CmdLnArgNotValidException : CmdLnException
     {
         public CmdLnArgNotValidException(string message) : base(message) { }
     }

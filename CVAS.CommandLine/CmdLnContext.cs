@@ -20,6 +20,11 @@ namespace CVAS.CommandLine
         public Sentence? Sentence { get; internal set; }
         public Action? Action { get; internal set; }
 
+        internal CmdLnArgument[] CmdLnArguments =
+        {
+
+        };
+
         private CmdLnContext() { } // Non-constructable
 
         public static void Init()
@@ -32,7 +37,29 @@ namespace CVAS.CommandLine
         public void ReadFrom(string[] args)
         {
             // Try to read the data into this context from args[]
-            throw new NotImplementedException();
+            
+            // Iterate through args and try arguments
+            while(args.Length != 0)
+            {
+                bool cmdFound = false;
+
+                foreach (CmdLnArgument cmdLnArgument in CmdLnArguments)
+                {
+                    try
+                    {
+                        args = cmdLnArgument.ImportFromAndTrim(args);
+                        cmdFound = true;
+                        break;
+                    }
+                    catch(CmdLnArgNotValidException e) // This command matches, but an error occured while reading the argument value
+                    {
+                        throw e;
+                    }
+                    catch(CmdLnStrNotValidException) { } // This command doesn't match, just continue
+                }
+
+                if (!cmdFound) throw new CmdLnStrNotValidException($"No option found for: {args[0]}");
+            }
         }
 
         public void Run()

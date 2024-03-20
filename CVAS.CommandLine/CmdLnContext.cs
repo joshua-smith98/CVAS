@@ -1,4 +1,6 @@
 ﻿using CVAS.Core;
+using System.Text;
+using System.Xml.Linq;
 
 namespace CVAS.CommandLine
 {
@@ -39,10 +41,42 @@ namespace CVAS.CommandLine
             throw new NotImplementedException();
         }
 
-        internal static void ReadStringFrom(string[] args)
+        internal static string ReadStringFrom(string[] args)
         {
             // Read a string from args[], taking into account double quotes (")
-            throw new NotImplementedException();
+            // Convert string[] back into a string
+            var strArgs = string.Join(' ', args);
+
+            // Essentially a copy/paste from REPL StringArgument
+            StringBuilder valueBuilder = new StringBuilder();
+
+            // Case: str begins with double quotes
+            if (strArgs[0] == '"')
+            {
+                // Build string from str contents
+                for (int i = 1; i < strArgs.Length; i++)
+                {
+                    if (strArgs[i] == '"') break; // Case: end of value
+
+                    valueBuilder.Append(strArgs[i]);
+
+                    if (i == strArgs.Length - 1) throw new CmdLnArgNotValidException($"Expected second set of double-quotes in argument!"); // TODO: make this message a bit more helpful
+                }
+
+                return valueBuilder.ToString();
+            }
+            else // Case: str doesn't begin with quotes
+            {
+                // Build string from str contents
+                for (int i = 0; i < strArgs.Length; i++)
+                {
+                    if (char.IsSeparator(strArgs[i])) break; // Case: end of value
+
+                    valueBuilder.Append(strArgs[i]);
+                }
+
+                return valueBuilder.ToString();
+            }
         }
     }
 }

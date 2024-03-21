@@ -1,4 +1,6 @@
 ﻿using CVAS.Core;
+using CVAS.FileSystem;
+using System.IO;
 
 namespace CVAS.CommandLine
 {
@@ -19,10 +21,13 @@ namespace CVAS.CommandLine
             }
         }
         private static CmdLnContext? instance;
-        
+
+        public string? LibraryPath { get; internal set; }
+        public string? SentenceStr { get; internal set; }
+        public string? OutputPath { get; internal set; }
+
         public Library? Library { get; internal set; }
         public Sentence? Sentence { get; internal set; }
-        public string? OutputPath { get; internal set; }
         public Action? Action { get; internal set; }
 
         /// <summary>
@@ -87,6 +92,25 @@ namespace CVAS.CommandLine
         {
             // Check that we have an Action to run
             if (Action is null) throw new CmdLnContextNotValidException("No action provided!");
+
+            // Try to load library
+            if (LibraryPath is not null)
+            {
+                try
+                {
+                    Library = LibraryFolder.LoadFrom(LibraryPath).Construct();
+                }
+                catch (DirectoryNotFoundException)
+                {
+                    throw new CmdLnArgNotValidException($"Failed to load library. Couldn't find directory at: {LibraryPath}");
+                }
+            }
+
+            // Try to get sentence
+            if (SentenceStr is not null)
+            {
+                Sentence = Library!.GetSentence(SentenceStr);
+            }
 
             // Try to run the given action
             try

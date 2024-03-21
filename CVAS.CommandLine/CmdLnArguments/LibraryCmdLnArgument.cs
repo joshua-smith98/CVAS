@@ -16,17 +16,8 @@ namespace CVAS.CommandLine
             var ret = args[1..];
             var path = ReadStringFromAndTrim(ref ret);
 
-            // Try to load library
-            try
-            {
-                CmdLnContext.Instance.Library = LibraryFolder.LoadFrom(path).Construct();
-            }
-            catch (DirectoryNotFoundException)
-            {
-                throw new CmdLnArgNotValidException($"Failed to load library. Couldn't find directory at: {path}");
-            }
-
-            // return trimmed args
+            // Save path to CmdLnContext and return trimmed args
+            CmdLnContext.Instance.LibraryPath = path;
             return ret;
         }
     }

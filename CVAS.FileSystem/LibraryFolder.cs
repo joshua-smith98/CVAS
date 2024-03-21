@@ -172,7 +172,7 @@ namespace CVAS.FileSystem
 
                 try
                 {
-                    audioClip_end = new AudioFileCached(files_ends[i]);
+                    audioClip_end = new AudioFileStreaming(files_ends[i]);
                 }
                 catch { continue; }
 

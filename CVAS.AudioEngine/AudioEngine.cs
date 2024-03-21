@@ -24,6 +24,8 @@ namespace CVAS.AudioEngineNS
 
         private readonly MixingSampleProvider sampleProvider;
 
+        private bool disposed = false;
+
 
         private AudioEngine()
         {
@@ -88,10 +90,15 @@ namespace CVAS.AudioEngineNS
             sampleProvider.RemoveAllMixerInputs();
         }
 
+        ~AudioEngine()
+        {
+            Dispose(); // Will never be called if already disposed, because of GC.SuppressFinalize()
+        }
+
         public void Dispose()
         {
-            waveOutEvent.Stop();
-            waveOutEvent.Dispose();
+            waveOutEvent?.Stop();
+            waveOutEvent?.Dispose();
             waveOutEvent = null!;
             GC.SuppressFinalize(this); // VS says to do this, but I'll be honest I'm not sure exactly what it does
         }

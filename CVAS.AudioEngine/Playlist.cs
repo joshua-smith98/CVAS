@@ -40,6 +40,11 @@ namespace CVAS.AudioEngineNS
             return sampleProvider.ToWaveProvider();
         }
 
+        ~Playlist()
+        {
+            Dispose();
+        }
+
         public void Dispose()
         {
             for (int i = 0; i < AudioClips.Length; i++)

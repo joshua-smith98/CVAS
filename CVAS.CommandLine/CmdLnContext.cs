@@ -113,7 +113,7 @@ namespace CVAS.CommandLine
         private void Run()
         {
             // Check that we have an Action to run
-            if (Action is null) throw new CmdLnContextNotValidException("No action provided!");
+            if (Action is null) throw new CmdLnContextNotValidException("Couldn't find anything to do!");
 
             // Try to load library
             if (LibraryPath is not null)

@@ -1,6 +1,4 @@
-﻿using CVAS.FileSystem;
-
-namespace CVAS.CommandLine
+﻿namespace CVAS.CommandLine
 {
     /// <summary>
     /// A <see cref="CmdLnArgument"/> the provides a library to the <see cref="CmdLnContext"/>.

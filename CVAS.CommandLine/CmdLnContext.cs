@@ -1,7 +1,6 @@
 ﻿using CVAS.Core;
 using CVAS.FileSystem;
 using CVAS.TerminalNS;
-using System.IO;
 
 namespace CVAS.CommandLine
 {

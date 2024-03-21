@@ -1,6 +1,4 @@
-﻿using CVAS.AudioEngine;
-
-namespace CVAS.Core
+﻿namespace CVAS.Core
 {
     /// <summary>
     /// A collection of <see cref="Phrase"/>s, including some default punctuation.

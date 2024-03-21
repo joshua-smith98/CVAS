@@ -1,5 +1,4 @@
-﻿using CVAS.TerminalNS;
-using System.Text;
+﻿using System.Text;
 
 namespace CVAS.CommandLine
 {

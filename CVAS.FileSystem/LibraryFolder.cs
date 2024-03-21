@@ -82,7 +82,7 @@ namespace CVAS.FileSystem
 
                 try
                 {
-                    using var a = new AudioFileReader(files[i]) ; // Test to see if it is a valid audio file
+                    using var a = new AudioFileReader(files[i]) { }; // Test to see if it is a valid audio file
 
                     audioFileNames.Add(SysPath.GetFileName(files[i]));
                 }

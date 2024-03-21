@@ -1,6 +1,4 @@
-﻿using System.Data;
-
-namespace CVAS.TerminalNS
+﻿namespace CVAS.TerminalNS
 {
     /// <summary>
     /// Simplified interface for printing information to the console.

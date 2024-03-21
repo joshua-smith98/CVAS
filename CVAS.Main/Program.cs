@@ -49,7 +49,7 @@ catch(Exception e)
     Terminal.Message($"{e.StackTrace}", ConsoleColor.Yellow);
     Terminal.Message();
     Terminal.Message("Please take a screenshot of this, and create an issue on github.", ConsoleColor.Red);
-    Terminal.Message();
-    Terminal.Message("The application will now close.", ConsoleColor.Red);
     Terminal.EndMessage();
+
+    Terminal.AwaitKey("Press any key to close the application...");
 }

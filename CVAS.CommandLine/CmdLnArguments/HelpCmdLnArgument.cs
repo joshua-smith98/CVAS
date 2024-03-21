@@ -24,6 +24,7 @@ namespace CVAS.CommandLine
             CmdLnContext.Instance.Action = () =>
             {
                 // Header
+                Terminal.IsSilent = false;
                 Terminal.BeginMessage();
                 Terminal.Message("---CVAS Command-line Interface v0.5.0---");
                 Terminal.Message("Usage:", ConsoleColor.Yellow);
@@ -44,7 +45,7 @@ namespace CVAS.CommandLine
                     Terminal.Message();
                     Terminal.EndMessage();
                 }
-
+                Terminal.IsSilent = true;
             };
 
             // Return trimmed args

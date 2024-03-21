@@ -3,6 +3,14 @@
 using CVAS.AudioEngine;
 using CVAS.CommandLine;
 using CVAS.REPL;
+using CVAS.TerminalNS;
+
+// Temporary args test!
+var testArgs = Terminal.Prompt("Provide args: ").Split();
+CmdLnContext.Init();
+CmdLnContext.Instance.ReadFromAndRun(testArgs);
+
+return;
 
 if (args.Length == 0)
 {

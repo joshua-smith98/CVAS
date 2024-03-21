@@ -36,7 +36,12 @@ namespace CVAS.CommandLine
         /// </summary>
         internal CmdLnArgument[] CmdLnArguments =
         {
-
+            new HelpCmdLnArgument(),
+            new PlayCmdLnArgument(),
+            new RenderCmdLnArgument(),
+            new LibraryCmdLnArgument(),
+            new SentenceCmdLnArgument(),
+            new OutputCmdLnArgument(),
         };
 
         private CmdLnContext() { } // Non-constructable

@@ -8,7 +8,12 @@ namespace CVAS.CommandLine
 
         public override string? ShortStr => "-l";
 
-        public override string Description => "Loads the library at the given directory.";
+        public override string[] DescriptionLines { get; } =
+        {
+            "Provides a directory to load a library from.",
+        };
+
+        public override string Usage => "-library | -l [path to library]";
 
         protected override string[] ImportFromImpl(string[] args)
         {

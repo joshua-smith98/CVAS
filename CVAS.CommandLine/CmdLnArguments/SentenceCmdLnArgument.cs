@@ -6,7 +6,12 @@
 
         public override string? ShortStr => "-s";
 
-        public override string Description => "Provides a sentence to speak using the currently loaded library.";
+        public override string[] DescriptionLines { get; } =
+        {
+            "Provides a sentence to speak using the currently loaded library.",
+        };
+
+        public override string Usage => "-sentence | -s [sentence]";
 
         protected override string[] ImportFromImpl(string[] args)
         {

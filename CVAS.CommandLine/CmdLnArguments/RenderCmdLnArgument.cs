@@ -6,7 +6,13 @@
 
         public override string? ShortStr => "-r";
 
-        public override string Description => "Renders a sentence to the file at the provided output path. Warning: this will replace any file that already exists!";
+        public override string[] DescriptionLines { get; } =
+        {
+            "Renders a sentence to the file at the provided output path.",
+            "Warning: this will replace any file that already exists!",
+        };
+
+        public override string Usage => "-render | -r";
 
         protected override string[] ImportFromImpl(string[] args)
         {

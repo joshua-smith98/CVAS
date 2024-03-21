@@ -9,7 +9,8 @@ namespace CVAS.CommandLine
     {
         public abstract string Str { get; }
         public abstract string? ShortStr { get; }
-        public abstract string Description { get; }
+        public abstract string[] DescriptionLines { get; }
+        public abstract string Usage { get; }
 
         /// <summary>
         /// Tries to import a value from the given arguments into <see cref="CmdLnContext.Instance"/>, returning the trimmed args.

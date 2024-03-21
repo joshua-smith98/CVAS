@@ -6,7 +6,12 @@
 
         public override string? ShortStr => "-o";
 
-        public override string Description => "Specifies an output file for the '-render' option.";
+        public override string[] DescriptionLines { get; } =
+        {
+            "Specifies an output file for the '-render' option.",
+        };
+
+        public override string Usage => "-output | -o [output path]";
 
         protected override string[] ImportFromImpl(string[] args)
         {

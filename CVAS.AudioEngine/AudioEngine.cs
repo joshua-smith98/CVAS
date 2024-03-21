@@ -76,7 +76,7 @@ namespace CVAS.AudioEngine
         /// </summary>
         /// <param name="audioClip"></param>
         /// <param name="path"></param>
-        public void Render(IAudioClip audioClip, string path)
+        public static void Render(IAudioClip audioClip, string path)
         {
             // Write wave file
             WaveFileWriter.CreateWaveFile16(path, audioClip.ToWaveProvider().ToSampleProvider());

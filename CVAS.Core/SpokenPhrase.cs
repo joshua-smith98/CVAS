@@ -55,10 +55,5 @@ namespace CVAS.Core
             audioClip = null!;
             GC.SuppressFinalize(this);
         }
-
-        ~SpokenPhrase()
-        {
-            Dispose();
-        }
     }
 }

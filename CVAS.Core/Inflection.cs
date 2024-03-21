@@ -16,11 +16,6 @@ namespace CVAS.Core
             AudioClip = audioClip;
         }
 
-        ~Inflection()
-        {
-            Dispose();
-        }
-
         public void Dispose()
         {
             AudioClip?.Dispose();

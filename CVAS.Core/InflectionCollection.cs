@@ -85,10 +85,5 @@ namespace CVAS.Core
             inflections = null!;
             GC.SuppressFinalize(this);
         }
-
-        ~InflectionCollection()
-        {
-            Dispose();
-        }
     }
 }

@@ -90,11 +90,6 @@ namespace CVAS.AudioEngineNS
             sampleProvider.RemoveAllMixerInputs();
         }
 
-        ~AudioEngine()
-        {
-            Dispose(); // Will never be called if already disposed, because of GC.SuppressFinalize()
-        }
-
         public void Dispose()
         {
             waveOutEvent?.Stop();

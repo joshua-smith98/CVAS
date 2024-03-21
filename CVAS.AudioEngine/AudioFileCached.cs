@@ -46,11 +46,6 @@ namespace CVAS.AudioEngineNS
             return new DisposingWaveProvider(new RawSourceWaveStream(newStream, WaveFormat));
         }
 
-        ~AudioFileCached()
-        {
-            Dispose();
-        }
-
         public void Dispose()
         {
             masterCache?.Dispose();

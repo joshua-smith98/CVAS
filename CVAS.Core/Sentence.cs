@@ -42,10 +42,5 @@ namespace CVAS.Core
             spokenPhrases = null!;
             GC.SuppressFinalize(this);
         }
-
-        ~Sentence()
-        {
-            Dispose();
-        }
     }
 }

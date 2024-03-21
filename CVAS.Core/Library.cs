@@ -129,11 +129,6 @@
             return subPhrase;
         }
 
-        ~Library()
-        {
-            Dispose();
-        }
-
         public void Dispose()
         {
             for (int i = 0; i < phrases.Count; i++)

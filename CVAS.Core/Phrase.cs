@@ -132,9 +132,5 @@ namespace CVAS.Core
             GC.SuppressFinalize(this);
         }
 
-        ~Phrase()
-        {
-            Dispose();
-        }
     }
 }

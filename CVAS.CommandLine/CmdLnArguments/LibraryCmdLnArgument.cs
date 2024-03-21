@@ -17,6 +17,9 @@ namespace CVAS.CommandLine
 
         protected override string[] ImportFromImpl(string[] args)
         {
+            // Verify: args has more than just Str
+            if (args.Length == 1) throw new CmdLnArgNotValidException($"Expected path to library after '{args[0]}', found nothing!");
+
             // Get path from args
             var ret = args[1..];
             var path = ReadStringFromAndTrim(ref ret);

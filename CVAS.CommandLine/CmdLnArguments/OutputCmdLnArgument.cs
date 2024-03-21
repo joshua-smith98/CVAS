@@ -15,6 +15,9 @@
 
         protected override string[] ImportFromImpl(string[] args)
         {
+            // Verify: args has more than just Str
+            if (args.Length == 1) throw new CmdLnArgNotValidException($"Expected output path after '{args[0]}', found nothing!");
+
             // Get path
             var ret = args[1..];
             var path = ReadStringFromAndTrim(ref ret);

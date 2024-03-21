@@ -20,7 +20,8 @@
             var path = ReadStringFromAndTrim(ref ret);
 
             // Verify: directory exists
-            if (!Directory.Exists(path)) throw new CmdLnArgNotValidException($"Couldn't find directory: {Path.GetDirectoryName(path)}");
+            var directoryName = Path.GetDirectoryName(path);
+            if (directoryName != "" && !Directory.Exists(path)) throw new CmdLnArgNotValidException($"Directory not found: {directoryName}");
 
             // Save path to CmdLnContext and return trimmed args
             CmdLnContext.Instance.OutputPath = path;

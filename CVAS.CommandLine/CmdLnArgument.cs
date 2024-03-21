@@ -37,7 +37,7 @@ namespace CVAS.CommandLine
         /// <returns></returns>
         /// <exception cref="CmdLnArgNotValidException"></exception>
         /// <exception cref="Exception"></exception>
-        protected static string ReadStringFrom(ref string[] args)
+        protected static string ReadStringFromAndTrim(ref string[] args)
         {
             // Read a string from args[], taking into account double quotes (")
             // Convert string[] back into a string

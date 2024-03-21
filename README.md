@@ -16,7 +16,7 @@ If you're looking for a finished & working program, try this one - its quite nic
  - [x] Render spoken sentences to files
  - [x] Library caching on the disk
  - [x] Perform functions via REPL
- - [ ] Perform functions via command line
+ - [x] Perform functions via command line
  - [ ] A completed README.md, with "Usage" and "Installation" sections.
 
 ### V1.0 - WPF GUI

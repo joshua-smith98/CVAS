@@ -80,7 +80,7 @@ namespace CVAS.REPL
             }
 
             // Render file
-            AudioEngine.AudioEngine.Instance.Render(sentence.GetAudioClip(), path);
+            AudioEngine.AudioEngine.Render(sentence.GetAudioClip(), path);
             Terminal.MessageSingle($"Rendered to: {path}");
         }
     }

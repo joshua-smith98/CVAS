@@ -1,4 +1,4 @@
-﻿namespace CVAS.AudioEngine
+﻿namespace CVAS.AudioEngineNS
 {
     /// <summary>
     /// Interface representing any playable piece of audio originating from a file.

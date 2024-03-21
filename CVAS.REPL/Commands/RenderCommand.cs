@@ -1,4 +1,5 @@
-﻿using CVAS.Core;
+﻿using CVAS.AudioEngineNS;
+using CVAS.Core;
 using CVAS.TerminalNS;
 
 namespace CVAS.REPL
@@ -79,7 +80,7 @@ namespace CVAS.REPL
             }
 
             // Render file
-            AudioEngine.AudioEngine.Render(sentence.GetAudioClip(), path);
+            AudioEngine.Render(sentence.GetAudioClip(), path);
             Terminal.MessageSingle($"Rendered to: {path}");
         }
     }

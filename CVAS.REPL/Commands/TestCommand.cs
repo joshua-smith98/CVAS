@@ -1,4 +1,4 @@
-﻿using CVAS.AudioEngine;
+﻿using CVAS.AudioEngineNS;
 using CVAS.Core;
 using CVAS.TerminalNS;
 

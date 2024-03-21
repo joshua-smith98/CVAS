@@ -1,6 +1,6 @@
 ﻿using NAudio.Wave;
 
-namespace CVAS.AudioEngine
+namespace CVAS.AudioEngineNS
 {
     /// <summary>
     /// Interface representing any playable piece of audio.

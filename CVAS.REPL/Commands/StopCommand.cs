@@ -1,4 +1,6 @@
-﻿namespace CVAS.REPL
+﻿using CVAS.AudioEngineNS;
+
+namespace CVAS.REPL
 {
     /// <summary>
     /// A <see cref="Command"/> that stops all audio playback.
@@ -17,7 +19,7 @@
 
         protected override void VerifyArgsAndRun()
         {
-            AudioEngine.AudioEngine.Instance.StopAll();
+            AudioEngine.Instance.StopAll();
         }
     }
 }

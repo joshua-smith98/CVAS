@@ -1,4 +1,6 @@
-﻿namespace CVAS.CommandLine
+﻿using CVAS.AudioEngineNS;
+
+namespace CVAS.CommandLine
 {
     /// <summary>
     /// A <see cref="CmdLnArgument"/> that plays a sentence.
@@ -26,7 +28,7 @@
                 if (CmdLnContext.Instance.Sentence is null) throw new CmdLnContextNotValidException("Tried to play, but no sentence was given!");
 
                 // Play sentence
-                AudioEngine.AudioEngine.PlayOnce(CmdLnContext.Instance.Sentence.GetAudioClip());
+                AudioEngine.PlayOnce(CmdLnContext.Instance.Sentence.GetAudioClip());
             };
 
             // Return trimmed args

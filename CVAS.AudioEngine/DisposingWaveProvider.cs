@@ -1,6 +1,6 @@
 ﻿using NAudio.Wave;
 
-namespace CVAS.AudioEngine
+namespace CVAS.AudioEngineNS
 {
     /// <summary>
     /// A WaveProvider that takes a WaveStream, and automatically disposes of it when finished playing.

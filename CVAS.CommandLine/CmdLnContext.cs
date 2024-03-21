@@ -102,7 +102,7 @@ namespace CVAS.CommandLine
                     catch(CmdLnStrNotValidException) { } // This command doesn't match, just continue
                 }
 
-                if (!cmdFound) throw new CmdLnStrNotValidException($"No option found for: {args[0]}");
+                if (!cmdFound) throw new CmdLnStrNotValidException($"'{args[0]}' is not a valid option. Use '-help' or '-h' to get a list of valid options.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace CVAS.CommandLine
                 }
                 catch (DirectoryNotFoundException)
                 {
-                    throw new CmdLnArgNotValidException($"Failed to load library. Couldn't find directory at: {LibraryPath}");
+                    throw new CmdLnArgNotValidException($"Couldn't find directory: {LibraryPath}");
                 }
             }
 

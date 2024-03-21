@@ -226,7 +226,7 @@ namespace CVAS.FileSystem
                     // I will print a message to the console notifying them to open an issue - if someone encounters it, it will be more information to diagnose with.
                     try
                     {
-                        audioClip = new AudioFileStreaming(SysPath.Combine(SysPath.GetDirectoryName(Path)!, inflectionRow.AudioFileName)); // Gets the path to the file, relative to this cache file's current directory.
+                        audioClip = new AudioFileCached(SysPath.Combine(SysPath.GetDirectoryName(Path)!, inflectionRow.AudioFileName)); // Gets the path to the file, relative to this cache file's current directory.
                     }
                     catch (DirectoryNotFoundException)
                     {

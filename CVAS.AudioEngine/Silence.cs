@@ -21,6 +21,7 @@ namespace CVAS.AudioEngineNS
 
         public void Dispose()
         {
+            // Nothing to dispose of
             GC.SuppressFinalize(this);
         }
     }

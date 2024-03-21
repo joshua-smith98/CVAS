@@ -20,7 +20,7 @@ namespace CVAS.AudioEngineNS
         
         public static readonly WaveFormat WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2); // TODO: Implement changing WaveFormat
 
-        private readonly WaveOutEvent waveOutEvent;
+        private WaveOutEvent waveOutEvent;
 
         private readonly MixingSampleProvider sampleProvider;
 
@@ -92,6 +92,7 @@ namespace CVAS.AudioEngineNS
         {
             waveOutEvent.Stop();
             waveOutEvent.Dispose();
+            waveOutEvent = null!;
             GC.SuppressFinalize(this); // VS says to do this, but I'll be honest I'm not sure exactly what it does
         }
     }

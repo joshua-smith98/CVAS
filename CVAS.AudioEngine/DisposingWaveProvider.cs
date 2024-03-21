@@ -9,7 +9,7 @@ namespace CVAS.AudioEngineNS
     {
         public WaveFormat WaveFormat => waveStream.WaveFormat;
 
-        private readonly WaveStream waveStream;
+        private WaveStream waveStream;
         private bool disposed = false;
 
         public DisposingWaveProvider(WaveStream waveStream)
@@ -24,14 +24,23 @@ namespace CVAS.AudioEngineNS
             var bytesRead = waveStream.Read(buffer, offset, count);
             
             // Case: EOF
-            if (bytesRead == 0)
-            {
-                waveStream.Dispose();
-                disposed = true;
-                GC.Collect(); // If we don't do this, the GC will allow gigabytes of memory usage to build up over time. This block won't be accessed too often, so it shouldn't affect performance.
-            }
+            if (bytesRead == 0) Dispose();
 
             return bytesRead;
+        }
+
+        ~DisposingWaveProvider() // In case EOF is never reached for some reason
+        {
+            if (!disposed) Dispose();
+        }
+
+        public void Dispose()
+        {
+            waveStream?.Dispose();
+            waveStream = null!;
+            disposed = true;
+            GC.SuppressFinalize(this);
+            GC.Collect(); // If we don't do this, the GC will allow gigabytes of memory usage to build up over time. This block won't be accessed too often, so it shouldn't affect performance.
         }
     }
 }

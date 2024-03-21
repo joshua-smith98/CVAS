@@ -14,7 +14,7 @@ namespace CVAS.AudioEngineNS
         /// </summary>
         public string Path { get; }
 
-        private readonly MemoryStream masterCache;
+        private MemoryStream masterCache;
 
         public AudioFileCached(string path)
         {
@@ -49,7 +49,9 @@ namespace CVAS.AudioEngineNS
         public void Dispose()
         {
             masterCache.Dispose();
+            masterCache = null!;
             GC.SuppressFinalize(this);
+            GC.Collect();
         }
     }
 }

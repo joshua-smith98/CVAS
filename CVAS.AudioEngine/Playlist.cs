@@ -8,7 +8,7 @@ namespace CVAS.AudioEngineNS
     /// </summary>
     public class Playlist : IAudioClip
     {
-        public IAudioClip[] AudioClips { get; }
+        public IAudioClip[] AudioClips { get; private set; }
 
         public Playlist(params IAudioClip[] audioClips)
         {
@@ -42,11 +42,13 @@ namespace CVAS.AudioEngineNS
 
         public void Dispose()
         {
-            foreach (IAudioClip audioClip in AudioClips)
+            for (int i = 0; i < AudioClips.Length; i++)
             {
-                audioClip.Dispose();
+                AudioClips[i]?.Dispose();
+                AudioClips[i] = null!;
             }
 
+            AudioClips = null!;
             GC.SuppressFinalize(this);
         }
     }

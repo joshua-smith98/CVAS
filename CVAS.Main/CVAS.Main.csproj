@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CVAS.CommandLine\CVAS.CommandLine.csproj" />
     <ProjectReference Include="..\CVAS.REPL\CVAS.REPL.csproj" />
   </ItemGroup>
 

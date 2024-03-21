@@ -1,5 +1,6 @@
 ﻿using CVAS.Core;
 using CVAS.FileSystem;
+using CVAS.TerminalNS;
 using System.IO;
 
 namespace CVAS.CommandLine
@@ -51,12 +52,26 @@ namespace CVAS.CommandLine
             instance = new CmdLnContext();
         }
 
+        public void ReadFromAndRun(string[] args)
+        {
+            try
+            {
+                ReadFrom(args);
+                Run();
+            }
+            catch (CmdLnException e)
+            {
+                Terminal.MessageSingle(e.Message, ConsoleColor.Red);
+                Terminal.AwaitKey();
+            }
+        }
+
         /// <summary>
         /// Tries to read this context from the given arguments.
         /// </summary>
         /// <param name="args"></param>
         /// <exception cref="CmdLnStrNotValidException"></exception>
-        public void ReadFrom(string[] args)
+        private void ReadFrom(string[] args)
         {
             // Try to read the data into this context from args[]
             
@@ -88,7 +103,7 @@ namespace CVAS.CommandLine
         /// Tries to run this context with the contained properties. Throws a <see cref="CmdLnContextNotValidException"/> upon failure.
         /// </summary>
         /// <exception cref="CmdLnContextNotValidException"></exception>
-        public void Run()
+        private void Run()
         {
             // Check that we have an Action to run
             if (Action is null) throw new CmdLnContextNotValidException("No action provided!");

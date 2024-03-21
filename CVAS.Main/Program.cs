@@ -1,6 +1,7 @@
 ﻿// Main entry point
 
 using CVAS.AudioEngine;
+using CVAS.CommandLine;
 using CVAS.REPL;
 
 if (args.Length == 0)
@@ -23,5 +24,6 @@ else if (args[0] == "-c")
 }
 else // if args has some thing(s), but not -c
 {
-    // Initialise commandline
+    CmdLnContext.Init();
+    CmdLnContext.Instance.ReadFromAndRun(args);
 }

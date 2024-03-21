@@ -8,7 +8,7 @@ namespace CVAS.Core
     public class Inflection : IDisposable
     {
         public InflectionType InflectionType { get; }
-        public IAudioClip AudioClip { get; }
+        public IAudioClip AudioClip { get; private set; }
 
         public Inflection(InflectionType inflectionType, IAudioClip audioClip)
         {
@@ -16,9 +16,15 @@ namespace CVAS.Core
             AudioClip = audioClip;
         }
 
+        ~Inflection()
+        {
+            Dispose();
+        }
+
         public void Dispose()
         {
-            AudioClip.Dispose();
+            AudioClip?.Dispose();
+            AudioClip = null!;
             GC.SuppressFinalize(this);
         }
     }

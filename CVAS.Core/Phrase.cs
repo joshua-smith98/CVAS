@@ -14,7 +14,7 @@ namespace CVAS.Core
         /// The collection of <see cref="Inflection"/>s associated with this phrase, each containing an <see cref="IAudioClip"/>.
         /// </summary>
         public Inflection[] Inflections => inflections.ToArray();
-        private readonly InflectionCollection inflections = new();
+        private InflectionCollection inflections = new();
         
         /// <summary>
         /// Constructs a new phrase with no associated audio.
@@ -127,8 +127,14 @@ namespace CVAS.Core
 
         public void Dispose()
         {
-            inflections.Dispose();
+            inflections?.Dispose();
+            inflections = null!;
             GC.SuppressFinalize(this);
+        }
+
+        ~Phrase()
+        {
+            Dispose();
         }
     }
 }

@@ -6,7 +6,7 @@
     public partial class Library : IDisposable
     {
         public Phrase[] Phrases => phrases.ToArray(); //public get only
-        private readonly List<Phrase> phrases = DefaultPhrases.ToList(); // All Libraries include the special phrases by default
+        private List<Phrase> phrases = DefaultPhrases.ToList(); // All Libraries include the special phrases by default
 
         public Library(params Phrase[] phrases)
         {
@@ -129,9 +129,21 @@
             return subPhrase;
         }
 
+        ~Library()
+        {
+            Dispose();
+        }
+
         public void Dispose()
         {
-            foreach (var phrase in phrases) phrase.Dispose();
+            for (int i = 0; i < phrases.Count; i++)
+            {
+                phrases[i]?.Dispose();
+                phrases[i] = null!;
+            }
+
+            phrases = null!;
+
             GC.SuppressFinalize(this);
         }
     }

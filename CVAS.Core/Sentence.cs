@@ -13,7 +13,7 @@ namespace CVAS.Core
         /// <summary>
         /// The sequence of <see cref="SpokenPhrase"/>s that defines this sentence.
         /// </summary>
-        public SpokenPhrase[] spokenPhrases { get; }
+        public SpokenPhrase[] spokenPhrases { get; private set; }
 
         internal Sentence(string str, string[] words, SpokenPhrase[] spokenPhrases)
         {
@@ -33,7 +33,19 @@ namespace CVAS.Core
 
         public void Dispose()
         {
-            foreach (var spokenPhrase in spokenPhrases) spokenPhrase.Dispose();
+            for (int i = 0; i < spokenPhrases.Length; i++)
+            {
+                spokenPhrases[i]?.Dispose();
+                spokenPhrases[i] = null!;
+            }
+
+            spokenPhrases = null!;
+            GC.SuppressFinalize(this);
+        }
+
+        ~Sentence()
+        {
+            Dispose();
         }
     }
 }

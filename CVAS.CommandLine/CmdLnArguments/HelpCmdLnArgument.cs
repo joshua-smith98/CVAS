@@ -27,7 +27,7 @@ namespace CVAS.CommandLine
                 Terminal.BeginMessage();
                 Terminal.Message("---CVAS Command-line Interface v0.5.0---");
                 Terminal.Message("Usage:", ConsoleColor.Yellow);
-                Terminal.Message("\tCVAS.exe -[option] (argument) -[option] (argument) ...", ConsoleColor.DarkYellow);
+                Terminal.Message("\t[cvas.exe] -[option] (argument) -[option] (argument) ...", ConsoleColor.DarkYellow);
                 Terminal.EndMessage();
 
                 // Print list of options

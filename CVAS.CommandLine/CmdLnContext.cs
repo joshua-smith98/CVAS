@@ -67,7 +67,6 @@ namespace CVAS.CommandLine
             catch (CmdLnException e)
             {
                 Terminal.MessageSingle(e.Message, ConsoleColor.Red);
-                Terminal.AwaitKey("Press any key to close the application...");
             }
         }
 
@@ -95,6 +94,7 @@ namespace CVAS.CommandLine
                     }
                     catch(CmdLnArgNotValidException e) // This command matches, but an error occured while reading the argument value
                     {
+                        cmdFound = true;
                         throw e;
                     }
                     catch(CmdLnStrNotValidException) { } // This command doesn't match, just continue

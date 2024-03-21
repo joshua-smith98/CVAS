@@ -38,6 +38,7 @@ namespace CVAS.AudioEngineNS
         {
             waveStream?.Dispose();
             waveStream = null!;
+            disposed = true;
             GC.SuppressFinalize(this);
             GC.Collect(); // If we don't do this, the GC will allow gigabytes of memory usage to build up over time. This block won't be accessed too often, so it shouldn't affect performance.
         }

@@ -13,7 +13,7 @@ namespace CVAS.REPL
 
         protected override string ReadFromImpl(string str)
         {
-            StringBuilder valueBuilder = new StringBuilder();
+            StringBuilder valueBuilder = new();
 
             // Case: str begins with double quotes
             if (str[0] == '"')
@@ -31,7 +31,7 @@ namespace CVAS.REPL
                 Value = valueBuilder.ToString();
 
                 // Return trimmed str
-                return str.Substring(valueBuilder.Length + 2).TrimStart();
+                return str[(valueBuilder.Length + 2)..].TrimStart();
             }
             else // Case: str doesn't begin with quotes
             {
@@ -46,7 +46,7 @@ namespace CVAS.REPL
                 Value = valueBuilder.ToString();
 
                 // Return trimmed str
-                return str.Substring(valueBuilder.Length).TrimStart();
+                return str[valueBuilder.Length..].TrimStart();
             }
         }
     }

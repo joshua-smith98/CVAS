@@ -78,13 +78,11 @@ namespace CVAS.FileSystem
                     if (!br.ReadChars(8).SequenceEqual("CVASLBCH".ToArray())) throw new InvalidFileHeaderException();
 
                     // Validity check: folder hash
-                    var filenames = Directory.GetFiles(SysPath.GetDirectoryName(path)).Select(x => SysPath.GetFileName(x)); // TODO: handle possible null reference
+                    var filenames = Directory.GetFiles(SysPath.GetDirectoryName(path)!).Select(x => SysPath.GetFileName(x)); // TODO: handle possible null reference
                     var filenames_string = "";
                     foreach (var filename in filenames)
                         filenames_string += filename;
-                    byte[] folderHash;
-                    using (var md5 = MD5.Create())
-                        folderHash = md5.ComputeHash(Encoding.ASCII.GetBytes(filenames_string));
+                    byte[] folderHash = MD5.HashData(Encoding.ASCII.GetBytes(filenames_string));
 
                     if (!br.ReadBytes(16).SequenceEqual(folderHash)) throw new InvalidFileHashException();
 
@@ -158,38 +156,42 @@ namespace CVAS.FileSystem
         {
             // Initialise variables for LibraryCacheFile construction
             // NOTE: We will need to use lists here for the phraseTable and inflectionTable, due to our need to exclude non-IAudioFile phrases and inflections
-            List<PhraseTableRow> phraseTable = new List<PhraseTableRow>();
+            List<PhraseTableRow> phraseTable = new();
 
             // Deconstruct phrases
             foreach (Phrase phrase in library.Phrases)
             {
                 // Check if this phrase contains only non-IAudioFiles and if so don't include
-                if (phrase.Inflections.Select(x => x.AudioClip).Where(x => x is IAudioFile).Count() == 0) continue;
-                
-                PhraseTableRow phraseRow = new PhraseTableRow();
-                phraseRow.Str = phrase.Str;
+                if (!phrase.Inflections.Select(x => x.AudioClip).Where(x => x is IAudioFile).Any()) continue;
+
+                PhraseTableRow phraseRow = new()
+                {
+                    Str = phrase.Str
+                };
 
                 // Deconstruct inflections
-                List<InflectionTableRow> inflectionTable = new List<InflectionTableRow>();
+                List<InflectionTableRow> inflectionTable = new();
                 foreach (InflectionType inflectionType in phrase.Inflections.Select(x => x.InflectionType))
                 {
                     // Check if this inflection isn't IAudioFile, if so and don't include
                     if (phrase.GetAudioClip(inflectionType) is not IAudioFile) continue;
-                    
-                    var inflectionRow = new InflectionTableRow();
-                    inflectionRow.Inflection = (int)inflectionType;
-                    inflectionRow.AudioFileName = SysPath.GetFileName(((IAudioFile)phrase.GetAudioClip(inflectionType)).Path); // Gets the filename for the phrase's IAudioFile
+
+                    var inflectionRow = new InflectionTableRow
+                    {
+                        Inflection = (int)inflectionType,
+                        AudioFileName = SysPath.GetFileName(((IAudioFile)phrase.GetAudioClip(inflectionType)).Path) // Gets the filename for the phrase's IAudioFile
+                    };
 
                     inflectionTable.Add(inflectionRow);
                 }
 
-                phraseRow.NumInflections = inflectionTable.Count();
+                phraseRow.NumInflections = inflectionTable.Count;
                 phraseRow.InflectionTable = inflectionTable.ToArray();
                 phraseTable.Add(phraseRow);
             }
 
             // Construct and return
-            return new LibraryCacheFile(phraseTable.Count(), phraseTable.ToArray());
+            return new LibraryCacheFile(phraseTable.Count, phraseTable.ToArray());
         }
 
         /// <summary>
@@ -201,7 +203,7 @@ namespace CVAS.FileSystem
             Terminal.BeginReport("Building from cache...");
             
             // Construct phrases
-            List<Phrase> phrases = new List<Phrase>();
+            List<Phrase> phrases = new();
             for (int i = 0; i < PhraseTable.Length; i++)
             {
                 // Report progress
@@ -214,7 +216,7 @@ namespace CVAS.FileSystem
                 bool unknownErrorNotified = false; // For the BEEG unknown error below
                 
                 // Construct inflections
-                InflectionCollection inflections = new InflectionCollection();
+                InflectionCollection inflections = new();
                 foreach (InflectionTableRow inflectionRow in PhraseTable[i].InflectionTable)
                 {
                     InflectionType inflectionType = (InflectionType)inflectionRow.Inflection;
@@ -224,7 +226,7 @@ namespace CVAS.FileSystem
                     // I will print a message to the console notifying them to open an issue - if someone encounters it, it will be more information to diagnose with.
                     try
                     {
-                        audioClip = new AudioFileStreaming(SysPath.Combine(SysPath.GetDirectoryName(Path), inflectionRow.AudioFileName)); // Gets the path to the file, relative to this cache file's current directory.
+                        audioClip = new AudioFileStreaming(SysPath.Combine(SysPath.GetDirectoryName(Path)!, inflectionRow.AudioFileName)); // Gets the path to the file, relative to this cache file's current directory.
                     }
                     catch (DirectoryNotFoundException)
                     {
@@ -284,13 +286,11 @@ namespace CVAS.FileSystem
                 bw.Write("CVASLBCH".ToArray()); // Convert to char[] so that BinaryWriter doesn't write a length int before the header
 
                 // Compute and write folder hash
-                var filenames = Directory.GetFiles(SysPath.GetDirectoryName(path)).Select(x => SysPath.GetFileName(x)); // TODO: handle possible null reference
+                var filenames = Directory.GetFiles(SysPath.GetDirectoryName(path)!).Select(x => SysPath.GetFileName(x)); // TODO: handle possible null reference
                 var filenames_string = "";
                 foreach (var filename in filenames)
                     filenames_string += filename;
-                byte[] folderHash;
-                using (var md5 = MD5.Create())
-                    folderHash = md5.ComputeHash(Encoding.ASCII.GetBytes(filenames_string));
+                byte[] folderHash = MD5.HashData(Encoding.ASCII.GetBytes(filenames_string));
                 bw.Write(folderHash);
 
                 // Write phrases & inflections

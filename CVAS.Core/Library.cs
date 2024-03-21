@@ -47,7 +47,7 @@ namespace CVAS.Core
         /// <returns></returns>
         public Sentence GetSentence(string str)
         {
-            string[] words = Phrase.getWords(str); // TODO? Fix dependency on Phrase here
+            string[] words = Phrase.GetWords(str); // TODO? Fix dependency on Phrase here
 
             // Copy paste from FindSubPhrases(), but with a big difference: we are calculating inflections here!
 
@@ -77,7 +77,7 @@ namespace CVAS.Core
         private Phrase[] FindSubPhrases(string[] words)
         {
             List<string> tempWords = words.ToList();
-            List<Phrase> subPhrases = new List<Phrase>();
+            List<Phrase> subPhrases = new();
 
             // Finds the longest beginning subphrase and adds to our list, then subtracts that subphrase from this phrase's words.
             // Repeats until there are no more words remaining, or no more subphrases can be found.
@@ -109,7 +109,7 @@ namespace CVAS.Core
         {
             // Iterates through words to find the largest subphrase of those words, or null
 
-            List<string> testPhrase = new List<string>(); // List of words that will be used to test for a possible subphrase
+            List<string> testPhrase = new(); // List of words that will be used to test for a possible subphrase
             Phrase? subPhrase = null;
 
             foreach (string word in words)
@@ -134,6 +134,7 @@ namespace CVAS.Core
         public void Dispose()
         {
             foreach (var phrase in phrases) phrase.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

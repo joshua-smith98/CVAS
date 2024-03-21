@@ -11,9 +11,9 @@
 
         public override string[] Usage { get; } = { "exit" };
 
-        public override Command[] SubCommands { get; } = { };
+        public override Command[] SubCommands { get; } = Array.Empty<Command>();
 
-        public override Argument[] Arguments { get; } = { };
+        public override Argument[] Arguments { get; } = Array.Empty<Argument>();
 
         protected override void VerifyArgsAndRun()
         {

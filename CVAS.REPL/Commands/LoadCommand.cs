@@ -14,7 +14,7 @@ namespace CVAS.REPL
 
         public override string[] Usage { get; } = { "load [path]" };
 
-        public override Command[] SubCommands { get; } = { };
+        public override Command[] SubCommands { get; } = Array.Empty<Command>();
 
         public override Argument[] Arguments { get; } =
         {

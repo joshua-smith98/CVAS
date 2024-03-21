@@ -19,6 +19,7 @@ namespace CVAS.Core
         public void Dispose()
         {
             AudioClip.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

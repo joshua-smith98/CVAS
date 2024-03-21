@@ -46,6 +46,8 @@ namespace CVAS.AudioEngine
             {
                 audioClip.Dispose();
             }
+
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -51,7 +51,7 @@ namespace CVAS.CommandLine
             if (strArgs[0] == '"')
             {
                 // Build string from str contents
-                StringBuilder valueBuilder = new StringBuilder();
+                StringBuilder valueBuilder = new();
 
                 for (int i = 1; i < strArgs.Length; i++)
                 {

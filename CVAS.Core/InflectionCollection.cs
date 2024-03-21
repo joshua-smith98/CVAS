@@ -8,11 +8,11 @@ namespace CVAS.Core
     /// </summary>
     public class InflectionCollection : ICollection<Inflection>, IDisposable
     {
-        public int Count => inflections.Count();
+        public int Count => inflections.Count;
 
         public bool IsReadOnly => false;
 
-        private List<Inflection> inflections = new List<Inflection>();
+        private readonly List<Inflection> inflections = new();
 
         /// <summary>
         /// Gets the <see cref="IAudioClip"/> associated with the given <see cref="InflectionType"/>.
@@ -25,7 +25,7 @@ namespace CVAS.Core
             get
             {
                 var ret = inflections.Where(x => x.InflectionType == type);
-                if (ret.Count() == 0) throw new KeyNotFoundException();
+                if (!ret.Any()) throw new KeyNotFoundException();
                 return ret.First().AudioClip;
             }
         }
@@ -77,6 +77,8 @@ namespace CVAS.Core
         public void Dispose()
         {
             foreach (var inflection in inflections) inflection.Dispose();
+
+            GC.SuppressFinalize(this);
         }
     }
 }

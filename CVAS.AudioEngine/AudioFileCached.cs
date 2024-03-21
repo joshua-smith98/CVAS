@@ -49,6 +49,7 @@ namespace CVAS.AudioEngine
         public void Dispose()
         {
             masterCache.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

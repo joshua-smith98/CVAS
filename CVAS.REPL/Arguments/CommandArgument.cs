@@ -19,7 +19,7 @@
             Value = REPL.Instance.CommandInstances.Where(x => x.Str == strFirst).First();
 
             // Return trimmed string
-            return str.Substring(strFirst.Length).TrimStart();
+            return str[strFirst.Length..].TrimStart();
         }
     }
 }

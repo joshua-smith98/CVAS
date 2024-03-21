@@ -15,11 +15,11 @@
             if (str[0] != '-') throw new ArgumentNotValidException($"[{Name}] is of type OptionArgument, and must begin with a hyphen (-).");
 
             // Get option, and remove '-' from the beginning
-            var option = str.Split().First().Substring(1);
+            var option = str.Split().First()[1..];
             Value = option;
 
             // Return trimmed str
-            return str.Substring(option.Length + 1).TrimStart();
+            return str[(option.Length + 1)..].TrimStart();
         }
     }
 }

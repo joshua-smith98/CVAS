@@ -14,7 +14,7 @@ namespace CVAS.Core
         /// The collection of <see cref="Inflection"/>s associated with this phrase, each containing an <see cref="IAudioClip"/>.
         /// </summary>
         public Inflection[] Inflections => inflections.ToArray();
-        private InflectionCollection inflections = new();
+        private readonly InflectionCollection inflections = new();
         
         /// <summary>
         /// Constructs a new phrase with no associated audio.
@@ -23,7 +23,7 @@ namespace CVAS.Core
         public Phrase (string str)
         {
             Str = str;
-            Words = getWords(str);
+            Words = GetWords(str);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace CVAS.Core
         public Phrase(string str, IAudioClip audioClip)
         {
             Str = str;
-            Words = getWords(str);
+            Words = GetWords(str);
             inflections.Add(new Inflection(InflectionType.End, audioClip));
         }
 
@@ -45,7 +45,7 @@ namespace CVAS.Core
         public Phrase(string str, params Inflection[] inflections)
         {
             Str = str;
-            Words = getWords(str);
+            Words = GetWords(str);
             this.inflections.AddRange(inflections);
         }
 
@@ -95,9 +95,9 @@ namespace CVAS.Core
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        internal static string[] getWords(string str)
+        internal static string[] GetWords(string str)
         {
-            List<string> words = new List<string>();
+            List<string> words = new();
 
             string word = "";
             foreach (char character in str)
@@ -109,7 +109,7 @@ namespace CVAS.Core
                     word = "";
                 }
                 // Case Special Phrases/Punctuation: add word & char to list and clear
-                else if (SpecialPhrases.Values.Contains(character))
+                else if (SpecialPhrases.ContainsValue(character))
                 {
                     if (word != "") words.Add(word); // Ditto
                     words.Add(character.ToString());
@@ -128,6 +128,7 @@ namespace CVAS.Core
         public void Dispose()
         {
             inflections.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace CVAS.REPL
 
         public override string[] Usage { get; } = { "help", "help [command]" };
 
-        public override Command[] SubCommands { get; } = { };
+        public override Command[] SubCommands { get; } = Array.Empty<Command>();
 
         public override Argument[] Arguments { get; } =
         {

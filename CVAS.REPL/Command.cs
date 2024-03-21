@@ -57,7 +57,7 @@
         private void ReadArguments(string str)
         {
             // Try to read arguments
-            var temp_str = str.Substring(Str.Length).TrimStart();
+            var temp_str = str[Str.Length..].TrimStart();
 
             foreach (Argument argument in Arguments) temp_str = argument.ReadFrom(temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
 

@@ -45,7 +45,7 @@ namespace CVAS.AudioEngine
         public static void PlayOnce(IAudioClip audioClip)
         {
             // Initialise new WaveOutEvent and play
-            WaveOutEvent waveOutEvent = new WaveOutEvent();
+            WaveOutEvent waveOutEvent = new();
             waveOutEvent.Init(audioClip.ToWaveProvider());
             waveOutEvent.Play();
 
@@ -65,7 +65,7 @@ namespace CVAS.AudioEngine
         /// <param name="audioClip"></param>
         public void Play(IAudioClip audioClip)
         {
-            MediaFoundationResampler resampler = new MediaFoundationResampler(audioClip.ToWaveProvider(), WaveFormat);
+            MediaFoundationResampler resampler = new(audioClip.ToWaveProvider(), WaveFormat);
             sampleProvider.AddMixerInput(resampler);
         }
 
@@ -92,6 +92,7 @@ namespace CVAS.AudioEngine
         {
             waveOutEvent.Stop();
             waveOutEvent.Dispose();
+            GC.SuppressFinalize(this); // VS says to do this, but I'll be honest I'm not sure exactly what it does
         }
     }
 }

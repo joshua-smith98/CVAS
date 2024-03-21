@@ -43,7 +43,7 @@ namespace CVAS.CommandLine
             };
 
             // Return trimmed args
-            return new string[0]; // -help will force execution and prevent further arguments from being read
+            return Array.Empty<string>(); // -help will force execution and prevent further arguments from being read
         }
     }
 }

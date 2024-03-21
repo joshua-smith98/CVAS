@@ -26,14 +26,8 @@ namespace CVAS.CommandLine
 
         private void VerifyStr(string[] args)
         {
-            // Check that args[0] begins with a dash '-'
-            if (args[0][0] != '-') throw new CmdLnStrNotValidException("Given option does not begin with '-'.");
-
-            // Trim dash from args[0]
-            var trimmedArg = args[0][1..].ToLower();
-
-            // Check trimmed args[0] to Str and ShortStr
-            if (trimmedArg != Str && trimmedArg != ShortStr) throw new CmdLnStrNotValidException("Given option does not match Str or ShortStr.");
+            // Check args[0] with Str and ShortStr
+            if (args[0].ToLower() != Str && args[0].ToLower() != ShortStr) throw new CmdLnStrNotValidException("Given option does not match Str or ShortStr.");
         }
 
         /// <summary>

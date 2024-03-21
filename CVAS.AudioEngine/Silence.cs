@@ -16,7 +16,7 @@ namespace CVAS.AudioEngine
 
         public IWaveProvider ToWaveProvider()
         {
-            return new SilenceSampleProvider(AudioEngine.Instance.WaveFormat, Milliseconds).ToWaveProvider();
+            return new SilenceSampleProvider(AudioEngine.WaveFormat, Milliseconds).ToWaveProvider();
         }
 
         public void Dispose()

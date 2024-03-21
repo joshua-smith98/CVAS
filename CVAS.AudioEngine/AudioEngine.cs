@@ -18,7 +18,7 @@ namespace CVAS.AudioEngine
         }
         private static AudioEngine? instance;
         
-        public WaveFormat WaveFormat => sampleProvider.WaveFormat; // Not sure if I'll need this but good to have it anyway
+        public static readonly WaveFormat WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2); // TODO: Implement changing WaveFormat
 
         private readonly WaveOutEvent waveOutEvent;
 
@@ -28,7 +28,7 @@ namespace CVAS.AudioEngine
         private AudioEngine()
         {
             // Initialise properties
-            sampleProvider = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100, 2)); // TODO: Implement changing WaveFormat
+            sampleProvider = new MixingSampleProvider(WaveFormat);
             sampleProvider.ReadFully = true;
             waveOutEvent = new WaveOutEvent();
             waveOutEvent.Init(sampleProvider);

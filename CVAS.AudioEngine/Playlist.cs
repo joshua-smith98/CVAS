@@ -26,9 +26,9 @@ namespace CVAS.AudioEngine
                 IWaveProvider waveProvider = AudioClips[i].ToWaveProvider();
 
                 // Check for resampling
-                if (!waveProvider.WaveFormat.Equals(AudioEngine.Instance.WaveFormat))
+                if (!waveProvider.WaveFormat.Equals(AudioEngine.WaveFormat))
                 {
-                    waveProvider = new MediaFoundationResampler(waveProvider, AudioEngine.Instance.WaveFormat);
+                    waveProvider = new MediaFoundationResampler(waveProvider, AudioEngine.WaveFormat);
                 }
 
                 // Assign to waveProviders

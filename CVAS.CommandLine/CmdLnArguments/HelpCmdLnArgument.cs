@@ -40,7 +40,7 @@ namespace CVAS.CommandLine
                 }
                 Terminal.EndMessage();
 
-                Terminal.AwaitKey();
+                Terminal.AwaitKey("Press any key to close the application...");
             };
 
             // Return trimmed args

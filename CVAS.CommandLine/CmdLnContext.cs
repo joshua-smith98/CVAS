@@ -67,7 +67,7 @@ namespace CVAS.CommandLine
             catch (CmdLnException e)
             {
                 Terminal.MessageSingle(e.Message, ConsoleColor.Red);
-                Terminal.AwaitKey();
+                Terminal.AwaitKey("Press any key to close the application...");
             }
         }
 

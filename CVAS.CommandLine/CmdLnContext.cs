@@ -22,6 +22,7 @@ namespace CVAS.CommandLine
         
         public Library? Library { get; internal set; }
         public Sentence? Sentence { get; internal set; }
+        public string? OutputPath { get; internal set; }
         public Action? Action { get; internal set; }
 
         /// <summary>

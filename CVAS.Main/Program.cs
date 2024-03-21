@@ -7,14 +7,6 @@ using CVAS.TerminalNS;
 
 try
 {
-    // Temporary args test!
-    Terminal.IsSilent = true;
-    var testArgs = Terminal.Prompt("Provide args: ").Split();
-    CmdLnContext.Init();
-    CmdLnContext.Instance.ReadFromAndRun(testArgs);
-
-    return;
-
     if (args.Length == 0)
     {
         // Since the REPL is the only usable interface, we will set it as the default for now

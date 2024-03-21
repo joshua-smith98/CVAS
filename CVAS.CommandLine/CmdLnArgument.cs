@@ -21,7 +21,7 @@
             var trimmedArg = args[0][1..].ToLower();
 
             // Check trimmed args[0] to Str and ShortStr
-            if (trimmedArg != Str && trimmedArg != ShortStr) throw new CmdLnStrNotValidException("Given option does not match Str or ShortStr.")
+            if (trimmedArg != Str && trimmedArg != ShortStr) throw new CmdLnStrNotValidException("Given option does not match Str or ShortStr.");
         }
 
         protected abstract string[] ImportFromImpl(string[] args);

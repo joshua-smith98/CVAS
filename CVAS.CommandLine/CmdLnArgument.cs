@@ -2,12 +2,22 @@
 
 namespace CVAS.CommandLine
 {
+    /// <summary>
+    /// Abstract class representing a command-line argument.
+    /// </summary>
     internal abstract class CmdLnArgument
     {
         public abstract string Str { get; }
         public abstract string? ShortStr { get; }
         public abstract string Description { get; }
 
+        /// <summary>
+        /// Tries to import a value from the given arguments into <see cref="CmdLnContext.Instance"/>, returning the trimmed args.
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        /// <exception cref="CmdLnStrNotValidException"/>
+        /// <exception cref="CmdLnArgNotValidException"/>
         public string[] ImportFromAndTrim(string[] args)
         {
             VerifyStr(args);
@@ -26,6 +36,13 @@ namespace CVAS.CommandLine
             if (trimmedArg != Str && trimmedArg != ShortStr) throw new CmdLnStrNotValidException("Given option does not match Str or ShortStr.");
         }
 
+        /// <summary>
+        /// Attempts to read a string from the given args, taking into account double quotes (").
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        /// <exception cref="CmdLnArgNotValidException"></exception>
+        /// <exception cref="Exception"></exception>
         protected static string ReadStringFrom(ref string[] args)
         {
             // Read a string from args[], taking into account double quotes (")

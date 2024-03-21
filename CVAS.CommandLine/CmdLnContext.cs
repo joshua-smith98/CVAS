@@ -1,11 +1,15 @@
 ﻿using CVAS.Core;
-using System.Text;
-using System.Xml.Linq;
 
 namespace CVAS.CommandLine
 {
+    /// <summary>
+    /// Represents the contextual items used for CVAS's command-line functionality.
+    /// </summary>
     public class CmdLnContext
     {
+        /// <summary>
+        /// The current instance of <see cref="CmdLnContext"/>. Throws a <see cref="NullReferenceException"/> if <see cref="CmdLnContext.Init"> has not been called.
+        /// </summary>
         public static CmdLnContext Instance
         {
             get
@@ -20,6 +24,9 @@ namespace CVAS.CommandLine
         public Sentence? Sentence { get; internal set; }
         public Action? Action { get; internal set; }
 
+        /// <summary>
+        /// Array of all <see cref="CmdLnArgument"/>s.
+        /// </summary>
         internal CmdLnArgument[] CmdLnArguments =
         {
 
@@ -27,13 +34,22 @@ namespace CVAS.CommandLine
 
         private CmdLnContext() { } // Non-constructable
 
+        /// <summary>
+        /// Initialises <see cref="CmdLnContext.Instance"/>. Throws a <see cref="CmdLnException"/> if called more than once.
+        /// </summary>
+        /// <exception cref="CmdLnException"></exception>
         public static void Init()
         {
             // Check if already initialised
-            if (instance is not null) throw new Exception("CmdLnContext cannot be initialised twice!");
+            if (instance is not null) throw new CmdLnException("CmdLnContext cannot be initialised twice!");
             instance = new CmdLnContext();
         }
 
+        /// <summary>
+        /// Tries to read this context from the given arguments.
+        /// </summary>
+        /// <param name="args"></param>
+        /// <exception cref="CmdLnStrNotValidException"></exception>
         public void ReadFrom(string[] args)
         {
             // Try to read the data into this context from args[]
@@ -62,6 +78,10 @@ namespace CVAS.CommandLine
             }
         }
 
+        /// <summary>
+        /// Tries to run this context with the contained properties. Throws a <see cref="CmdLnContextNotValidException"/> upon failure.
+        /// </summary>
+        /// <exception cref="CmdLnContextNotValidException"></exception>
         public void Run()
         {
             // Check that we have an Action to run

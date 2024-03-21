@@ -26,19 +26,19 @@ namespace CVAS.CommandLine
                 Terminal.Message("\tCVAS.exe -[option] (argument) -[option] (argument) ...", ConsoleColor.DarkYellow);
                 Terminal.EndMessage();
 
-                Terminal.BeginMessage();
-                Terminal.Message("---Options---");
+                Terminal.MessageSingle("---Options---");
                 foreach (CmdLnArgument argument in CmdLnContext.Instance.CmdLnArguments)
                 {
-                    Terminal.Message($"{argument.Str} | {argument.ShortStr}", ConsoleColor.Yellow);
+                    Terminal.BeginMessage();
+                    Terminal.Message($"{argument.Str} ({argument.ShortStr})", ConsoleColor.Yellow);
                     foreach (var line in argument.DescriptionLines)
                     {
                         Terminal.Message($"\t{line}", ConsoleColor.Yellow);
                     }
                     Terminal.Message($"\t{argument.Usage}", ConsoleColor.DarkYellow);
                     Terminal.Message();
+                    Terminal.EndMessage();
                 }
-                Terminal.EndMessage();
 
                 Terminal.AwaitKey("Press any key to close the application...");
             };

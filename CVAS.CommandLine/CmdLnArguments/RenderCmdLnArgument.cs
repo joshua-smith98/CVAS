@@ -1,5 +1,8 @@
 ﻿namespace CVAS.CommandLine
 {
+    /// <summary>
+    /// A <see cref="CmdLnArgument"/> that renders a sentence to a file.
+    /// </summary>
     internal class RenderCmdLnArgument : CmdLnArgument
     {
         public override string Str => "-render";

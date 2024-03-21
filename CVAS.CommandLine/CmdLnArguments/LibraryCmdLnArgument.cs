@@ -2,6 +2,9 @@
 
 namespace CVAS.CommandLine
 {
+    /// <summary>
+    /// A <see cref="CmdLnArgument"/> the provides a library to the <see cref="CmdLnContext"/>.
+    /// </summary>
     internal class LibraryCmdLnArgument : CmdLnArgument
     {
         public override string Str => "-library";

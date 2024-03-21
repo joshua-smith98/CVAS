@@ -1,5 +1,8 @@
 ﻿namespace CVAS.CommandLine
 {
+    /// <summary>
+    /// A <see cref="CmdLnArgument"/> that provides an output path for rendering to the <see cref="CmdLnContext"/>.
+    /// </summary>
     internal class OutputCmdLnArgument : CmdLnArgument
     {
         public override string Str => "-output";

@@ -1,5 +1,8 @@
 ﻿namespace CVAS.CommandLine
 {
+    /// <summary>
+    /// A <see cref="CmdLnArgument"/> that provides a sentence to the <see cref="CmdLnContext"/>.
+    /// </summary>
     internal class SentenceCmdLnArgument : CmdLnArgument
     {
         public override string Str => "-sentence";

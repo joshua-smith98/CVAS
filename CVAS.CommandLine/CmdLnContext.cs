@@ -57,6 +57,10 @@ namespace CVAS.CommandLine
             instance = new CmdLnContext();
         }
 
+        /// <summary>
+        /// Reads the given arguments and tries to run the attached action. Handles all <see cref="CmdLnException"/>s.
+        /// </summary>
+        /// <param name="args"></param>
         public void ReadFromAndRun(string[] args)
         {
             try
@@ -76,7 +80,8 @@ namespace CVAS.CommandLine
         /// Tries to read this context from the given arguments.
         /// </summary>
         /// <param name="args"></param>
-        /// <exception cref="CmdLnStrNotValidException"></exception>
+        /// <exception cref="CmdLnStrNotValidException"/>
+        /// <exception cref="CmdLnArgNotValidException"/>
         private void ReadFrom(string[] args)
         {
             // Try to read the data into this context from args[]
@@ -107,9 +112,10 @@ namespace CVAS.CommandLine
         }
 
         /// <summary>
-        /// Tries to run this context with the contained properties. Throws a <see cref="CmdLnContextNotValidException"/> upon failure.
+        /// Tries to run this context with the contained properties. Throws the appropriate <see cref="CmdLnException"/> upon failure.
         /// </summary>
         /// <exception cref="CmdLnContextNotValidException"></exception>
+        /// <exception cref="CmdLnArgNotValidException"></exception>
         private void Run()
         {
             // Check that we have an Action to run

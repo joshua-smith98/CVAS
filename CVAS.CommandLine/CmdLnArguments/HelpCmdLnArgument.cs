@@ -2,6 +2,9 @@
 
 namespace CVAS.CommandLine
 {
+    /// <summary>
+    /// A <see cref="CmdLnArgument"/> that prints help information.
+    /// </summary>
     internal class HelpCmdLnArgument : CmdLnArgument
     {
         public override string Str => "-help";
@@ -20,12 +23,14 @@ namespace CVAS.CommandLine
             // Assign action to CmdLnContext
             CmdLnContext.Instance.Action = () =>
             {
+                // Header
                 Terminal.BeginMessage();
                 Terminal.Message("---CVAS Command-line Interface v0.5.0---");
                 Terminal.Message("Usage:", ConsoleColor.Yellow);
                 Terminal.Message("\tCVAS.exe -[option] (argument) -[option] (argument) ...", ConsoleColor.DarkYellow);
                 Terminal.EndMessage();
 
+                // Print list of options
                 Terminal.MessageSingle("---Options---");
                 foreach (CmdLnArgument argument in CmdLnContext.Instance.CmdLnArguments)
                 {

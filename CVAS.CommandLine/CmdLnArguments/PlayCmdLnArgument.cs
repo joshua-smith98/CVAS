@@ -1,5 +1,8 @@
 ﻿namespace CVAS.CommandLine
 {
+    /// <summary>
+    /// A <see cref="CmdLnArgument"/> that plays a sentence.
+    /// </summary>
     internal class PlayCmdLnArgument : CmdLnArgument
     {
         public override string Str => "-play";
@@ -17,7 +20,6 @@
         protected override string[] ImportFromImpl(string[] args)
         {
             // Assign action to CmdLnContext.Action
-
             CmdLnContext.Instance.Action = () =>
             {
                 // Verify: sentence exists (we do not need to verify library, as it must exist if sentence exists)

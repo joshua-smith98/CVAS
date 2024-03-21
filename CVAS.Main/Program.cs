@@ -1,13 +1,12 @@
-﻿// Main entry point
-
-using CVAS.AudioEngine;
+﻿using CVAS.AudioEngine;
 using CVAS.CommandLine;
 using CVAS.REPL;
 using CVAS.TerminalNS;
 
+// Main entry point
 try
 {
-    if (args.Length == 0)
+    if (args.Length == 0) // No args | default app
     {
         // Since the REPL is the only usable interface, we will set it as the default for now
         AudioEngine.Init();
@@ -27,6 +26,7 @@ try
     }
     else // if args has some thing(s), but not -c
     {
+        // Silence Terminal, initialise command-line and read from args
         Terminal.IsSilent = true;
         CmdLnContext.Init();
         CmdLnContext.Instance.ReadFromAndRun(args);
@@ -34,7 +34,8 @@ try
 }
 catch(Exception e)
 {
-    Terminal.IsSilent = false;
+    // Print unknown error message for misc exceptions
+    Terminal.IsSilent = false; // just in case
 
     Terminal.BeginMessage();
     Terminal.Message("An unknown error has occurred!", ConsoleColor.Red);

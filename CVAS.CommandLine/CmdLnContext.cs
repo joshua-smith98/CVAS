@@ -64,8 +64,18 @@ namespace CVAS.CommandLine
 
         public void Run()
         {
-            // Try to run the given Action
-            throw new NotImplementedException();
+            // Check that we have an Action to run
+            if (Action is null) throw new CmdLnContextNotValidException("No action provided!");
+
+            // Try to run the given action
+            try
+            {
+                Action.Invoke();
+            }
+            catch (CmdLnException e)
+            { 
+                throw e;
+            }
         }
 
         internal static string ReadStringFrom(string[] args)

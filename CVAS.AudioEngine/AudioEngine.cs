@@ -54,8 +54,6 @@ namespace CVAS.AudioEngine
             {
                 if (waveOutEvent.PlaybackState is PlaybackState.Stopped)
                     break;
-
-                Task.Delay(100); // Only check every 100ms
             }
 
             waveOutEvent.Dispose();

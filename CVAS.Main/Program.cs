@@ -6,6 +6,7 @@ using CVAS.REPL;
 using CVAS.TerminalNS;
 
 // Temporary args test!
+Terminal.IsSilent = true;
 var testArgs = Terminal.Prompt("Provide args: ").Split();
 CmdLnContext.Init();
 CmdLnContext.Instance.ReadFromAndRun(testArgs);
@@ -32,6 +33,7 @@ else if (args[0] == "-c")
 }
 else // if args has some thing(s), but not -c
 {
+    Terminal.IsSilent = true;
     CmdLnContext.Init();
     CmdLnContext.Instance.ReadFromAndRun(args);
 }

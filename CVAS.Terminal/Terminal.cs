@@ -7,6 +7,11 @@ namespace CVAS.TerminalNS
     /// </summary>
     public static class Terminal
     {
+        /// <summary>
+        /// Setting this to true will disable all terminal messages and reports.
+        /// </summary>
+        public static bool IsSilent { get; set; } = false;
+
         private static TerminalBlockStatus Status = TerminalBlockStatus.NoBlockActive;
 
         static Terminal()
@@ -134,7 +139,7 @@ namespace CVAS.TerminalNS
             if (Status is not TerminalBlockStatus.MessageBlockActive)
                 throw new TerminalException("Tried to post a message outside a message block!");
 
-            Console.WriteLine(message);
+            if (!IsSilent) Console.WriteLine(message);
         }
 
         /// <summary>
@@ -149,7 +154,7 @@ namespace CVAS.TerminalNS
             if (Status is not TerminalBlockStatus.MessageBlockActive)
                 throw new TerminalException("Tried to post a message outside a message block!");
 
-            WriteLineWithColour(message, colour);
+            if (!IsSilent) WriteLineWithColour(message, colour);
         }
 
         /// <summary>
@@ -163,7 +168,7 @@ namespace CVAS.TerminalNS
                 throw new TerminalException("Tried to close a message block, when no message block was active!");
 
             Status = TerminalBlockStatus.NoBlockActive;
-            Console.WriteLine();
+            if (!IsSilent) Console.WriteLine();
         }
 
         /// <summary>
@@ -215,7 +220,7 @@ namespace CVAS.TerminalNS
         public static void BeginReport(string reportHeader)
         {
             BeginReport();
-            Console.WriteLine(reportHeader);
+            if (!IsSilent) Console.WriteLine(reportHeader);
         }
 
         /// <summary>
@@ -225,7 +230,7 @@ namespace CVAS.TerminalNS
         public static void BeginReport(string reportHeader, ConsoleColor colour)
         {
             BeginReport();
-            WriteLineWithColour(reportHeader, colour);
+            if (!IsSilent) WriteLineWithColour(reportHeader, colour);
         }
 
         /// <summary>
@@ -238,10 +243,13 @@ namespace CVAS.TerminalNS
             if (Status is not TerminalBlockStatus.ReportBlockActive)
                 throw new TerminalException("Tried to post a report outside a report block!");
 
-            Console.CursorLeft = 0;
-            Console.Write(string.Concat(Enumerable.Repeat(" ", Console.WindowWidth)));
-            Console.CursorLeft = 0;
-            Console.Write(message);
+            if (!IsSilent)
+            {
+                Console.CursorLeft = 0;
+                Console.Write(string.Concat(Enumerable.Repeat(" ", Console.WindowWidth)));
+                Console.CursorLeft = 0;
+                Console.Write(message);
+            }
         }
 
         /// <summary>
@@ -254,10 +262,13 @@ namespace CVAS.TerminalNS
             if (Status is not TerminalBlockStatus.ReportBlockActive)
                 throw new TerminalException("Tried to post a report outside a report block!");
 
-            Console.CursorLeft = 0;
-            Console.Write(string.Concat(Enumerable.Repeat(" ", Console.WindowWidth)));
-            Console.CursorLeft = 0;
-            WriteWithColour(message, colour);
+            if (!IsSilent)
+            {
+                Console.CursorLeft = 0;
+                Console.Write(string.Concat(Enumerable.Repeat(" ", Console.WindowWidth)));
+                Console.CursorLeft = 0;
+                WriteWithColour(message, colour);
+            }
         }
 
         /// <summary>
@@ -271,10 +282,14 @@ namespace CVAS.TerminalNS
             if (Status is not TerminalBlockStatus.ReportBlockActive)
                 throw new TerminalException("Tried to close a report block, when no report block was active!");
 
-            Report(message);
+            if (!IsSilent)
+            {
+                Report(message);
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+
             Status = TerminalBlockStatus.NoBlockActive;
-            Console.WriteLine();
-            Console.WriteLine();
         }
 
         /// <summary>
@@ -288,10 +303,14 @@ namespace CVAS.TerminalNS
             if (Status is not TerminalBlockStatus.ReportBlockActive)
                 throw new TerminalException("Tried to close a report block, when no report block was active!");
 
-            Report(message, colour);
+            if (!IsSilent)
+            {
+                Report(message, colour);
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+
             Status = TerminalBlockStatus.NoBlockActive;
-            Console.WriteLine();
-            Console.WriteLine();
         }
 
         private static void WriteLineWithColour(string str, ConsoleColor colour)

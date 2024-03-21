@@ -83,6 +83,7 @@ namespace CVAS.CommandLine
             while(args.Length != 0)
             {
                 bool cmdFound = false;
+                Terminal.MessageSingle($"Try read: {args[0]}");
 
                 foreach (CmdLnArgument cmdLnArgument in CmdLnArguments)
                 {
@@ -99,6 +100,10 @@ namespace CVAS.CommandLine
                     }
                     catch(CmdLnStrNotValidException) { } // This command doesn't match, just continue
                 }
+
+                Terminal.BeginMessage();
+                foreach (var arg in args) Terminal.Message($"- {arg}");
+                Terminal.EndMessage();
 
                 if (!cmdFound) throw new CmdLnStrNotValidException($"No option found for: {args[0]}");
             }

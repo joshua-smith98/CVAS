@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using CVAS.TerminalNS;
+using System.Text;
 
 namespace CVAS.CommandLine
 {
@@ -57,7 +58,9 @@ namespace CVAS.CommandLine
                     if (strArgs[i] == '"') // Case: end of value
                     {
                         // Trim args and return
-                        args = strArgs[(i + 1)..].Split();
+                        var trimmedStrArgs = strArgs[(i + 1)..].TrimStart();
+                        if (trimmedStrArgs == string.Empty) args = Array.Empty<string>(); // Handle case where string is empty: otherwise Split() will produce array with one element!
+                        else args = trimmedStrArgs.Split();
                         return valueBuilder.ToString();
                     }
 

@@ -37,18 +37,13 @@ catch(Exception e)
     // Print unknown error message for misc exceptions
     Terminal.IsSilent = false; // just in case
 
-    Terminal.BeginMessage();
-    Terminal.Message("A fatal error has occurred!", ConsoleColor.Red);
+    Terminal.ForceBeginMessage();
+    Terminal.Message($"A fatal error has occurred, of type: {e.GetType()}", ConsoleColor.Red);
     Terminal.Message();
-    Terminal.Message($"Type: {e.GetType()}", ConsoleColor.Red);
-    Terminal.Message();
-    if (e.Message == string.Empty) Terminal.Message("Message: No message was given.", ConsoleColor.Red);
-    else Terminal.Message($"Message: {e.Message}", ConsoleColor.Red);
-    Terminal.Message();
-    Terminal.Message($"Stack trace:", ConsoleColor.Red);
+    Terminal.Message($"\"{e.Message}\"", ConsoleColor.Red);
     Terminal.Message($"{e.StackTrace}", ConsoleColor.Red);
     Terminal.Message();
-    Terminal.Message("Please take a screenshot of this, and create an issue on github.", ConsoleColor.Yellow);
+    Terminal.Message("Please take a screenshot of this, and create an issue on github.", ConsoleColor.Red);
     Terminal.EndMessage();
 
     Terminal.AwaitKey("Press any key to close the application...");

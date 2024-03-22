@@ -15,7 +15,7 @@ namespace CVAS.REPL
 
         public override string[] Usage { get; } = { "test [sentence]", "test" };
 
-        public override Command[] SubCommands { get; } = { };
+        public override Command[] SubCommands { get; } = Array.Empty<Command>();
 
         public override Argument[] Arguments { get; } =
         {
@@ -55,12 +55,12 @@ namespace CVAS.REPL
         /// Prints a formatted preview of the given sentence to the console.
         /// </summary>
         /// <param name="sentence"></param>
-        private void PrintSentencePreview(Sentence sentence)
+        private static void PrintSentencePreview(Sentence sentence)
         {
             Terminal.BeginMessage();
 
             // Print phrases
-            foreach (var phrase in sentence.spokenPhrases.Where(x => !x.IsSpecialPhrase()))
+            foreach (var phrase in sentence.SpokenPhrases.Where(x => !x.IsSpecialPhrase()))
             {
                 // Case: current Phrase is empty (i.e. it couldn't be found)
                 if (phrase.IsEmptyPhrase())
@@ -73,7 +73,7 @@ namespace CVAS.REPL
                 Terminal.Message($"[{phrase.Str}] : {phrase.Inflection}");
 
                 // Print a new line after phrases that end a sentence.
-                if (phrase != sentence.spokenPhrases.Where(x => !x.IsSpecialPhrase()).Last() && phrase.Inflection is InflectionType.End)
+                if (phrase != sentence.SpokenPhrases.Where(x => !x.IsSpecialPhrase()).Last() && phrase.Inflection is InflectionType.End)
                     Terminal.Message();
             }
 

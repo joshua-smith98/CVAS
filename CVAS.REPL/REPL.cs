@@ -80,15 +80,7 @@ namespace CVAS.REPL
                 {
                     RunFrom(command); // Since we're reading from the console, command will never be null
                 }
-                catch (CommandNotValidException e) // TODO: this can be simplified with REPLException
-                {
-                    Terminal.MessageSingle(e.Message, ConsoleColor.Red);
-                }
-                catch (ArgumentNotValidException e)
-                {
-                    Terminal.MessageSingle(e.Message, ConsoleColor.Red);
-                }
-                catch (ContextNotValidException e)
+                catch (REPLException e)
                 {
                     Terminal.MessageSingle(e.Message, ConsoleColor.Red);
                 }

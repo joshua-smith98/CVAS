@@ -78,7 +78,8 @@ namespace CVAS.FileSystem
                     if (!br.ReadChars(8).SequenceEqual("CVASLBCH".ToArray())) throw new InvalidFileHeaderException();
 
                     // Validity check: folder hash
-                    var filenames = Directory.GetFiles(SysPath.GetDirectoryName(path)!).Select(x => SysPath.GetFileName(x)); // TODO: handle possible null reference
+                    // Path.GetDirectoryName() will never return null, as the cache file at 'path' will always been in a library folder
+                    var filenames = Directory.GetFiles(SysPath.GetDirectoryName(path)!).Select(x => SysPath.GetFileName(x));
                     var filenames_string = "";
                     foreach (var filename in filenames)
                         filenames_string += filename;
@@ -106,7 +107,8 @@ namespace CVAS.FileSystem
                         throw new InvalidFileFormatException();
                     }
 
-                    if (br.BaseStream.Position != br.BaseStream.Length) throw new InvalidFileFormatException(); // Case: there is extra data in the file
+                    // Case: there is extra data in the file
+                    if (br.BaseStream.Position != br.BaseStream.Length) throw new InvalidFileFormatException(); 
                 }
                 #endregion
 
@@ -124,17 +126,21 @@ namespace CVAS.FileSystem
 
                     for (int i = 0; i < numPhrases; i++)
                     {
-                        phraseTable[i] = new PhraseTableRow();
-                        phraseTable[i].Str = br.ReadString();
-                        phraseTable[i].NumInflections = br.ReadInt32();
-                        phraseTable[i].InflectionTable = new InflectionTableRow[phraseTable[i].NumInflections];
+                        phraseTable[i] = new PhraseTableRow
+                        {
+                            Str = br.ReadString(),
+                            NumInflections = br.ReadInt32(),
+                            InflectionTable = new InflectionTableRow[phraseTable[i].NumInflections],
+                        };
 
                         // Read inflections
                         for (int j = 0; j < phraseTable[i].NumInflections; j++)
                         {
-                            phraseTable[i].InflectionTable[j] = new InflectionTableRow();
-                            phraseTable[i].InflectionTable[j].Inflection = br.ReadInt32();
-                            phraseTable[i].InflectionTable[j].AudioFileName = br.ReadString();
+                            phraseTable[i].InflectionTable[j] = new InflectionTableRow
+                            {
+                                Inflection = br.ReadInt32(),
+                                AudioFileName = br.ReadString()
+                            };
                         }
                     }
 
@@ -226,7 +232,9 @@ namespace CVAS.FileSystem
                     // I will print a message to the console notifying them to open an issue - if someone encounters it, it will be more information to diagnose with.
                     try
                     {
-                        audioClip = new AudioFileStreaming(SysPath.Combine(SysPath.GetDirectoryName(Path)!, inflectionRow.AudioFileName)); // Gets the path to the file, relative to this cache file's current directory.
+                        // Gets the path to the file, relative to this cache file's current directory.
+                        // Path.GetDirectoryName() will never return null, as the cache file at 'path' will always been in a library folder
+                        audioClip = new AudioFileStreaming(SysPath.Combine(SysPath.GetDirectoryName(Path)!, inflectionRow.AudioFileName));
                     }
                     catch (DirectoryNotFoundException)
                     {
@@ -286,7 +294,8 @@ namespace CVAS.FileSystem
                 bw.Write("CVASLBCH".ToArray()); // Convert to char[] so that BinaryWriter doesn't write a length int before the header
 
                 // Compute and write folder hash
-                var filenames = Directory.GetFiles(SysPath.GetDirectoryName(path)!).Select(x => SysPath.GetFileName(x)); // TODO: handle possible null reference
+                // Path.GetDirectoryName() will never return null, as the cache file at 'path' will always been in a library folder
+                var filenames = Directory.GetFiles(SysPath.GetDirectoryName(path)!).Select(x => SysPath.GetFileName(x));
                 var filenames_string = "";
                 foreach (var filename in filenames)
                     filenames_string += filename;

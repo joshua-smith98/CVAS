@@ -24,9 +24,6 @@ namespace CVAS.AudioEngineNS
 
         private readonly MixingSampleProvider sampleProvider;
 
-        private bool disposed = false;
-
-
         private AudioEngine()
         {
             // Initialise properties
@@ -52,11 +49,7 @@ namespace CVAS.AudioEngineNS
             waveOutEvent.Play();
 
             // Hang until playback is complete
-            while (true)
-            {
-                if (waveOutEvent.PlaybackState is PlaybackState.Stopped)
-                    break;
-            }
+            while (waveOutEvent.PlaybackState is PlaybackState.Playing);
 
             waveOutEvent.Dispose();
         }
@@ -95,7 +88,7 @@ namespace CVAS.AudioEngineNS
             waveOutEvent?.Stop();
             waveOutEvent?.Dispose();
             waveOutEvent = null!;
-            GC.SuppressFinalize(this); // VS says to do this, but I'll be honest I'm not sure exactly what it does
+            GC.SuppressFinalize(this);
         }
     }
 }

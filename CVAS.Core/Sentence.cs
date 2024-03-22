@@ -13,13 +13,13 @@ namespace CVAS.Core
         /// <summary>
         /// The sequence of <see cref="SpokenPhrase"/>s that defines this sentence.
         /// </summary>
-        public SpokenPhrase[] spokenPhrases { get; private set; }
+        public SpokenPhrase[] SpokenPhrases { get; private set; }
 
         internal Sentence(string str, string[] words, SpokenPhrase[] spokenPhrases)
         {
             Str = str;
             Words = words;
-            this.spokenPhrases = spokenPhrases;
+            SpokenPhrases = spokenPhrases;
         }
 
         /// <summary>
@@ -28,18 +28,18 @@ namespace CVAS.Core
         /// <returns>Note: always returns <see cref="Playlist"/> as <see cref="IAudioClip"/>.</returns>
         public IAudioClip GetAudioClip()
         {
-            return new Playlist(spokenPhrases.Select(x => x.GetAudioClip()).ToArray());
+            return new Playlist(SpokenPhrases.Select(x => x.GetAudioClip()).ToArray());
         }
 
         public void Dispose()
         {
-            for (int i = 0; i < spokenPhrases.Length; i++)
+            for (int i = 0; i < SpokenPhrases.Length; i++)
             {
-                spokenPhrases[i]?.Dispose();
-                spokenPhrases[i] = null!;
+                SpokenPhrases[i]?.Dispose();
+                SpokenPhrases[i] = null!;
             }
 
-            spokenPhrases = null!;
+            SpokenPhrases = null!;
             GC.SuppressFinalize(this);
         }
     }

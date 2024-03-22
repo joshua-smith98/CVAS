@@ -183,7 +183,7 @@ namespace CVAS.FileSystem
             }
 
             // Construct library
-            Library ret = new Library(phrases.ToArray());
+            Library ret = new(phrases.ToArray());
             Terminal.EndReport($"Successfully analysed {filePaths.Length} files and loaded {ret.Phrases.Length} phrases.");
 
             // Build cache

@@ -43,7 +43,7 @@ namespace CVAS.REPL
         /// Prints the Str, Description and Usage details for the given command.
         /// </summary>
         /// <param name="command"></param>
-        private void PrintCommandDetails(Command command)
+        private static void PrintCommandDetails(Command command)
         {
             // Print Str and Description
             Terminal.BeginMessage();

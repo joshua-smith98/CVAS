@@ -1,13 +1,33 @@
+
 # CVAS
 
-CVAS stands for ***Concatenative Voice Announcement System***. It sounds fancy, but it's really quite simple.
-At its basic level, this program takes a series of recorded phrases and attempts to speak a given sentence by stringing those phrases together. Think: automatic train announcements.
+CVAS stands for ***Concatenative Voice Announcement System***. CVAS takes a series of recorded phrases and attempts to speak a given sentence by stringing those phrases together. Think: automatic train announcements.
 
-**Please note: CVAS is still in heavy development.
-If you're looking for a finished & working program, try this one - its quite nice:** [jaboles/DVA5](https://github.com/jaboles/DVA5)
+**Please note: CVAS is currently terminal-only.
+If you're looking for a program with UI, try this one - its quite nice:** [jaboles/DVA5](https://github.com/jaboles/DVA5)
+## Installation
+*For a binary, check releases.*
+
+### Build with Visual Studio
+CVAS comes as a Visual Studio 2022 solution. To build CVAS with Visual Studio:
+ 1. Clone the repository and open the solution with VS2022 or equivalent.
+ 2. Ensure CVAS.Main is selected as the startup project.
+ 3. Build and run the solution, or publish the CVAS.Main project with your required settings.
+
+(It's recommended that you publish as *Self-Contained* and with *"Publish as a Single File"* checked.)
+
+### Build with dotnet
+To build CVAS with *dotnet*, ensure you have [.NET 8.0 SDK installed](https://dotnet.microsoft.com/en-us/download), and then use the following commands in the Terminal:
+
+    git clone https://github.com/joshua-smith98/CVAS.git
+    cd CVAS/CVAS.Main/
+    dotnet publish --sc -p:PublishSingleFile=true
+***Note:** while building on Linux with dotnet is possible, CVAS will open to a fatal error. Unfortunately this is because CVAS uses [NAudio](https://github.com/naudio/NAudio), which is Windows only.*
+
+## Usage
+TODO
 ## Roadmap
-
-### V0.5 - Back-end, Command-line & README.md
+### v0.5.0 - Back-end, Command-line & README.md ✔️
  - [x] Sentence, phase & library functionality
  - [x] Audio playback of sentences and phrases
  - [x] Audio caching
@@ -17,10 +37,10 @@ If you're looking for a finished & working program, try this one - its quite nic
  - [x] Library caching on the disk
  - [x] Perform functions via REPL
  - [x] Perform functions via command line
- - [ ] A completed README.md, with "Usage" and "Installation" sections.
+ - [x] A completed README.md, with "Usage" and "Installation" sections.
 
-### V1.0 - WPF GUI
-- This will be expanded on once V0.5 is complete.
+### v1.0.0 - WPF GUI & Analysis Tools
+- This will be expanded once v0.5.0 is complete.
 
 ***
 Follow the design and development process more closely [on CVAS's Trello board.](https://trello.com/b/Z1Bclmuy/cvas)

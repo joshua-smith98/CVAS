@@ -12,7 +12,7 @@ namespace CVAS.Core
 
         public bool IsReadOnly => false;
 
-        private List<Inflection> inflections = new();
+        private List<Inflection> inflections = [];
 
         /// <summary>
         /// Gets the <see cref="IAudioClip"/> associated with the given <see cref="InflectionType"/>.

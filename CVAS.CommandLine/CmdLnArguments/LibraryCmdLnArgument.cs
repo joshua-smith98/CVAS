@@ -10,9 +10,9 @@
         public override string? ShortStr => "-l";
 
         public override string[] DescriptionLines { get; } =
-        {
+        [
             "Provides a directory to load a library from.",
-        };
+        ];
 
         public override string Usage => "-library | -l [path to library]";
 

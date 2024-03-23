@@ -11,14 +11,14 @@ namespace CVAS.REPL
 
         public override string Description => "Loads a folder of audio files as a library of phrases.";
 
-        public override string[] Usage { get; } = { "load [path]" };
+        public override string[] Usage { get; } = ["load [path]"];
 
-        public override Command[] SubCommands { get; } = Array.Empty<Command>();
+        public override Command[] SubCommands { get; } = [];
 
         public override Argument[] Arguments { get; } =
-        {
+        [
             new StringArgument("path", true), // Library path
-        };
+        ];
 
         protected override void VerifyArgsAndRun()
         {

@@ -9,11 +9,11 @@
 
         public override string Description => "Exits the program.";
 
-        public override string[] Usage { get; } = { "exit" };
+        public override string[] Usage { get; } = ["exit"];
 
-        public override Command[] SubCommands { get; } = Array.Empty<Command>();
+        public override Command[] SubCommands { get; } = [];
 
-        public override Argument[] Arguments { get; } = Array.Empty<Argument>();
+        public override Argument[] Arguments { get; } = [];
 
         protected override void VerifyArgsAndRun()
         {

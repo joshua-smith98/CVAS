@@ -6,14 +6,9 @@ namespace CVAS.AudioEngineNS
     /// <summary>
     /// An piece of playable audio made up of concatenated <see cref="IAudioClip"/>s.
     /// </summary>
-    public class Playlist : IAudioClip
+    public class Playlist(params IAudioClip[] audioClips) : IAudioClip
     {
-        public IAudioClip[] AudioClips { get; private set; }
-
-        public Playlist(params IAudioClip[] audioClips)
-        {
-            AudioClips = audioClips;
-        }
+        public IAudioClip[] AudioClips => audioClips;
 
         public IWaveProvider ToWaveProvider()
         {
@@ -42,13 +37,13 @@ namespace CVAS.AudioEngineNS
 
         public void Dispose()
         {
-            for (int i = 0; i < AudioClips.Length; i++)
+            for (int i = 0; i < audioClips.Length; i++)
             {
-                AudioClips[i]?.Dispose();
-                AudioClips[i] = null!;
+                audioClips[i]?.Dispose();
+                audioClips[i] = null!;
             }
 
-            AudioClips = null!;
+            audioClips = null!;
             GC.SuppressFinalize(this);
         }
     }

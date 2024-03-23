@@ -13,14 +13,14 @@ namespace CVAS.REPL
 
         public override string Description => "Displays the given sentence and any phrases that couldn't be found. Also commits that sentence to memory.";
 
-        public override string[] Usage { get; } = { "test [sentence]", "test" };
+        public override string[] Usage { get; } = ["test [sentence]", "test"];
 
-        public override Command[] SubCommands { get; } = Array.Empty<Command>();
+        public override Command[] SubCommands { get; } = [];
 
         public override Argument[] Arguments { get; } =
-        {
+        [
             new StringArgument("sentence", false),
-        };
+        ];
 
         protected override void VerifyArgsAndRun()
         {

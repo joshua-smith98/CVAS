@@ -34,14 +34,14 @@ namespace CVAS.CommandLine
         /// Array of all <see cref="CmdLnArgument"/>s.
         /// </summary>
         internal CmdLnArgument[] CmdLnArguments =
-        {
+        [
             new HelpCmdLnArgument(),
             new PlayCmdLnArgument(),
             new RenderCmdLnArgument(),
             new LibraryCmdLnArgument(),
             new SentenceCmdLnArgument(),
             new OutputCmdLnArgument(),
-        };
+        ];
 
         private CmdLnContext() { } // Non-constructable
 
@@ -98,10 +98,10 @@ namespace CVAS.CommandLine
                         cmdFound = true;
                         break;
                     }
-                    catch(CmdLnArgNotValidException e) // This command matches, but an error occured while reading the argument value
+                    catch(CmdLnArgNotValidException) // This command matches, but an error occured while reading the argument value
                     {
                         cmdFound = true;
-                        throw e;
+                        throw;
                     }
                     catch(CmdLnStrNotValidException) { } // This command doesn't match, just continue
                 }
@@ -144,9 +144,9 @@ namespace CVAS.CommandLine
             {
                 Action.Invoke();
             }
-            catch (CmdLnException e)
+            catch (CmdLnException)
             { 
-                throw e;
+                throw;
             }
         }
     }

@@ -162,7 +162,7 @@ namespace CVAS.FileSystem
         {
             // Initialise variables for LibraryCacheFile construction
             // NOTE: We will need to use lists here for the phraseTable and inflectionTable, due to our need to exclude non-IAudioFile phrases and inflections
-            List<PhraseTableRow> phraseTable = new();
+            List<PhraseTableRow> phraseTable = [];
 
             // Deconstruct phrases
             foreach (Phrase phrase in library.Phrases)
@@ -176,7 +176,7 @@ namespace CVAS.FileSystem
                 };
 
                 // Deconstruct inflections
-                List<InflectionTableRow> inflectionTable = new();
+                List<InflectionTableRow> inflectionTable = [];
                 foreach (InflectionType inflectionType in phrase.Inflections.Select(x => x.InflectionType))
                 {
                     // Check if this inflection isn't IAudioFile, if so and don't include
@@ -209,7 +209,7 @@ namespace CVAS.FileSystem
             Terminal.BeginReport("Building from cache...");
             
             // Construct phrases
-            List<Phrase> phrases = new();
+            List<Phrase> phrases = [];
             for (int i = 0; i < PhraseTable.Length; i++)
             {
                 // Report progress
@@ -222,7 +222,7 @@ namespace CVAS.FileSystem
                 bool unknownErrorNotified = false; // For the BEEG unknown error below
                 
                 // Construct inflections
-                InflectionCollection inflections = new();
+                InflectionCollection inflections = [];
                 foreach (InflectionTableRow inflectionRow in PhraseTable[i].InflectionTable)
                 {
                     InflectionType inflectionType = (InflectionType)inflectionRow.Inflection;

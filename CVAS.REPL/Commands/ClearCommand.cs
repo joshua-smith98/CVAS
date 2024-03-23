@@ -11,11 +11,11 @@ namespace CVAS.REPL
 
         public override string Description => "Clears the currently loaded Library and any memorised Sentence.";
 
-        public override string[] Usage { get; } = { "clear" };
+        public override string[] Usage { get; } = ["clear"];
 
-        public override Command[] SubCommands { get; } = Array.Empty<Command>();
+        public override Command[] SubCommands { get; } = [];
 
-        public override Argument[] Arguments { get; } = Array.Empty<Argument>();
+        public override Argument[] Arguments { get; } = [];
 
         protected override void VerifyArgsAndRun()
         {

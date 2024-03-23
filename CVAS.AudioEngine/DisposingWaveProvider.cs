@@ -5,17 +5,12 @@ namespace CVAS.AudioEngineNS
     /// <summary>
     /// A WaveProvider that takes a WaveStream, and automatically disposes of it when finished playing.
     /// </summary>
-    internal class DisposingWaveProvider : IWaveProvider
+    internal class DisposingWaveProvider(WaveStream waveStream) : IWaveProvider
     {
         public WaveFormat WaveFormat => waveStream.WaveFormat;
 
-        private WaveStream waveStream;
+        private WaveStream waveStream = waveStream;
         private bool disposed = false;
-
-        public DisposingWaveProvider(WaveStream waveStream)
-        {
-            this.waveStream = waveStream;
-        }
 
         public int Read(byte[] buffer, int offset, int count)
         {

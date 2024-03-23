@@ -3,11 +3,9 @@
     /// <summary>
     /// An <see cref="Argument"/> that attempts to read a string prefixed by a dash (-). E.g. "command -option".
     /// </summary>
-    internal class OptionArgument : Argument
+    internal class OptionArgument(string name, bool isCompulsory) : Argument(name, isCompulsory)
     {
         public override Type ValueType => typeof(string);
-
-        public OptionArgument(string name, bool isCompulsory) : base(name, isCompulsory) { }
 
         protected override string ReadFromImpl(string str)
         {

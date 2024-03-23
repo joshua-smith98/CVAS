@@ -25,7 +25,7 @@ namespace CVAS.REPL
         /// A list of all top-level commands that can be used in the REPL.
         /// </summary>
         internal Command[] CommandInstances { get; } =
-        {
+        [
             new HelpCommand(),
             new LoadCommand(),
             new TestCommand(),
@@ -34,7 +34,7 @@ namespace CVAS.REPL
             new StopCommand(),
             new ClearCommand(),
             new ExitCommand(),
-        };
+        ];
 
         /// <summary>
         /// The currently loaded library for this REPL.

@@ -13,15 +13,15 @@ namespace CVAS.REPL
 
         public override string Description => "Renders the given sentence to a file at the given path, and commits that sentence to memory.";
 
-        public override string[] Usage { get; } = { "render [path] [sentence]", "render [path]" };
+        public override string[] Usage { get; } = ["render [path] [sentence]", "render [path]"];
 
-        public override Command[] SubCommands { get; } = Array.Empty<Command>();
+        public override Command[] SubCommands { get; } = [];
 
         public override Argument[] Arguments { get; } =
-        {
+        [
             new StringArgument("path", true), // Path to file
             new StringArgument("sentence", false), // Sentence or Path if sentence path failed to read
-        };
+        ];
 
         protected override void VerifyArgsAndRun()
         {

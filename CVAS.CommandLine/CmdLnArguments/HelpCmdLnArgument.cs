@@ -12,9 +12,9 @@ namespace CVAS.CommandLine
         public override string? ShortStr => "-h";
 
         public override string[] DescriptionLines { get; } =
-        {
+        [
             "Prints command-line instructions and lists all options and their descriptions.",
-        };
+        ];
 
         public override string Usage => "-help | -h";
 
@@ -49,7 +49,7 @@ namespace CVAS.CommandLine
             };
 
             // Return trimmed args
-            return Array.Empty<string>(); // -help will force execution and prevent further arguments from being read
+            return []; // -help will force execution and prevent further arguments from being read
         }
     }
 }

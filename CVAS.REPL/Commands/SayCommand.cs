@@ -12,14 +12,14 @@ namespace CVAS.REPL
 
         public override string Description => "Says the given sentence, and commits it to memory.";
 
-        public override string[] Usage { get; } = { "say [sentence]", "say" };
+        public override string[] Usage { get; } = ["say [sentence]", "say"];
 
-        public override Command[] SubCommands { get; } = { };
+        public override Command[] SubCommands { get; } = [];
 
         public override Argument[] Arguments { get; } =
-        {
+        [
             new StringArgument("sentence", false),
-        };
+        ];
 
         protected override void VerifyArgsAndRun()
         {

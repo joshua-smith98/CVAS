@@ -5,17 +5,12 @@ namespace CVAS.AudioEngineNS
     /// <summary>
     /// A playable piece of audio from a file, that is streamed directly from the disk.
     /// </summary>
-    public class AudioFileStreaming : IAudioFile
+    public class AudioFileStreaming(string path) : IAudioFile
     {
         /// <summary>
         /// Path to the originating file.
         /// </summary>
-        public string Path { get; }
-
-        public AudioFileStreaming(string path)
-        {
-            Path = path; // We're assuming that the the file at 'path' is an audio file
-        }
+        public string Path => path; // We're assuming that the the file at 'path' is an audio file
 
         public IWaveProvider ToWaveProvider()
         {
@@ -24,6 +19,7 @@ namespace CVAS.AudioEngineNS
 
         public void Dispose()
         {
+            // Nothing to dispose of
             GC.SuppressFinalize(this);
         }
     }

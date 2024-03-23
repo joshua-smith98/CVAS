@@ -11,11 +11,11 @@ namespace CVAS.REPL
 
         public override string Description => "Stops all audio playback.";
 
-        public override string[] Usage { get; } = { "stop" };
+        public override string[] Usage { get; } = ["stop"];
 
-        public override Command[] SubCommands { get; } = { };
+        public override Command[] SubCommands { get; } = [];
 
-        public override Argument[] Arguments { get; } = { };
+        public override Argument[] Arguments { get; } = [];
 
         protected override void VerifyArgsAndRun()
         {

@@ -11,14 +11,14 @@ namespace CVAS.REPL
 
         public override string Description => "Gets the description and usage instructions for the given command, or lists all commands.";
 
-        public override string[] Usage { get; } = { "help", "help [command]" };
+        public override string[] Usage { get; } = ["help", "help [command]"];
 
-        public override Command[] SubCommands { get; } = Array.Empty<Command>();
+        public override Command[] SubCommands { get; } = [];
 
         public override Argument[] Arguments { get; } =
-        {
+        [
             new CommandArgument("command", false),
-        };
+        ];
 
         protected override void VerifyArgsAndRun()
         {
@@ -43,7 +43,7 @@ namespace CVAS.REPL
         /// Prints the Str, Description and Usage details for the given command.
         /// </summary>
         /// <param name="command"></param>
-        private void PrintCommandDetails(Command command)
+        private static void PrintCommandDetails(Command command)
         {
             // Print Str and Description
             Terminal.BeginMessage();

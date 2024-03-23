@@ -14,7 +14,7 @@ namespace CVAS.Core
         /// The collection of <see cref="Inflection"/>s associated with this phrase, each containing an <see cref="IAudioClip"/>.
         /// </summary>
         public Inflection[] Inflections => inflections.ToArray();
-        private readonly InflectionCollection inflections = new();
+        private InflectionCollection inflections = [];
         
         /// <summary>
         /// Constructs a new phrase with no associated audio.
@@ -97,7 +97,7 @@ namespace CVAS.Core
         /// <returns></returns>
         internal static string[] GetWords(string str)
         {
-            List<string> words = new();
+            List<string> words = [];
 
             string word = "";
             foreach (char character in str)
@@ -127,8 +127,10 @@ namespace CVAS.Core
 
         public void Dispose()
         {
-            inflections.Dispose();
+            inflections?.Dispose();
+            inflections = null!;
             GC.SuppressFinalize(this);
         }
+
     }
 }

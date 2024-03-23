@@ -47,9 +47,9 @@
         /// </summary>
         public static char AwaitKey()
         {
-            Console.CursorVisible = true;
+            // Console.CursorVisible = true;
             var keyinfo = Console.ReadKey();
-            Console.CursorVisible = false;
+            // Console.CursorVisible = false;
             Console.CursorLeft--;
             Console.Write(" ");
             Console.WriteLine();
@@ -115,6 +115,19 @@
                 throw new TerminalException("Tried to open a message block when a another block type is currently active!");
             }
 
+            Status = TerminalBlockStatus.MessageBlockActive;
+        }
+
+        /// <summary>
+        /// Forces a message block to begin. Useful for exceptions.
+        /// </summary>
+        public static void ForceBeginMessage() // TODO: Replace manual block opening and closing with IDisposable object, so we don't need this
+        {
+            if (Status is TerminalBlockStatus.MessageBlockActive)
+                Console.WriteLine(); // Write a single new line if a message block was active
+            else if (Status is TerminalBlockStatus.ReportBlockActive)
+                Console.WriteLine("\n"); // Write two new lines if a report block was active
+            
             Status = TerminalBlockStatus.MessageBlockActive;
         }
 

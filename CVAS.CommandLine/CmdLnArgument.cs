@@ -58,7 +58,7 @@ namespace CVAS.CommandLine
                     {
                         // Trim args and return
                         var trimmedStrArgs = strArgs[(i + 1)..].TrimStart();
-                        if (trimmedStrArgs == string.Empty) args = Array.Empty<string>(); // Handle case where string is empty: otherwise Split() will produce array with one element!
+                        if (trimmedStrArgs == string.Empty) args = []; // Handle case where string is empty: otherwise Split() will produce array with one element!
                         else args = trimmedStrArgs.Split();
                         return valueBuilder.ToString();
                     }

@@ -10,9 +10,9 @@
         public override string? ShortStr => "-o";
 
         public override string[] DescriptionLines { get; } =
-        {
+        [
             "Specifies an output file for the '-render' option.",
-        };
+        ];
 
         public override string Usage => "-output | -o [output path]";
 

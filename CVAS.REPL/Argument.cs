@@ -3,13 +3,13 @@
     /// <summary>
     /// Represents an argument for a command which can be read from a string.
     /// </summary>
-    internal abstract class Argument
+    internal abstract class Argument(string name, bool isCompulsory)
     {
         /// <summary>
         /// The name of this <see cref="Argument"/> instance. Used to refer to this argument when attempting to read it via an <see cref="Command"/>.
         /// </summary>
-        public string Name { get; }
-        
+        public string Name => name;
+
         /// <summary>
         /// Value of the argument. Will be <see cref="null"/> until read.
         /// </summary>
@@ -23,13 +23,7 @@
         /// <summary>
         /// Determines whether this argument is required by the parent command. When set to <see cref="false"/>, no exceptions will be thrown if invalid.
         /// </summary>
-        public bool IsCompulsory { get; }
-
-        public Argument(string name, bool isCompulsory)
-        {
-            Name = name;
-            IsCompulsory = isCompulsory;
-        }
+        public bool IsCompulsory => isCompulsory;
 
         /// <summary>
         /// Validates, and attempts to read an argument from the given string. When successful, will also trim this argument from the given string.
@@ -43,11 +37,11 @@
                 VerifyFrom(str);
                 return ReadFromImpl(str);
             }
-            catch(REPLException e)
+            catch(REPLException)
             {
                 Value = null;
                 
-                if (IsCompulsory) throw e;
+                if (IsCompulsory) throw;
                 else return str;
             }
         }

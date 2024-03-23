@@ -15,7 +15,7 @@ namespace CVAS.Core
         /// </summary>
         public InflectionType Inflection { get; }
 
-        private IAudioClip audioClip { get; }
+        private IAudioClip audioClip;
 
         internal SpokenPhrase(string str, string[] words, IAudioClip audioClip, InflectionType inflection)
         {
@@ -51,7 +51,9 @@ namespace CVAS.Core
 
         public void Dispose()
         {
-            audioClip.Dispose();
+            audioClip?.Dispose();
+            audioClip = null!;
+            GC.SuppressFinalize(this);
         }
     }
 }

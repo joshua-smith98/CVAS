@@ -5,14 +5,9 @@ namespace CVAS.AudioEngineNS
     /// <summary>
     /// A playable piece of silent audio, with a given length in milliseconds.
     /// </summary>
-    public class Silence : IAudioClip
+    public class Silence(int milliseconds) : IAudioClip
     {
-        public int Milliseconds { get; }
-
-        public Silence(int milliseconds)
-        {
-            Milliseconds = milliseconds;
-        }
+        public int Milliseconds => milliseconds;
 
         public IWaveProvider ToWaveProvider()
         {
@@ -21,6 +16,7 @@ namespace CVAS.AudioEngineNS
 
         public void Dispose()
         {
+            // Nothing to dispose of
             GC.SuppressFinalize(this);
         }
     }

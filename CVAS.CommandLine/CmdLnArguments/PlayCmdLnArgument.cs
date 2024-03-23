@@ -12,10 +12,10 @@ namespace CVAS.CommandLine
         public override string? ShortStr => "-p";
 
         public override string[] DescriptionLines { get; } =
-        {
+        [
             "Plays the given sentence, using the given library.",
             "The application will remain open until the sentence has finished playing.",
-        };
+        ];
 
         public override string Usage => "-play | -p";
 

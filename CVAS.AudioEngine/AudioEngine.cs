@@ -20,10 +20,9 @@ namespace CVAS.AudioEngineNS
         
         public static readonly WaveFormat WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2); // TODO: Implement changing WaveFormat
 
-        private readonly WaveOutEvent waveOutEvent;
+        private WaveOutEvent waveOutEvent;
 
         private readonly MixingSampleProvider sampleProvider;
-
 
         private AudioEngine()
         {
@@ -50,11 +49,7 @@ namespace CVAS.AudioEngineNS
             waveOutEvent.Play();
 
             // Hang until playback is complete
-            while (true)
-            {
-                if (waveOutEvent.PlaybackState is PlaybackState.Stopped)
-                    break;
-            }
+            while (waveOutEvent.PlaybackState is PlaybackState.Playing);
 
             waveOutEvent.Dispose();
         }
@@ -90,9 +85,10 @@ namespace CVAS.AudioEngineNS
 
         public void Dispose()
         {
-            waveOutEvent.Stop();
-            waveOutEvent.Dispose();
-            GC.SuppressFinalize(this); // VS says to do this, but I'll be honest I'm not sure exactly what it does
+            waveOutEvent?.Stop();
+            waveOutEvent?.Dispose();
+            waveOutEvent = null!;
+            GC.SuppressFinalize(this);
         }
     }
 }

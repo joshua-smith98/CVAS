@@ -5,11 +5,9 @@ namespace CVAS.REPL
     /// <summary>
     /// An <see cref="Argument"/> that attempts to read a string surrounded by whitespace or double quotes (").
     /// </summary>
-    internal class StringArgument : Argument
+    internal class StringArgument(string name, bool isCompulsory) : Argument(name, isCompulsory)
     {
         public override Type ValueType => typeof(string);
-
-        public StringArgument(string name, bool isCompulsory) : base(name, isCompulsory) { }
 
         protected override string ReadFromImpl(string str)
         {

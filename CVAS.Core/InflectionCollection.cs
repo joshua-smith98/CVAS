@@ -12,7 +12,7 @@ namespace CVAS.Core
 
         public bool IsReadOnly => false;
 
-        private readonly List<Inflection> inflections = new();
+        private List<Inflection> inflections = [];
 
         /// <summary>
         /// Gets the <see cref="IAudioClip"/> associated with the given <see cref="InflectionType"/>.
@@ -76,8 +76,13 @@ namespace CVAS.Core
 
         public void Dispose()
         {
-            foreach (var inflection in inflections) inflection.Dispose();
+            for (int i = 0; i < inflections.Count; i++)
+            {
+                inflections[i]?.Dispose();
+                inflections[i] = null!;
+            }
 
+            inflections = null!;
             GC.SuppressFinalize(this);
         }
     }

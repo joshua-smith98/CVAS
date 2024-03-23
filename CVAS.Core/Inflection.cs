@@ -5,20 +5,15 @@ namespace CVAS.Core
     /// <summary>
     /// Represents a single inflection, including its type and relevant <see cref="IAudioClip"/>.
     /// </summary>
-    public class Inflection : IDisposable
+    public class Inflection(InflectionType inflectionType, IAudioClip audioClip) : IDisposable
     {
-        public InflectionType InflectionType { get; }
-        public IAudioClip AudioClip { get; }
-
-        public Inflection(InflectionType inflectionType, IAudioClip audioClip)
-        {
-            InflectionType = inflectionType;
-            AudioClip = audioClip;
-        }
+        public InflectionType InflectionType => inflectionType;
+        public IAudioClip AudioClip => audioClip;
 
         public void Dispose()
         {
-            AudioClip.Dispose();
+            audioClip?.Dispose();
+            audioClip = null!;
             GC.SuppressFinalize(this);
         }
     }

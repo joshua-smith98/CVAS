@@ -5,8 +5,8 @@
     /// </summary>
     public partial class Library : IDisposable
     {
-        public Phrase[] Phrases => phrases.ToArray(); //public get only
-        private readonly List<Phrase> phrases = DefaultPhrases.ToList(); // All Libraries include the special phrases by default
+        public Phrase[] Phrases => phrases.Concat(DefaultPhrases).ToArray(); // Always concatinate default phrases to our phrase list
+        private List<Phrase> phrases = new(); // All Libraries include the special phrases by default
 
         public Library(params Phrase[] phrases)
         {
@@ -20,7 +20,7 @@
         /// <returns>The specified <see cref="Phrase"/> or null if unsuccessful.</returns>
         public Phrase? FindPhrase(string str)
         {
-            foreach(Phrase phr in phrases)
+            foreach(Phrase phr in Phrases)
             {
                 if (phr.Str == str) return phr;
             }
@@ -131,7 +131,14 @@
 
         public void Dispose()
         {
-            foreach (var phrase in phrases) phrase.Dispose();
+            for (int i = 0; i < phrases.Count; i++)
+            {
+                phrases[i]?.Dispose();
+                phrases[i] = null!;
+            }
+
+            phrases = null!;
+
             GC.SuppressFinalize(this);
         }
     }

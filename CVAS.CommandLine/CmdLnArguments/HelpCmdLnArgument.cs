@@ -12,9 +12,9 @@ namespace CVAS.CommandLine
         public override string? ShortStr => "-h";
 
         public override string[] DescriptionLines { get; } =
-        {
+        [
             "Prints command-line instructions and lists all options and their descriptions.",
-        };
+        ];
 
         public override string Usage => "-help | -h";
 
@@ -24,10 +24,11 @@ namespace CVAS.CommandLine
             CmdLnContext.Instance.Action = () =>
             {
                 // Header
+                Terminal.IsSilent = false;
                 Terminal.BeginMessage();
                 Terminal.Message("---CVAS Command-line Interface v0.5.0---");
                 Terminal.Message("Usage:", ConsoleColor.Yellow);
-                Terminal.Message("\tCVAS.exe -[option] (argument) -[option] (argument) ...", ConsoleColor.DarkYellow);
+                Terminal.Message("\t[cvas.exe] -[option] (argument) -[option] (argument) ...", ConsoleColor.DarkYellow);
                 Terminal.EndMessage();
 
                 // Print list of options
@@ -44,11 +45,11 @@ namespace CVAS.CommandLine
                     Terminal.Message();
                     Terminal.EndMessage();
                 }
-
+                Terminal.IsSilent = true;
             };
 
             // Return trimmed args
-            return Array.Empty<string>(); // -help will force execution and prevent further arguments from being read
+            return []; // -help will force execution and prevent further arguments from being read
         }
     }
 }

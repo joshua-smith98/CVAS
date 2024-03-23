@@ -22,7 +22,8 @@ To build CVAS with *dotnet*, ensure you have [.NET 8.0 SDK installed](https://do
     git clone https://github.com/joshua-smith98/CVAS.git
     cd CVAS/CVAS.Main/
     dotnet publish --sc -p:PublishSingleFile=true
-***Note:** while building on Linux with dotnet is possible, CVAS will open to a fatal error. Unfortunately this is because CVAS uses [NAudio](https://github.com/naudio/NAudio), which is Windows only.*
+***
+***Note:** CVAS is currently a Windows-Only application. While building on Linux with dotnet is technically possible, CVAS will open to a fatal DllNotFoundException. This is because CVAS uses [NAudio](https://github.com/naudio/NAudio) for audio rendering and playback, which unfortunately is a Windows-Only library.*
 
 ## Usage
 TODO

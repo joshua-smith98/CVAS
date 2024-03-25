@@ -130,8 +130,8 @@ namespace CVAS.FileSystem
                         {
                             Str = br.ReadString(),
                             NumInflections = br.ReadInt32(),
-                            InflectionTable = new InflectionTableRow[phraseTable[i].NumInflections],
                         };
+                        phraseTable[i].InflectionTable = new InflectionTableRow[phraseTable[i].NumInflections];
 
                         // Read inflections
                         for (int j = 0; j < phraseTable[i].NumInflections; j++)

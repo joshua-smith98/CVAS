@@ -10,7 +10,7 @@ To download CVAS, check the [Releases](https://github.com/joshua-smith98/CVAS/re
 If you're looking for something cross-platform with a GUI, try this one - its quite nice:** [jaboles/DVA5](https://github.com/jaboles/DVA5)
 
 # Features & Roadmap
-## v0.5.0 - Terminal UI & Basic Functions ✔️
+## v0.5 - Terminal UI & Basic Functions ✔️
  - [x] String together audio files to speak Sentences
  - [x] Test, speak and render Sentences to a file
  - [x] Automatically load a Library of audio files from a folder
@@ -18,7 +18,7 @@ If you're looking for something cross-platform with a GUI, try this one - its qu
  - [x] Caching of Libraries for almost instant loading after first analysis
  - [x] Use CVAS via REPL or with Command-line Arguments
 
-## v1.0.0 - WPF GUI & Analysis Tools
+## v1.0 - WPF GUI & Analysis Tools
  - [ ] **Fully Functional Windows WFP GUI**
  - [ ] ~~Cross-platform Terminal Support for Linux & MacOS~~ **(Still TBD)**
  - [ ] Import Libraries from a folder for quick and easy loading

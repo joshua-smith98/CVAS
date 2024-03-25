@@ -49,8 +49,7 @@ To build CVAS with *dotnet*, ensure you have [.NET 8.0 SDK installed](https://do
 
 ***Note:** CVAS is currently a Windows-Only application. While building on Linux or MacOS with dotnet is technically possible, CVAS will open to a fatal DllNotFoundException. This is because CVAS currently uses [NAudio](https://github.com/naudio/NAudio) for audio rendering and playback, which unfortunately is a Windows-Only library.*
 
-# Usage
-## Usage via REPL
+# Usage via REPL
 CVAS comes with a REPL interface by default. To use the REPL, simply run *cvas.exe*.
 The REPL is designed to be used with the following workflow:
 
@@ -59,7 +58,7 @@ The REPL is designed to be used with the following workflow:
  3. 'Say' the sentence.
  4. Render the sentence to a file.
 
-### Loading a Library
+## Loading a Library
 Once in the CVAS REPL, use the following command:
 
     load [path to library]
@@ -67,7 +66,7 @@ CVAS will then attempt to load an audio library from the given folder (see [Audi
 
 *Note that all strings with whitespace must be encased in double-quotes (").*
 
-### Testing a Sentence
+## Testing a Sentence
 After you have loaded a library, you can test a sentence by using the following command:
 
     test [sentence]
@@ -75,14 +74,14 @@ CVAS will then print out all the phrases that are needed to speak that sentence,
 
 CVAS will also remember the last sentence you have used so you can use it again easily in future commands.
 
-### 'Saying' a Sentence
+## 'Saying' a Sentence
 After you have tested a sentence, you may want to have CVAS 'say' it, to check it sounds like you expect. To 'say' a sentence, you can use the following command:
 
     say [sentence]
 Or, if you have used your sentence before in another command, you do not need to provide it again:
 
     say
-### Rendering a Sentence to a File
+## Rendering a Sentence to a File
 Finally, you may want to render a sentence to a file for external use (note that currently only wav is supported). To render a sentence, you can use the following command:
 
     render [path] [sentence]
@@ -94,19 +93,19 @@ For a full list of REPL commands and their usage, use:
 
     help
 
-## Usage via Command-line Arguments
+# Usage via Command-line Arguments
 CVAS can also be used via command-line arguments. CVAS's command-line syntax is as follows:
 
     cvas.exe -[option] (argument) -[option] (argument) -[option] (argument) ...
 Using command-line arguments, you can play and render sentences.
 
-### Playing a Sentence via Command-line
+## Playing a Sentence via Command-line
 To play a sentence via command-line, you can use the following options:
 
     cvas.exe -library [path to library] -sentence [sentence] -play
 *Note that the order of the options is not important.*
 
-### Rendering a Sentence via Command-line
+## Rendering a Sentence via Command-line
 To render a sentence to a wav file via Command-line, you can use the following options:
 
     cvas.exe -library [path to library] -sentence [sentence] -output [path to output file] -render
@@ -115,7 +114,7 @@ For a full list of Command-line arguments and their functions, use:
 
     cvas.exe -help
 
-## Audio Libraries
+# Audio Libraries
 CVAS requires you to load an audio library before you can process any sentences. Libraries in CVAS are just folders containing specially named audio files.
 
 The required formatting of audio file names is based on that of [jaboles/DVA5](https://github.com/jaboles/DVA5) to allow for cross-compatibility:

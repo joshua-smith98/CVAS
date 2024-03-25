@@ -62,7 +62,7 @@ The REPL is designed to be used with the following workflow:
 Once in the CVAS REPL, use the following command:
 
     load [path to library]
-CVAS will then attempt to load an audio library from the given folder (see [Audio Libraries](https://github.com/joshua-smith98/CVAS/README.md#audio-libraries) below for more information on audio libraries).
+CVAS will then attempt to load an audio library from the given folder (see [Audio Libraries](https://github.com/joshua-smith98/CVAS/tree/main?tab=readme-ov-file#audio-libraries) below for more information on audio libraries).
 
 *Note that all strings with whitespace must be encased in double-quotes (").*
 

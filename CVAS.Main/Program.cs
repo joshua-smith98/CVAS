@@ -4,8 +4,10 @@ using CVAS.REPL;
 using CVAS.TerminalNS;
 
 // Main entry point
+#if !DEBUG
 try
 {
+#endif
     if (args.Length == 0) // No args | default app
     {
         // Since the REPL is the only usable interface, we will set it as the default for now
@@ -31,6 +33,7 @@ try
         CmdLnContext.Init();
         CmdLnContext.Instance.ReadFromAndRun(args);
     }
+#if !DEBUG
 }
 catch(Exception e)
 {
@@ -48,3 +51,4 @@ catch(Exception e)
 
     Terminal.AwaitKey("Press any key to close the application...");
 }
+#endif

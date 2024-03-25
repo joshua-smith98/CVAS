@@ -4,10 +4,33 @@
 
 CVAS stands for ***Concatenative Voice Announcement System***. CVAS takes a series of recorded phrases and attempts to speak a given sentence by stringing those phrases together. Think: automatic train announcements.
 
-**Please note: CVAS is currently terminal-only.
-If you're looking for a program with UI, try this one - its quite nice:** [jaboles/DVA5](https://github.com/jaboles/DVA5)
+To download CVAS, check the [Releases](https://github.com/joshua-smith98/CVAS/releases) page for the latest binary.
+
+**Please note: CVAS is currently terminal-only, and only supports Windows.
+If you're looking for something cross-platform with a GUI, try this one - its quite nice:** [jaboles/DVA5](https://github.com/jaboles/DVA5)
+
+# Features & Roadmap
+## v0.5.0 - Terminal UI & Basic Functions ✔️
+ - [x] String together audio files to speak Sentences
+ - [x] Test, speak and render Sentences to a file
+ - [x] Automatically load a Library of audio files from a folder
+ - [x] Support for Middle and Ending Inflections for each Phrase
+ - [x] Caching of Libraries for almost instant loading after first analysis
+ - [x] Use CVAS via REPL or with Command-line Arguments
+
+## v1.0.0 - WPF GUI & Analysis Tools
+ - [ ] **Fully Functional Windows WFP GUI**
+ - [ ] ~~Cross-platform Terminal Support for Linux & MacOS~~ **(Still TBD)**
+ - [ ] Import Libraries from a folder for quick and easy loading
+ - [ ] Save Sentences for easy editing and playback
+ - [ ] Analyse a set of Sentences to find the Phrases that are required to say them
+ - [ ] Analyse a Library of Phrases to find missing words
+ - [ ] *More TBD...*
+
+***
+Follow the design and development process more closely [on CVAS's Trello board.](https://trello.com/b/Z1Bclmuy/cvas)
+
 # Installation
-*For a binary, check releases.*
 
 ## Build with Visual Studio
 CVAS comes as a Visual Studio 2022 solution. To build CVAS with Visual Studio:
@@ -24,7 +47,7 @@ To build CVAS with *dotnet*, ensure you have [.NET 8.0 SDK installed](https://do
     cd CVAS/CVAS.Main/
     dotnet publish --sc -p:PublishSingleFile=true
 
-***Note:** CVAS is currently a Windows-Only application. While building on Linux with dotnet is technically possible, CVAS will open to a fatal DllNotFoundException. This is because CVAS uses [NAudio](https://github.com/naudio/NAudio) for audio rendering and playback, which unfortunately is a Windows-Only library.*
+***Note:** CVAS is currently a Windows-Only application. While building on Linux or MacOS with dotnet is technically possible, CVAS will open to a fatal DllNotFoundException. This is because CVAS currently uses [NAudio](https://github.com/naudio/NAudio) for audio rendering and playback, which unfortunately is a Windows-Only library.*
 
 # Usage
 ## Usage via REPL
@@ -40,7 +63,7 @@ The REPL is designed to be used with the following workflow:
 Once in the CVAS REPL, use the following command:
 
     load [path to library]
-CVAS will then attempt to load an audio library from the given folder (see **Audio Libraries** below for more information on audio libraries).
+CVAS will then attempt to load an audio library from the given folder (see [Audio Libraries](https://github.com/joshua-smith98/CVAS/README.md#audio-libraries) below for more information on audio libraries).
 
 *Note that all strings with whitespace must be encased in double-quotes (").*
 
@@ -70,7 +93,6 @@ And again, if you have used a sentence before, you do not need to provide it aga
 For a full list of REPL commands and their usage, use:
 
     help
-***
 
 ## Usage via Command-line Arguments
 CVAS can also be used via command-line arguments. CVAS's command-line syntax is as follows:
@@ -92,7 +114,7 @@ To render a sentence to a wav file via Command-line, you can use the following o
 For a full list of Command-line arguments and their functions, use:
 
     cvas.exe -help
-***
+
 ## Audio Libraries
 CVAS requires you to load an audio library before you can process any sentences. Libraries in CVAS are just folders containing specially named audio files.
 
@@ -110,22 +132,3 @@ Whereas a file containing the phrase "the train arriving on platform", which doe
 *Note that MP3 files are used here as an example only. CVAS supports almost all audio file formats. For more information about supported audio formats, see [naudio/NAudio](https://github.com/naudio/NAudio)*.
 
 For more examples of valid file names, you can take a look inside the 'sounds' folder of [jaboles/DVA5](https://github.com/jaboles/DVA5). All audio file names in DVA5 are compatible with CVAS.
-
-# Roadmap
-## v0.5.0 - Back-end, Command-line & README.md ✔️
- - [x] Sentence, phase & library functionality
- - [x] Audio playback of sentences and phrases
- - [x] Audio caching
- - [x] Inflection support
- - [x] Automatically load a library from a folder
- - [x] Render spoken sentences to files
- - [x] Library caching on the disk
- - [x] Perform functions via REPL
- - [x] Perform functions via command line
- - [x] A completed README.md, with "Usage" and "Installation" sections.
-
-## v1.0.0 - WPF GUI & Analysis Tools
-- This will be expanded once v0.5.0 is complete.
-
-***
-Follow the design and development process more closely [on CVAS's Trello board.](https://trello.com/b/Z1Bclmuy/cvas)

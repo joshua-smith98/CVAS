@@ -5,6 +5,7 @@
     /// </summary>
     public enum InflectionType
     {
+        Null, // Used in a SpokenPhrase when its previous Phrase had no inflections - only occurs when a Phrase can't be found
         Middle,
         End
     }

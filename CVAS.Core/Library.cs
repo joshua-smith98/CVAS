@@ -84,8 +84,15 @@
                 Phrase? subPhrase = FindLargestSubphrase(tempWords.ToArray());
                 if (subPhrase is null)
                 {
-                    // If we can't find a subphrase, just add an empty phrase to the list and continue
-                    subPhrases.Add(new Phrase("NULL")); // TODO: make this into a static readonly Phrase.NULL ?
+                    // Concatinate any sequences of unfound phrases
+                    if (subPhrases.Last().IsEmptyPhrase())
+                    {
+                        subPhrases[^0] = new Phrase($"{subPhrases[^0].Str} {tempWords[0]}");
+                        continue;
+                    }
+                    
+                    // If we can't find a subphrase, add a null phrase to the list and continue
+                    subPhrases.Add(new Phrase(tempWords[0]));
                     tempWords.RemoveRange(0, 1);
                     continue;
                 }

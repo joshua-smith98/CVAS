@@ -50,6 +50,12 @@ namespace CVAS.Core
         }
 
         /// <summary>
+        /// Determines whether this <see cref="Phrase"/> is empty.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsEmptyPhrase() => Inflections.Length == 0;
+
+        /// <summary>
         /// Gets the default <see cref="IAudioClip"/> for this phrase, or silence.
         /// </summary>
         /// <returns><see cref="InflectionType.End"/> if available, otherwise <see cref="InflectionType.Middle"/>. If there is no associated <see cref="IAudioClip"/>, this returns <see cref="Silence"/>.</returns>
@@ -87,7 +93,9 @@ namespace CVAS.Core
         /// <returns></returns>
         public SpokenPhrase GetSpoken(InflectionType inflection)
         {
-            return new SpokenPhrase(Str, Words, GetAudioClip(inflection), inflection);
+            return !IsEmptyPhrase()
+                ? new SpokenPhrase(Str, Words, GetAudioClip(inflection), inflection) // Case: Inflections exist
+                : new SpokenPhrase(Str, Words, GetAudioClip(), InflectionType.Null); // Case: No inflections (means this phrase couldn't be found)
         }
 
         /// <summary>

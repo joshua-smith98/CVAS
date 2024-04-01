@@ -44,10 +44,7 @@ namespace CVAS.Core
         /// Determines whether this <see cref="SpokenPhrase"/> is empty.
         /// </summary>
         /// <returns></returns>
-        public bool IsEmptyPhrase()
-        {
-            return Str == "NULL";
-        }
+        public bool IsEmptyPhrase() => Inflection is InflectionType.Null;
 
         public void Dispose()
         {

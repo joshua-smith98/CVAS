@@ -82,18 +82,22 @@
             while (tempWords.Count > 0)
             {
                 Phrase? subPhrase = FindLargestSubphrase(tempWords.ToArray());
+
+                // Case: phrase couldn't be found
                 if (subPhrase is null)
                 {
-                    // Concatinate any sequences of unfound phrases
+                    // Case: the previous phrase also couldn't be found (i.e. a sequence of unfound phrases)
                     if (subPhrases.Last().IsEmptyPhrase())
                     {
-                        subPhrases[^0] = new Phrase($"{subPhrases[^0].Str} {tempWords[0]}");
-                        continue;
+                        // Concatinate any sequences of unfound phrases
+                        subPhrases[^1] = new Phrase($"{subPhrases[^1].Str} {tempWords[0]}");
+                    }
+                    else // Otherwise if we can't find a subphrase, just add a null phrase to the list
+                    {
+                        subPhrases.Add(new Phrase(tempWords[0]));
                     }
                     
-                    // If we can't find a subphrase, add a null phrase to the list and continue
-                    subPhrases.Add(new Phrase(tempWords[0]));
-                    tempWords.RemoveRange(0, 1);
+                    tempWords.RemoveAt(0); // No matter what, remove the word we couldn't find
                     continue;
                 }
 

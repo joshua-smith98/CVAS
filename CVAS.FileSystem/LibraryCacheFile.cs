@@ -75,7 +75,7 @@ namespace CVAS.FileSystem
                 #region Validity Checks
                 {
                     // Validity check: header
-                    if (!br.ReadChars(8).SequenceEqual("CVASLBCH".ToArray())) throw new InvalidFileHeaderException();
+                    if (!br.ReadChars(8).SequenceEqual("CVASLBCH".ToArray())) throw new InvalidFileFormatException();
 
                     // Validity check: folder hash
                     // Path.GetDirectoryName() will never return null, as the cache file at 'path' will always been in a library folder

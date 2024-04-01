@@ -55,15 +55,15 @@ namespace CVAS.FileSystem
             }
             catch (FileNotFoundException)
             {
-                Terminal.BeginMessage();
-                Terminal.Message("A cache does not exist for this folder - a first time analysis will be executed.", ConsoleColor.Yellow);
-                Terminal.EndMessage();
+                Terminal.MessageSingle("A cache does not exist for this folder - a first time analysis will be executed.", ConsoleColor.Yellow);
+            }
+            catch (InvalidFileFormatException)
+            {
+                Terminal.MessageSingle("The cache file for this folder is of an invalid format, and will be rebuilt.");
             }
             catch (InvalidFileHashException)
             {
-                Terminal.BeginMessage();
-                Terminal.Message("The folder contents have changed - the cache file will be rebuilt.", ConsoleColor.Yellow);
-                Terminal.EndMessage();
+                Terminal.MessageSingle("The folder contents have changed - the cache file will be rebuilt.", ConsoleColor.Yellow);
             }
 
             // Otherwise, load filenames from Directory.GetFiles(), checking for validity as audio files

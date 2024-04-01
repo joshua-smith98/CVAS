@@ -61,6 +61,10 @@ namespace CVAS.FileSystem
             {
                 Terminal.MessageSingle("The cache file for this folder is of an invalid format, and will be rebuilt.");
             }
+            catch (InvalidFileVersionException)
+            {
+                Terminal.MessageSingle("The cache file for this folder is of an old format, and will be rebuilt.");
+            }
             catch (InvalidFileHashException)
             {
                 Terminal.MessageSingle("The folder contents have changed - the cache file will be rebuilt.", ConsoleColor.Yellow);

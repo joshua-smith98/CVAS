@@ -77,6 +77,9 @@ namespace CVAS.FileSystem
                     // Validity check: header
                     if (!br.ReadChars(8).SequenceEqual("CVASLBCH".ToArray())) throw new InvalidFileFormatException();
 
+                    // Validity check: version number (current version is '1')
+                    if (br.ReadInt32() != 1) throw new InvalidFileVersionException();
+
                     // Validity check: folder hash
                     // Path.GetDirectoryName() will never return null, as the cache file at 'path' will always been in a library folder
                     var filenames = Directory.GetFiles(SysPath.GetDirectoryName(path)!).Select(x => SysPath.GetFileName(x));
@@ -117,8 +120,8 @@ namespace CVAS.FileSystem
 
                 #region Load from file and construct
                 {
-                    // Skip 2 x 4 byte headers and 16 byte folder hash
-                    br.BaseStream.Position = 24;
+                    // Skip 2 x 4 byte headers, 4 byte version no. and 16 byte folder hash
+                    br.BaseStream.Position = 28;
 
                     // Read phrases
                     int numPhrases = br.ReadInt32();

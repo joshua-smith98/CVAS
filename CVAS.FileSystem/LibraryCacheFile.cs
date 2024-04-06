@@ -19,6 +19,7 @@ namespace CVAS.FileSystem
         public const string DefaultPath = "cache.lbc";
 
         public char[] Header => "CVASLBCH".ToArray();
+        public static int Version = 1;
 
         internal int NumPhrases { get; private set; }
         internal PhraseTableRow[] PhraseTable { get; private set; }
@@ -78,7 +79,7 @@ namespace CVAS.FileSystem
                     if (!br.ReadChars(8).SequenceEqual("CVASLBCH".ToArray())) throw new InvalidFileFormatException();
 
                     // Validity check: version number (current version is '1')
-                    if (br.ReadInt32() != 1) throw new InvalidFileVersionException();
+                    if (br.ReadInt32() != Version) throw new InvalidFileVersionException();
 
                     // Validity check: folder hash
                     // Path.GetDirectoryName() will never return null, as the cache file at 'path' will always been in a library folder
@@ -295,6 +296,7 @@ namespace CVAS.FileSystem
             {
                 // Write headers
                 bw.Write("CVASLBCH".ToArray()); // Convert to char[] so that BinaryWriter doesn't write a length int before the header
+                bw.Write(Version); // Write the version number to the file
 
                 // Compute and write folder hash
                 // Path.GetDirectoryName() will never return null, as the cache file at 'path' will always been in a library folder

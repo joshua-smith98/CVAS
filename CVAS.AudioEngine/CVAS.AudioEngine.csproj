@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="Bass.Net">
+      <HintPath>..\Bass24.Net\Bass.Net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

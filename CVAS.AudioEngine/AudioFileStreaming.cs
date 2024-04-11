@@ -12,7 +12,7 @@ namespace CVAS.AudioEngineNS
         /// </summary>
         public string Path => path; // We're assuming that the the file at 'path' is an audio file
 
-        public IWaveProvider ToWaveProvider()
+        internal IWaveProvider ToWaveProvider()
         {
             return new DisposingWaveProvider(new AudioFileReader(Path));
         }

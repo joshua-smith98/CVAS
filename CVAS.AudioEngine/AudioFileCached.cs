@@ -7,7 +7,7 @@ namespace CVAS.AudioEngineNS
     /// </summary>
     public class AudioFileCached : IAudioFile
     {
-        public WaveFormat WaveFormat { get; } // We need this here in order to load the wavestream from memory
+        internal WaveFormat WaveFormat { get; } // We need this here in order to load the wavestream from memory
 
         /// <summary>
         /// Path to the originating file.
@@ -33,7 +33,7 @@ namespace CVAS.AudioEngineNS
             }
         }
 
-        public IWaveProvider ToWaveProvider()
+        internal IWaveProvider ToWaveProvider()
         {
             // Copy audio data from master cache to new cache
             var newStream = new MemoryStream();

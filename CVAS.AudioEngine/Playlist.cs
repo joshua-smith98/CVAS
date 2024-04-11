@@ -10,7 +10,7 @@ namespace CVAS.AudioEngineNS
     {
         public IAudioClip[] AudioClips => audioClips;
 
-        public IWaveProvider ToWaveProvider()
+        internal IWaveProvider ToWaveProvider()
         {
             ConcatenatingSampleProvider sampleProvider;
             IWaveProvider[] waveProviders = new IWaveProvider[AudioClips.Length]; // Collection of WaveProviders to concatenate

@@ -18,7 +18,7 @@ namespace CVAS.AudioEngineNS
         }
         private static AudioEngine? instance;
         
-        public static readonly WaveFormat WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2); // TODO: Implement changing WaveFormat
+        internal static readonly WaveFormat WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2); // TODO: Implement changing WaveFormat
 
         private WaveOutEvent waveOutEvent;
 

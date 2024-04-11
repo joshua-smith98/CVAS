@@ -9,7 +9,7 @@ namespace CVAS.AudioEngineNS
     {
         public int Milliseconds => milliseconds;
 
-        public IWaveProvider ToWaveProvider()
+        internal IWaveProvider ToWaveProvider()
         {
             return new SilenceSampleProvider(AudioEngine.WaveFormat, Milliseconds).ToWaveProvider();
         }

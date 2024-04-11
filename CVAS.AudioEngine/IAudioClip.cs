@@ -7,6 +7,6 @@ namespace CVAS.AudioEngineNS
     /// </summary>
     public interface IAudioClip : IDisposable // Inherits IDisposable, because some subclasses need to be disposed
     {
-        public IWaveProvider ToWaveProvider();
+        internal IWaveProvider ToWaveProvider();
     }
 }

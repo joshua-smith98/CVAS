@@ -23,6 +23,8 @@ namespace CVAS.AudioEngineNS
                         throw new FileNotFoundException();
                     case BASSError.BASS_ERROR_NOTAUDIO:
                         throw new AudioEngineException($"Attempted to open file that doesn't contain audio: {path}");
+                    case BASSError.BASS_ERROR_MEM:
+                        throw new AudioEngineException($"BASS ran out of memory while loading an audio file: {path}");
                     default:
                         throw new AudioEngineException($"An unknown error occurred while opening an audio file. BASS error code: {bassError}");
                 }

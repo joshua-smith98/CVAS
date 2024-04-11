@@ -1,6 +1,6 @@
 ﻿using NAudio.Wave;
 
-namespace CVAS.AudioEngineNS
+namespace CVAS.WinAudioEngineNS
 {
     /// <summary>
     /// A playable piece of silent audio, with a given length in milliseconds.

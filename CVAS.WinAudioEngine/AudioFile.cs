@@ -1,4 +1,4 @@
-﻿namespace CVAS.AudioEngineNS
+﻿namespace CVAS.WinAudioEngineNS
 {
     /// <summary>
     /// Abstract class representing any playable piece of audio originating from a file.

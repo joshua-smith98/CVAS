@@ -1,7 +1,7 @@
 ﻿using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 
-namespace CVAS.AudioEngineNS
+namespace CVAS.WinAudioEngineNS
 {
     /// <summary>
     /// An piece of playable audio made up of concatenated <see cref="AudioClip"/>s.

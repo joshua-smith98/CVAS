@@ -1,9 +1,9 @@
-﻿using CVAS.AudioEngineNS;
+﻿using CVAS.WinAudioEngineNS;
 
 namespace CVAS.Core
 {
     /// <summary>
-    /// Represents a single inflection, including its type and relevant <see cref="AudioEngineNS.AudioClip"/>.
+    /// Represents a single inflection, including its type and relevant <see cref="WinAudioEngineNS.AudioClip"/>.
     /// </summary>
     public class Inflection(InflectionType inflectionType, AudioClip audioClip) : IDisposable
     {

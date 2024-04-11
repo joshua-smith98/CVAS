@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.Core", "CVAS.Core\CVAS.Core.csproj", "{A559CF5B-8924-4F51-9343-38C59B78C7C6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.AudioEngine", "CVAS.AudioEngine\CVAS.AudioEngine.csproj", "{A29FCBE2-A7A8-4280-BA52-47153B6C6DDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.WinAudioEngine", "CVAS.WinAudioEngine\CVAS.WinAudioEngine.csproj", "{A29FCBE2-A7A8-4280-BA52-47153B6C6DDF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.REPL", "CVAS.REPL\CVAS.REPL.csproj", "{1563A132-E404-4A9D-B70F-161797A0D5CC}"
 EndProject
@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.FileSystem", "CVAS.Fil
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.Terminal", "CVAS.Terminal\CVAS.Terminal.csproj", "{471C84FE-518D-4D40-BBA2-92FC204E09C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CVAS.CommandLine", "CVAS.CommandLine\CVAS.CommandLine.csproj", "{B943722C-66A4-4DA7-81DB-4F0AE1F8B095}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CVAS.CommandLine", "CVAS.CommandLine\CVAS.CommandLine.csproj", "{B943722C-66A4-4DA7-81DB-4F0AE1F8B095}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CVAS.AudioEngine", "CVAS.AudioEngine\CVAS.AudioEngine.csproj", "{BA4C1E7A-B9EC-41F0-8241-433FD26F7004}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{B943722C-66A4-4DA7-81DB-4F0AE1F8B095}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B943722C-66A4-4DA7-81DB-4F0AE1F8B095}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B943722C-66A4-4DA7-81DB-4F0AE1F8B095}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA4C1E7A-B9EC-41F0-8241-433FD26F7004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA4C1E7A-B9EC-41F0-8241-433FD26F7004}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA4C1E7A-B9EC-41F0-8241-433FD26F7004}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA4C1E7A-B9EC-41F0-8241-433FD26F7004}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

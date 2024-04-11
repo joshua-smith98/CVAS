@@ -15,9 +15,9 @@ namespace CVAS.Core
         /// </summary>
         public InflectionType Inflection { get; }
 
-        private IAudioClip audioClip;
+        private AudioClip audioClip;
 
-        internal SpokenPhrase(string str, string[] words, IAudioClip audioClip, InflectionType inflection)
+        internal SpokenPhrase(string str, string[] words, AudioClip audioClip, InflectionType inflection)
         {
             Str = str;
             Words = words;
@@ -26,10 +26,10 @@ namespace CVAS.Core
         }
 
         /// <summary>
-        /// Gets the associated <see cref="IAudioClip"/> for this SpokenPhrase.
+        /// Gets the associated <see cref="AudioClip"/> for this SpokenPhrase.
         /// </summary>
         /// <returns></returns>
-        public IAudioClip GetAudioClip() => audioClip;
+        public AudioClip GetAudioClip() => audioClip;
 
         /// <summary>
         /// Determines whether this <see cref="SpokenPhrase"/> is one of the special phrases used for punctuation.

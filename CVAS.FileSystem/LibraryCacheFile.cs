@@ -171,7 +171,7 @@ namespace CVAS.FileSystem
             foreach (Phrase phrase in library.Phrases)
             {
                 // Check if this phrase contains only non-IAudioFiles and if so don't include
-                if (!phrase.Inflections.Select(x => x.AudioClip).Where(x => x is IAudioFile).Any()) continue;
+                if (!phrase.Inflections.Select(x => x.AudioClip).Where(x => x is AudioFile).Any()) continue;
 
                 PhraseTableRow phraseRow = new()
                 {
@@ -183,12 +183,12 @@ namespace CVAS.FileSystem
                 foreach (InflectionType inflectionType in phrase.Inflections.Select(x => x.InflectionType))
                 {
                     // Check if this inflection isn't IAudioFile, if so and don't include
-                    if (phrase.GetAudioClip(inflectionType) is not IAudioFile) continue;
+                    if (phrase.GetAudioClip(inflectionType) is not AudioFile) continue;
 
                     var inflectionRow = new InflectionTableRow
                     {
                         Inflection = (int)inflectionType,
-                        AudioFileName = SysPath.GetFileName(((IAudioFile)phrase.GetAudioClip(inflectionType)).Path) // Gets the filename for the phrase's IAudioFile
+                        AudioFileName = SysPath.GetFileName(((AudioFile)phrase.GetAudioClip(inflectionType)).Path) // Gets the filename for the phrase's IAudioFile
                     };
 
                     inflectionTable.Add(inflectionRow);
@@ -229,7 +229,7 @@ namespace CVAS.FileSystem
                 foreach (InflectionTableRow inflectionRow in PhraseTable[i].InflectionTable)
                 {
                     InflectionType inflectionType = (InflectionType)inflectionRow.Inflection;
-                    IAudioClip audioClip;
+                    AudioClip audioClip;
                     // In some specific circumstances the following statement throws a DirectoryNotFoundException, even if the directory is valid.
                     // I don't know what causes this, it only happens with certain directory names. I see no issue with my code, perhaps this is a bug with NAudio?
                     // I will print a message to the console notifying them to open an issue - if someone encounters it, it will be more information to diagnose with.

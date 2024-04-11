@@ -23,10 +23,10 @@ namespace CVAS.Core
         }
 
         /// <summary>
-        /// Gets a playable <see cref="IAudioClip"/> for this sentence.
+        /// Gets a playable <see cref="AudioClip"/> for this sentence.
         /// </summary>
-        /// <returns>Note: always returns <see cref="Playlist"/> as <see cref="IAudioClip"/>.</returns>
-        public IAudioClip GetAudioClip()
+        /// <returns>Note: always returns <see cref="Playlist"/> as <see cref="AudioClip"/>.</returns>
+        public AudioClip GetAudioClip()
         {
             return new Playlist(SpokenPhrases.Select(x => x.GetAudioClip()).ToArray());
         }

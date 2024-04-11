@@ -41,7 +41,7 @@ namespace CVAS.AudioEngineNS
             instance = new AudioEngine();
         }
 
-        public static void PlayOnce(IAudioClip audioClip)
+        public static void PlayOnce(AudioClip audioClip)
         {
             // Initialise new WaveOutEvent and play
             WaveOutEvent waveOutEvent = new();
@@ -55,21 +55,21 @@ namespace CVAS.AudioEngineNS
         }
 
         /// <summary>
-        /// Plays the given <see cref="IAudioClip"/>, with automatic resampling.
+        /// Plays the given <see cref="AudioClip"/>, with automatic resampling.
         /// </summary>
         /// <param name="audioClip"></param>
-        public void Play(IAudioClip audioClip)
+        public void Play(AudioClip audioClip)
         {
             MediaFoundationResampler resampler = new(audioClip.ToWaveProvider(), WaveFormat);
             sampleProvider.AddMixerInput(resampler);
         }
 
         /// <summary>
-        /// Renders an <see cref="IAudioClip"/> to a new file at the given path. Assumes the directory exists, and overwrites any existing file.
+        /// Renders an <see cref="AudioClip"/> to a new file at the given path. Assumes the directory exists, and overwrites any existing file.
         /// </summary>
         /// <param name="audioClip"></param>
         /// <param name="path"></param>
-        public static void Render(IAudioClip audioClip, string path)
+        public static void Render(AudioClip audioClip, string path)
         {
             // Write wave file
             WaveFileWriter.CreateWaveFile16(path, audioClip.ToWaveProvider().ToSampleProvider());

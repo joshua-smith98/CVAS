@@ -5,14 +5,14 @@ namespace CVAS.AudioEngineNS
     /// <summary>
     /// A playable piece of audio from a file, that has been cached in memory.
     /// </summary>
-    public class AudioFileCached : IAudioFile
+    public class AudioFileCached : AudioFile
     {
         internal WaveFormat WaveFormat { get; } // We need this here in order to load the wavestream from memory
 
         /// <summary>
         /// Path to the originating file.
         /// </summary>
-        public string Path { get; }
+        public override string Path { get; }
 
         private MemoryStream masterCache;
 
@@ -33,7 +33,7 @@ namespace CVAS.AudioEngineNS
             }
         }
 
-        internal IWaveProvider ToWaveProvider()
+        internal override IWaveProvider ToWaveProvider()
         {
             // Copy audio data from master cache to new cache
             var newStream = new MemoryStream();
@@ -46,7 +46,7 @@ namespace CVAS.AudioEngineNS
             return new DisposingWaveProvider(new RawSourceWaveStream(newStream, WaveFormat));
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             masterCache?.Dispose();
             masterCache = null!;

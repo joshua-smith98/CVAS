@@ -18,7 +18,7 @@ namespace CVAS.Core
     public partial class Library
     {
         /// <summary>
-        /// The collection of default phrases found in every <see cref="Library"/>, and their corresponding <see cref="IAudioClip"/>s (usually a <see cref="Silence"/>).
+        /// The collection of default phrases found in every <see cref="Library"/>, and their corresponding <see cref="AudioClip"/>s (usually a <see cref="Silence"/>).
         /// </summary>
         public static readonly Phrase[] DefaultPhrases =
         [

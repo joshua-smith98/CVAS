@@ -11,9 +11,9 @@ namespace CVAS.Core
         public string[] Words { get; }
 
         /// <summary>
-        /// Gets the default <see cref="IAudioClip"/> associated with this phrase.
+        /// Gets the default <see cref="AudioClip"/> associated with this phrase.
         /// </summary>
         /// <returns></returns>
-        public IAudioClip GetAudioClip();
+        public AudioClip GetAudioClip();
     }
 }

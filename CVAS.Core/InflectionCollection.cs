@@ -15,12 +15,12 @@ namespace CVAS.Core
         private List<Inflection> inflections = [];
 
         /// <summary>
-        /// Gets the <see cref="IAudioClip"/> associated with the given <see cref="InflectionType"/>.
+        /// Gets the <see cref="AudioClip"/> associated with the given <see cref="InflectionType"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
         /// <exception cref="KeyNotFoundException"></exception>
-        public IAudioClip this[InflectionType type]
+        public AudioClip this[InflectionType type]
         {
             get
             {

@@ -4,13 +4,13 @@ using NAudio.Wave.SampleProviders;
 namespace CVAS.AudioEngineNS
 {
     /// <summary>
-    /// An piece of playable audio made up of concatenated <see cref="IAudioClip"/>s.
+    /// An piece of playable audio made up of concatenated <see cref="AudioClip"/>s.
     /// </summary>
-    public class Playlist(params IAudioClip[] audioClips) : IAudioClip
+    public class Playlist(params AudioClip[] audioClips) : AudioClip
     {
-        public IAudioClip[] AudioClips => audioClips;
+        public AudioClip[] AudioClips => audioClips;
 
-        internal IWaveProvider ToWaveProvider()
+        internal override IWaveProvider ToWaveProvider()
         {
             ConcatenatingSampleProvider sampleProvider;
             IWaveProvider[] waveProviders = new IWaveProvider[AudioClips.Length]; // Collection of WaveProviders to concatenate
@@ -35,7 +35,7 @@ namespace CVAS.AudioEngineNS
             return sampleProvider.ToWaveProvider();
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             for (int i = 0; i < audioClips.Length; i++)
             {

@@ -137,7 +137,7 @@ namespace CVAS.FileSystem
                 }
 
                 // Don't need to do a validity check, because we already did that while loading AudioFileNames
-                IAudioClip audioClip_middle = new AudioFileStreaming(files_middles[i]);
+                AudioClip audioClip_middle = new AudioFileStreaming(files_middles[i]);
 
                 // Phrase.str is file name without extension
                 string str = SysPath.GetFileNameWithoutExtension(files_middles[i]);
@@ -150,7 +150,7 @@ namespace CVAS.FileSystem
                     );
 
                 // Load ending inflection if it exists, otherwise load null
-                IAudioClip? audioClip_end = files_ends.Contains(file_end) ? new AudioFileStreaming(file_end) : null;
+                AudioClip? audioClip_end = files_ends.Contains(file_end) ? new AudioFileStreaming(file_end) : null;
 
                 // Construct new phrases and add to list
                 if (audioClip_end is not null)
@@ -172,7 +172,7 @@ namespace CVAS.FileSystem
                 }
 
                 // Audio file validity check
-                IAudioClip audioClip_end;
+                AudioClip audioClip_end;
 
                 try
                 {

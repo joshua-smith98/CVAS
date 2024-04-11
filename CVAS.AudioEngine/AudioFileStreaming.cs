@@ -16,11 +16,5 @@ namespace CVAS.AudioEngineNS
         {
             return new DisposingWaveProvider(new AudioFileReader(Path));
         }
-
-        public override void Dispose()
-        {
-            // Nothing to dispose of
-            GC.SuppressFinalize(this);
-        }
     }
 }

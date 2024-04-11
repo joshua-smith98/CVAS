@@ -13,11 +13,5 @@ namespace CVAS.AudioEngineNS
         {
             return new SilenceSampleProvider(AudioEngine.WaveFormat, Milliseconds).ToWaveProvider();
         }
-
-        public override void Dispose()
-        {
-            // Nothing to dispose of
-            GC.SuppressFinalize(this);
-        }
     }
 }

@@ -18,6 +18,9 @@ If you're looking for something cross-platform with a GUI, try this one - its qu
  - [x] Caching of Libraries for almost instant loading after first analysis
  - [x] Use CVAS via REPL or with Command-line Arguments
 
+## v0.6 - Terminal Support for Linux
+ - [ ] Use CVAS natively on Linux-based systems
+
 ## v1.0 - WPF GUI & Analysis Tools
  - [ ] **Fully Functional Windows WFP GUI**
  - [ ] ~~Cross-platform Terminal Support for Linux & MacOS~~ **(Still TBD)**

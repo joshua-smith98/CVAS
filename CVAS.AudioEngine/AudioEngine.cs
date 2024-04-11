@@ -54,6 +54,17 @@ namespace CVAS.AudioEngineNS
             waveOutEvent.Dispose();
         }
 
+        public static bool IsAudioFile(string path)
+        {
+            try
+            {
+                // Return true if we can load the audio file
+                using (new AudioFileReader(path)) { } ;
+                return true;
+            }
+            catch { return false; } // Otherwise return false
+        }
+
         /// <summary>
         /// Plays the given <see cref="AudioClip"/>, with automatic resampling.
         /// </summary>

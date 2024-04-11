@@ -1,7 +1,6 @@
 ﻿using CVAS.AudioEngineNS;
 using CVAS.Core;
 using CVAS.TerminalNS;
-using NAudio.Wave;
 using SysPath = System.IO.Path;
 
 namespace CVAS.FileSystem
@@ -84,13 +83,8 @@ namespace CVAS.FileSystem
                     Terminal.Report($"[{percent:0}%]");
                 }
 
-                try
-                {
-                    using var a = new AudioFileReader(files[i]) { }; // Test to see if it is a valid audio file
-
-                    audioFileNames.Add(SysPath.GetFileName(files[i]));
-                }
-                catch { } // Ignore all non-audiofiles
+                // Only add the file if it is an audio file, otherwise ignore it
+                if (AudioEngine.IsAudioFile(files[i])) audioFileNames.Add(SysPath.GetFileName(files[i]));
             }
             Terminal.EndReport($"Successfully found {audioFileNames.Count} audio files.");
 

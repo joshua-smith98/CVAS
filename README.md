@@ -23,7 +23,6 @@ If you're looking for something cross-platform with a GUI, try this one - its qu
 
 ## v1.0 - WPF GUI & Analysis Tools
  - [ ] **Fully Functional Windows WFP GUI**
- - [ ] ~~Cross-platform Terminal Support for Linux & MacOS~~ **(Still TBD)**
  - [ ] Import Libraries from a folder for quick and easy loading
  - [ ] Save Sentences for easy editing and playback
  - [ ] Analyse a set of Sentences to find the Phrases that are required to say them

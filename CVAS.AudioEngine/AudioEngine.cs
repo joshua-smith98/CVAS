@@ -12,9 +12,9 @@
         }
         private static AudioEngine? instance;
 
-        internal int Freq;
-
-        internal int BitsPerSample;
+        internal int Freq { get; }
+        internal int BitsPerSample { get; }
+        internal int Chans { get; }
 
         private AudioEngine()
         {

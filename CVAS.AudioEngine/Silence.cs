@@ -10,10 +10,10 @@ namespace CVAS.AudioEngineNS
         internal override int GetStreamHandle()
         {
             // Get length in bytes
-            var byteLength = (int)((milliseconds / 1000f) * AudioEngine.Instance.Freq * 2); // 2 is the number of bytes per sample (16bit audio)
+            var byteLength = (int)((milliseconds / 1000f) * 44100 * 2); // 2 is the number of bytes per sample (16bit audio)
 
             // Create sample
-            int sampleHandle = Bass.BASS_SampleCreate(byteLength, AudioEngine.Instance.Freq, 1, 1, BASSFlag.BASS_DEFAULT);
+            int sampleHandle = Bass.BASS_SampleCreate(byteLength, 44100, 1, 1, BASSFlag.BASS_DEFAULT);
             if (sampleHandle == 0)
             {
                 // Handle errors

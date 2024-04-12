@@ -11,8 +11,8 @@ namespace CVAS.AudioEngineNS
         {
             // Create mixer
             int mixerHandle = BassMix.BASS_Mixer_StreamCreate(
-                AudioEngine.Instance.Freq,
-                AudioEngine.Instance.Chans,
+                44100,
+                1,
                 BASSFlag.BASS_MIXER_END |
                 BASSFlag.BASS_MIXER_QUEUE |
                 BASSFlag.BASS_STREAM_DECODE

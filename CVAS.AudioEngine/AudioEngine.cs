@@ -113,7 +113,7 @@ namespace CVAS.AudioEngineNS
             BassMix.BASS_Mixer_StreamAddChannel(mixerHandle, audioClipHandle, BASSFlag.BASS_DEFAULT);
 
             // Play mixer
-            BassMix.BASS_Mixer_ChannelPlay(mixerHandle);
+            Bass.BASS_ChannelPlay(mixerHandle, false);
 
             // Hang until stream stops
             while(Bass.BASS_ChannelIsActive(audioClipHandle) is BASSActive.BASS_ACTIVE_PLAYING)
@@ -189,12 +189,7 @@ namespace CVAS.AudioEngineNS
 
         public void StopAll()
         {
-            Bass.BASS_ChannelStop(engineMixerHandle);
-            foreach (int channelHandle in BassMix.BASS_Mixer_StreamGetChannels(engineMixerHandle))
-            {
-                BassMix.BASS_Mixer_ChannelRemove(channelHandle);
-            }
-            Bass.BASS_ChannelPlay(engineMixerHandle, false);
+            throw new NotImplementedException();
         }
 
         public void Dispose()

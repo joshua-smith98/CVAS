@@ -1,4 +1,4 @@
-﻿using CVAS.WinAudioEngineNS;
+﻿using CVAS.AudioEngineNS;
 using CVAS.CommandLine;
 using CVAS.REPL;
 using CVAS.TerminalNS;

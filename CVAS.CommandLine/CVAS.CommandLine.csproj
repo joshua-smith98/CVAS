@@ -7,9 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CVAS.AudioEngine\CVAS.WinAudioEngine.csproj" />
+    <ProjectReference Include="..\CVAS.AudioEngine\CVAS.AudioEngine.csproj" />
     <ProjectReference Include="..\CVAS.Core\CVAS.Core.csproj" />
     <ProjectReference Include="..\CVAS.FileSystem\CVAS.FileSystem.csproj" />
+    <ProjectReference Include="..\CVAS.WinAudioEngine\CVAS.WinAudioEngine.csproj" />
   </ItemGroup>
 
 </Project>

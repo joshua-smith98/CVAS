@@ -1,4 +1,5 @@
 ﻿using Un4seen.Bass;
+using Un4seen.Bass.AddOn.Mix;
 using Un4seen.Bass.Misc;
 
 namespace CVAS.AudioEngineNS
@@ -14,6 +15,8 @@ namespace CVAS.AudioEngineNS
             }
         }
         private static AudioEngine? instance;
+
+        private int engineMixerHandle;
 
         private AudioEngine()
         {
@@ -36,6 +39,28 @@ namespace CVAS.AudioEngineNS
 
             // TODO: Assign Freq and Chans depending on the current device's Freq and Chans
 
+            // Try to create mixer
+            int mixerHandle = BassMix.BASS_Mixer_StreamCreate(
+                44100,
+                1,
+                BASSFlag.BASS_MIXER_NONSTOP
+                );
+
+            if (mixerHandle == 0)
+            {
+                // Handle errors
+                var bassError = Bass.BASS_ErrorGetCode();
+                switch (bassError)
+                {
+                    case BASSError.BASS_ERROR_MEM:
+                        throw new AudioEngineException("BASS ran out of memory while initialising global mixer.");
+                    default:
+                        throw new AudioEngineException($"An unknown error occurred while initialising the global mixer. BASS error code: {bassError}");
+                }
+            }
+
+            engineMixerHandle = mixerHandle;
+            Bass.BASS_ChannelPlay(engineMixerHandle, false);
         }
 
         public static void Init()
@@ -118,7 +143,7 @@ namespace CVAS.AudioEngineNS
 
         public void Play(AudioClip audioClip)
         {
-            Bass.BASS_ChannelPlay(audioClip.GetStreamHandle(), false);
+            BassMix.BASS_Mixer_StreamAddChannel(engineMixerHandle, audioClip.GetStreamHandle(), BASSFlag.BASS_DEFAULT);
         }
 
         public static void Render(AudioClip audioClip, string path)
@@ -139,13 +164,14 @@ namespace CVAS.AudioEngineNS
 
         public void StopAll()
         {
-            Bass.BASS_Pause();
-            Bass.BASS_Start();
+            Bass.BASS_ChannelStop(engineMixerHandle);
+            Bass.BASS_ChannelPlay(engineMixerHandle, false);
         }
 
         public void Dispose()
         {
-            Bass.BASS_Pause();
+            Bass.BASS_ChannelStop(engineMixerHandle);
+            Bass.BASS_ChannelFree(engineMixerHandle);
             Bass.BASS_Free();
         }
     }

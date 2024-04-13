@@ -101,12 +101,12 @@ namespace CVAS.AudioEngineNS
             if (Bass.BASS_ChannelIsActive(streamHandle) is not BASSActive.BASS_ACTIVE_PLAYING)
             {
                 while (Bass.BASS_ChannelIsActive(streamHandle) is not BASSActive.BASS_ACTIVE_PLAYING)
-                    Task.Delay(100);
+                    Thread.Sleep(100);
             }
 
             // Wait until stream is no longer playing
             while (Bass.BASS_ChannelIsActive(streamHandle) is BASSActive.BASS_ACTIVE_PLAYING)
-                Task.Delay(100);
+                Thread.Sleep(100);
 
             // Free the stream
             if (!Bass.BASS_StreamFree(streamHandle))

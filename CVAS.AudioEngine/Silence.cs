@@ -13,7 +13,7 @@ namespace CVAS.AudioEngineNS
             var byteLength = (int)((milliseconds / 1000f) * 44100 * 2); // 2 is the number of bytes per sample (16bit audio)
 
             // Create sample
-            int sampleHandle = Bass.BASS_SampleCreate(byteLength, 44100, 1, 1, BASSFlag.BASS_DEFAULT);
+            int sampleHandle = Bass.BASS_SampleCreate(byteLength, 44100, 1, 2, BASSFlag.BASS_DEFAULT); // Apparently '1' is not a valid value for max on linux!
             if (sampleHandle == 0)
             {
                 // Handle errors

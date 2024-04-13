@@ -65,6 +65,8 @@ namespace CVAS.AudioEngineNS
 
         public static void Init()
         {
+            // Check if already initialised
+            if (instance is not null) throw new Exception("AudioEngine cannot be initialised twice!");
             instance = new AudioEngine();
         }
 

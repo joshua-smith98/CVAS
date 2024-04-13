@@ -190,6 +190,10 @@ namespace CVAS.AudioEngineNS
         public void StopAll()
         {
             Bass.BASS_ChannelStop(engineMixerHandle);
+            foreach (int channelHandle in BassMix.BASS_Mixer_StreamGetChannels(engineMixerHandle))
+            {
+                BassMix.BASS_Mixer_ChannelRemove(channelHandle);
+            }
             Bass.BASS_ChannelPlay(engineMixerHandle, false);
         }
 

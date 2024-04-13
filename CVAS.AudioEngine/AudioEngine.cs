@@ -87,15 +87,40 @@ namespace CVAS.AudioEngineNS
                         throw new AudioEngineException($"Failed to initialise BASS audio engine because of an unknown error. BASS error code: {bassError}");
                 }
             }
-            // Play audioClip stream
+
+            // Initialise temporary mixer
+            int mixerHandle = BassMix.BASS_Mixer_StreamCreate(
+                44100,
+                1,
+                BASSFlag.BASS_MIXER_END
+                );
+
+            if (mixerHandle == 0)
+            {
+                // Handle errors
+                var bassError = Bass.BASS_ErrorGetCode();
+                switch (bassError)
+                {
+                    case BASSError.BASS_ERROR_MEM:
+                        throw new AudioEngineException("BASS ran out of memory while initialising play-once mixer.");
+                    default:
+                        throw new AudioEngineException($"An unknown error occurred while initialising play-once mixer. BASS error code: {bassError}");
+                }
+            }
+
+            // Get audioClip stream and attach to mixer
             var audioClipHandle = audioClip.GetStreamHandle();
-            Bass.BASS_ChannelPlay(audioClipHandle, false); // Assume this works, all errors seem to be unlikely.
+            BassMix.BASS_Mixer_StreamAddChannel(mixerHandle, audioClipHandle, BASSFlag.BASS_DEFAULT);
+
+            // Play mixer
+            BassMix.BASS_Mixer_ChannelPlay(mixerHandle);
 
             // Hang until stream stops
             while(Bass.BASS_ChannelIsActive(audioClipHandle) is BASSActive.BASS_ACTIVE_PLAYING)
                 Task.Delay(100); // Only check every 100ms
 
-            // We don't need free the stream, as it is automatically done inside GetStreamHandle()
+            // Free mixer
+            Bass.BASS_ChannelFree(mixerHandle);
 
             // Free BASS
             Bass.BASS_Free();

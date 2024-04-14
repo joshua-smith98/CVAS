@@ -4,13 +4,14 @@ using CVAS.REPL;
 using CVAS.TerminalNS;
 
 // Main entry point
+// Always use Terminal
+using var t = Terminal.Init();
+
+// Only catch unhandled exceptions on release
 #if !DEBUG
 try
 {
 #endif
-    // Always initialise terminal
-    Terminal.Init();
-    
     if (args.Length == 0) // No args | default app
     {
         // Since the REPL is the only usable interface, we will set it as the default for now

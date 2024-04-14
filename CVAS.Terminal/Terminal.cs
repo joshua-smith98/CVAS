@@ -3,7 +3,7 @@
     /// <summary>
     /// Simplified interface for printing information to the console.
     /// </summary>
-    public class Terminal
+    public class Terminal : IDisposable
     {
         
         public static Terminal Instance
@@ -28,15 +28,20 @@
             Console.CursorVisible = false;
         }
 
-        ~Terminal()
+        public void Dispose()
         {
-            Console.CursorVisible = true; // Make terminal cursor visible again when finalised (seems to affect linux but not windows)
+            Console.CursorVisible = true; // Make terminal cursor visible again when disposed (seems to affect linux but not windows)
         }
         
-        public static void Init()
+        public static Terminal Init()
         {
             if (instance is not null) throw new TerminalException("Terminal cannot be initialised twice!");
-            else instance = new Terminal();
+            else
+            {
+                var ret = new Terminal();
+                instance = ret;
+                return ret;
+            }
         }
 
         /// <summary>

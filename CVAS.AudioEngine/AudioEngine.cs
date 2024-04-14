@@ -150,29 +150,6 @@ namespace CVAS.AudioEngineNS
             return true;
         }
 
-        internal static void FreeUponStop(int streamHandle)
-        {
-            // First check if it has started yet
-            // If not, wait until it starts (so we don't free it immediately!)
-
-            if (Bass.BASS_ChannelIsActive(streamHandle) is not BASSActive.BASS_ACTIVE_PLAYING)
-            {
-                while (Bass.BASS_ChannelIsActive(streamHandle) is not BASSActive.BASS_ACTIVE_PLAYING)
-                    Thread.Sleep(100);
-            }
-
-            // Wait until stream is no longer playing
-            while (Bass.BASS_ChannelIsActive(streamHandle) is BASSActive.BASS_ACTIVE_PLAYING)
-                Thread.Sleep(100);
-
-            // Free the stream
-            if (!Bass.BASS_StreamFree(streamHandle))
-            {
-                // I just have this here in case there is a problem with the handle (e.g. giving this the wrong handle)
-                throw new AudioEngineException($"An unknown error occurred while trying to free a stream: {Bass.BASS_ErrorGetCode()}");
-            }
-        }
-
         public void Play(AudioClip audioClip)
         {
             BassMix.BASS_Mixer_StreamAddChannel(engineMixerHandle, audioClip.GetStreamHandle(), BASSFlag.BASS_DEFAULT);
@@ -221,7 +198,17 @@ namespace CVAS.AudioEngineNS
 
         public void StopAll()
         {
-            throw new NotImplementedException();
+            // Stop global mixer
+            Bass.BASS_ChannelStop(engineMixerHandle);
+
+            // Remove all channels connected to mixer
+            foreach (int channelHandle in BassMix.BASS_Mixer_StreamGetChannels(engineMixerHandle))
+            {
+                BassMix.BASS_Mixer_ChannelRemove(channelHandle);
+            }
+
+            // Restart global mixer
+            Bass.BASS_ChannelPlay(engineMixerHandle, false);
         }
 
         public void Dispose()

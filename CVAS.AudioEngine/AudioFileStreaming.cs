@@ -30,8 +30,7 @@ namespace CVAS.AudioEngineNS
                 }
             }
 
-            // Run autofree task and return
-            Task.Run(() => AudioEngine.FreeUponStop(streamHandle));
+            // Return handle
             return streamHandle;
         }
     }

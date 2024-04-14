@@ -37,8 +37,7 @@ namespace CVAS.AudioEngineNS
             foreach (AudioClip audioClip in AudioClips)
                 BassMix.BASS_Mixer_StreamAddChannel(mixerHandle, audioClip.GetStreamHandle(), BASSFlag.BASS_MIXER_CHAN_DOWNMIX);
 
-            // Run autofree and return handle
-            Task.Run(() => AudioEngine.FreeUponStop(mixerHandle));
+            // Return handle
             return mixerHandle;
         }
     }

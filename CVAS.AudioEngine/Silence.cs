@@ -38,7 +38,7 @@ namespace CVAS.AudioEngineNS
             }
 
             // Get stream handle
-            int streamHandle = Bass.BASS_SampleGetChannel(sampleHandle, BASSFlag.BASS_SAMCHAN_STREAM | BASSFlag.BASS_STREAM_DECODE);
+            int streamHandle = Bass.BASS_SampleGetChannel(sampleHandle, BASSFlag.BASS_SAMCHAN_STREAM | BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_STREAM_AUTOFREE);
             if (streamHandle == 0)
             {
                 // No errors should be thrown here if the code is semantically correct, so we'll only use the default "unknown error" message.
@@ -46,8 +46,7 @@ namespace CVAS.AudioEngineNS
                 throw new AudioEngineException($"An unknown error occurred while generating silence. BASS error code: {bassError}");
             }
 
-            // Run autofree and return handle
-            Task.Run(() => AudioEngine.FreeUponStop(streamHandle));
+            // Return handle
             return streamHandle;
         }
     }

@@ -175,6 +175,28 @@ namespace CVAS.AudioEngineNS
 
         public static void Render(AudioClip audioClip, string path)
         {
+            // Check to see if we need to initialise BASS and do so
+            if (instance is null)
+            {
+                // Initialise BASS
+                if (!Bass.BASS_Init(-1, 44100, 0, IntPtr.Zero))
+                {
+                    // Handle errors
+                    var bassError = Bass.BASS_ErrorGetCode();
+                    switch (bassError)
+                    {
+                        case BASSError.BASS_ERROR_DX:
+                            throw new AudioEngineException("Failed to initialise BASS audio engine: DirectX is not installed.");
+                        case BASSError.BASS_ERROR_ALREADY:
+                            throw new AudioEngineException("Tried to initialise BASS twice!");
+                        case BASSError.BASS_ERROR_MEM:
+                            throw new AudioEngineException("BASS ran out of memory while initialising.");
+                        default:
+                            throw new AudioEngineException($"Failed to initialise BASS audio engine because of an unknown error. BASS error code: {bassError}");
+                    }
+                }
+            }
+
             var audioClipStream = audioClip.GetStreamHandle();
             
             EncoderWAV encoderWAV = new EncoderWAV(audioClipStream)
@@ -187,6 +209,11 @@ namespace CVAS.AudioEngineNS
             while(Bass.BASS_ChannelIsActive(audioClipStream) is BASSActive.BASS_ACTIVE_PLAYING) { } // TODO make this async to avoid hanging GUI in future
             encoderWAV.Stop();
             encoderWAV.Dispose();
+
+            if (instance is null)
+            {
+                Bass.BASS_Free();
+            }
         }
 
         public void StopAll()

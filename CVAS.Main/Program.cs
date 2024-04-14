@@ -8,6 +8,9 @@ using CVAS.TerminalNS;
 try
 {
 #endif
+    // Always initialise terminal
+    Terminal.Init();
+    
     if (args.Length == 0) // No args | default app
     {
         // Since the REPL is the only usable interface, we will set it as the default for now

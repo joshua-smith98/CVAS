@@ -15,6 +15,7 @@ namespace CVAS.AudioEngineNS
             }
         }
         private static AudioEngine? instance;
+        public static bool IsInitialised => instance is not null;
 
         private int engineMixerHandle;
 
@@ -72,21 +73,25 @@ namespace CVAS.AudioEngineNS
 
         public static void PlayOnce(AudioClip audioClip)
         {
-            // Initialise BASS
-            if (!Bass.BASS_Init(-1, 44100, 0, IntPtr.Zero))
+            // Check to see if we need to initialise BASS, and do so
+            if (IsInitialised)
             {
-                // Handle errors
-                var bassError = Bass.BASS_ErrorGetCode();
-                switch (bassError)
+                // Initialise BASS
+                if (!Bass.BASS_Init(-1, 44100, 0, IntPtr.Zero))
                 {
-                    case BASSError.BASS_ERROR_DX:
-                        throw new AudioEngineException("Failed to initialise BASS audio engine: DirectX is not installed.");
-                    case BASSError.BASS_ERROR_ALREADY:
-                        throw new AudioEngineException("Tried to initialise BASS twice!");
-                    case BASSError.BASS_ERROR_MEM:
-                        throw new AudioEngineException("BASS ran out of memory while initialising.");
-                    default:
-                        throw new AudioEngineException($"Failed to initialise BASS audio engine because of an unknown error. BASS error code: {bassError}");
+                    // Handle errors
+                    var bassError = Bass.BASS_ErrorGetCode();
+                    switch (bassError)
+                    {
+                        case BASSError.BASS_ERROR_DX:
+                            throw new AudioEngineException("Failed to initialise BASS audio engine: DirectX is not installed.");
+                        case BASSError.BASS_ERROR_ALREADY:
+                            throw new AudioEngineException("Tried to initialise BASS twice!");
+                        case BASSError.BASS_ERROR_MEM:
+                            throw new AudioEngineException("BASS ran out of memory while initialising.");
+                        default:
+                            throw new AudioEngineException($"Failed to initialise BASS audio engine because of an unknown error. BASS error code: {bassError}");
+                    }
                 }
             }
 
@@ -124,8 +129,8 @@ namespace CVAS.AudioEngineNS
             // Free mixer
             Bass.BASS_ChannelFree(mixerHandle);
 
-            // Free BASS
-            Bass.BASS_Free();
+            // Free BASS if needed
+            if (IsInitialised) Bass.BASS_Free();
         }
 
         public static bool IsAudioFile(string path)
@@ -176,7 +181,7 @@ namespace CVAS.AudioEngineNS
         public static void Render(AudioClip audioClip, string path)
         {
             // Check to see if we need to initialise BASS and do so
-            if (instance is null)
+            if (IsInitialised)
             {
                 // Initialise BASS
                 if (!Bass.BASS_Init(-1, 44100, 0, IntPtr.Zero))
@@ -210,10 +215,8 @@ namespace CVAS.AudioEngineNS
             encoderWAV.Stop();
             encoderWAV.Dispose();
 
-            if (instance is null)
-            {
-                Bass.BASS_Free();
-            }
+            // Free BASS if needed
+            if (IsInitialised) Bass.BASS_Free();
         }
 
         public void StopAll()
@@ -226,6 +229,7 @@ namespace CVAS.AudioEngineNS
             Bass.BASS_ChannelStop(engineMixerHandle);
             Bass.BASS_ChannelFree(engineMixerHandle);
             Bass.BASS_Free();
+            instance = null;
         }
     }
 }

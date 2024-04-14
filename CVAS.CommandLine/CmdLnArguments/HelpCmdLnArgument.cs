@@ -24,28 +24,28 @@ namespace CVAS.CommandLine
             CmdLnContext.Instance.Action = () =>
             {
                 // Header
-                Terminal.IsSilent = false;
-                Terminal.BeginMessage();
-                Terminal.Message("---CVAS Command-line Interface v0.5.0---");
-                Terminal.Message("Usage:", ConsoleColor.Yellow);
-                Terminal.Message("\t[cvas.exe] -[option] (argument) -[option] (argument) ...", ConsoleColor.DarkYellow);
-                Terminal.EndMessage();
+                Terminal.Instance.IsSilent = false;
+                Terminal.Instance.BeginMessage();
+                Terminal.Instance.Message("---CVAS Command-line Interface v0.5.0---");
+                Terminal.Instance.Message("Usage:", ConsoleColor.Yellow);
+                Terminal.Instance.Message("\t[cvas.exe] -[option] (argument) -[option] (argument) ...", ConsoleColor.DarkYellow);
+                Terminal.Instance.EndMessage();
 
                 // Print list of options
-                Terminal.MessageSingle("---Options---");
+                Terminal.Instance.MessageSingle("---Options---");
                 foreach (CmdLnArgument argument in CmdLnContext.Instance.CmdLnArguments)
                 {
-                    Terminal.BeginMessage();
-                    Terminal.Message($"{argument.Str} ({argument.ShortStr})", ConsoleColor.Yellow);
+                    Terminal.Instance.BeginMessage();
+                    Terminal.Instance.Message($"{argument.Str} ({argument.ShortStr})", ConsoleColor.Yellow);
                     foreach (var line in argument.DescriptionLines)
                     {
-                        Terminal.Message($"\t{line}", ConsoleColor.Yellow);
+                        Terminal.Instance.Message($"\t{line}", ConsoleColor.Yellow);
                     }
-                    Terminal.Message($"\t{argument.Usage}", ConsoleColor.DarkYellow);
-                    Terminal.Message();
-                    Terminal.EndMessage();
+                    Terminal.Instance.Message($"\t{argument.Usage}", ConsoleColor.DarkYellow);
+                    Terminal.Instance.Message();
+                    Terminal.Instance.EndMessage();
                 }
-                Terminal.IsSilent = true;
+                Terminal.Instance.IsSilent = true;
             };
 
             // Return trimmed args

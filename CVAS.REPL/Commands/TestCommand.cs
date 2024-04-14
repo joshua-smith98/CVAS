@@ -47,7 +47,7 @@ namespace CVAS.REPL
                 // Memorise Sentence
                 REPL.Instance.CurrentSentence?.Dispose();
                 REPL.Instance.CurrentSentence = sentence;
-                Terminal.MessageSingle("Sentence was committed to memory.", ConsoleColor.Yellow);
+                Terminal.Instance.MessageSingle("Sentence was committed to memory.", ConsoleColor.Yellow);
             }
         }
 
@@ -57,7 +57,7 @@ namespace CVAS.REPL
         /// <param name="sentence"></param>
         private static void PrintSentencePreview(Sentence sentence)
         {
-            Terminal.BeginMessage();
+            Terminal.Instance.BeginMessage();
 
             // Print phrases
             foreach (var phrase in sentence.SpokenPhrases.Where(x => !x.IsSpecialPhrase()))
@@ -65,19 +65,19 @@ namespace CVAS.REPL
                 // Case: current Phrase is empty (i.e. it couldn't be found)
                 if (phrase.IsEmptyPhrase())
                 {
-                    Terminal.Message($"[{phrase.Str}] : {phrase.Inflection}", ConsoleColor.Red); // Print empty phrases in red
+                    Terminal.Instance.Message($"[{phrase.Str}] : {phrase.Inflection}", ConsoleColor.Red); // Print empty phrases in red
                     continue;
                 }
 
                 // Case: current Phrase is not empty
-                Terminal.Message($"[{phrase.Str}] : {phrase.Inflection}");
+                Terminal.Instance.Message($"[{phrase.Str}] : {phrase.Inflection}");
 
                 // Print a new line after phrases that end a sentence.
                 if (phrase != sentence.SpokenPhrases.Where(x => !x.IsSpecialPhrase()).Last() && phrase.Inflection is InflectionType.End)
-                    Terminal.Message();
+                    Terminal.Instance.Message();
             }
 
-            Terminal.EndMessage();
+            Terminal.Instance.EndMessage();
         }
     }
 }

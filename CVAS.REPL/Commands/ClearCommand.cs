@@ -30,7 +30,7 @@ namespace CVAS.REPL
             REPL.Instance.CurrentLibrary.Dispose();
             REPL.Instance.CurrentLibrary = null;
             GC.Collect(); // To free up any memory used by the library
-            Terminal.MessageSingle("Current library cleared.");
+            Terminal.Instance.MessageSingle("Current library cleared.");
         }
     }
 }

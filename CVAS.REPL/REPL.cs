@@ -64,16 +64,16 @@ namespace CVAS.REPL
             IsRunning = true;
 
             // Write REPL header
-            Terminal.BeginMessage();
-            Terminal.Message("----CVAS v0.5.0 REPL----");
-            Terminal.Message("Type 'help' for a list of commands.");
-            Terminal.EndMessage();
+            Terminal.Instance.BeginMessage();
+            Terminal.Instance.Message("----CVAS v0.5.0 REPL----");
+            Terminal.Instance.Message("Type 'help' for a list of commands.");
+            Terminal.Instance.EndMessage();
 
             // Main REPL loop
             while (IsRunning)
             {
                 // Prompt user
-                var command = Terminal.Prompt(">> ");
+                var command = Terminal.Instance.Prompt(">> ");
 
                 // Attempt to run command, and handle exceptions.
                 try
@@ -82,7 +82,7 @@ namespace CVAS.REPL
                 }
                 catch (REPLException e)
                 {
-                    Terminal.MessageSingle(e.Message, ConsoleColor.Red);
+                    Terminal.Instance.MessageSingle(e.Message, ConsoleColor.Red);
                 }
             }
         }

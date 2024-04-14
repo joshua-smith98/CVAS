@@ -69,9 +69,9 @@ namespace CVAS.CommandLine
             }
             catch (CmdLnException e)
             {
-                Terminal.IsSilent = false;
-                Terminal.MessageSingle(e.Message, ConsoleColor.Red);
-                Terminal.IsSilent = true;
+                Terminal.Instance.IsSilent = false;
+                Terminal.Instance.MessageSingle(e.Message, ConsoleColor.Red);
+                Terminal.Instance.IsSilent = true;
             }
         }
 

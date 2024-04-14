@@ -54,23 +54,23 @@ namespace CVAS.FileSystem
             }
             catch (FileNotFoundException)
             {
-                Terminal.MessageSingle("A cache does not exist for this folder - a first time analysis will be executed.", ConsoleColor.Yellow);
+                Terminal.Instance.MessageSingle("A cache does not exist for this folder - a first time analysis will be executed.", ConsoleColor.Yellow);
             }
             catch (InvalidFileFormatException)
             {
-                Terminal.MessageSingle("The cache file for this folder is of an invalid format, and will be rebuilt.");
+                Terminal.Instance.MessageSingle("The cache file for this folder is of an invalid format, and will be rebuilt.");
             }
             catch (InvalidFileVersionException)
             {
-                Terminal.MessageSingle("The cache file for this folder is of an old format, and will be rebuilt.");
+                Terminal.Instance.MessageSingle("The cache file for this folder is of an old format, and will be rebuilt.");
             }
             catch (InvalidFileHashException)
             {
-                Terminal.MessageSingle("The folder contents have changed - the cache file will be rebuilt.", ConsoleColor.Yellow);
+                Terminal.Instance.MessageSingle("The folder contents have changed - the cache file will be rebuilt.", ConsoleColor.Yellow);
             }
 
             // Otherwise, load filenames from Directory.GetFiles(), checking for validity as audio files
-            Terminal.BeginReport("Searching for audio files...");
+            Terminal.Instance.BeginReport("Searching for audio files...");
             var files = Directory.GetFiles(path);
 
             for (int i = 0; i < files.Length; i++)
@@ -80,13 +80,13 @@ namespace CVAS.FileSystem
                 {
                     float percent = (float)(i + 1) / files.Length;
                     percent *= 100f;
-                    Terminal.Report($"[{percent:0}%]");
+                    Terminal.Instance.Report($"[{percent:0}%]");
                 }
 
                 // Only add the file if it is an audio file, otherwise ignore it
                 if (AudioEngine.IsAudioFile(files[i])) audioFileNames.Add(SysPath.GetFileName(files[i]));
             }
-            Terminal.EndReport($"Successfully found {audioFileNames.Count} audio files.");
+            Terminal.Instance.EndReport($"Successfully found {audioFileNames.Count} audio files.");
 
             return new LibraryFolder(path, audioFileNames.ToArray());
         }
@@ -103,7 +103,7 @@ namespace CVAS.FileSystem
                 return LibraryCacheFile.Construct();
             }
 
-            Terminal.BeginReport("Performing phrase analysis...");
+            Terminal.Instance.BeginReport("Performing phrase analysis...");
             
             // Straight copy-pasted from Library with a few changes. Once this refactor is done, it won't be there anymore!
 
@@ -127,7 +127,7 @@ namespace CVAS.FileSystem
                 {
                     float percent = (float)(i + 1) / files_middles.Length;
                     percent *= 100f;
-                    Terminal.Report($"[{percent:0}%] (1/2) Analysing middle inflections...");
+                    Terminal.Instance.Report($"[{percent:0}%] (1/2) Analysing middle inflections...");
                 }
 
                 // Don't need to do a validity check, because we already did that while loading AudioFileNames
@@ -162,7 +162,7 @@ namespace CVAS.FileSystem
                 {
                     float percent = (float)(i + 1) / files_ends.Count;
                     percent *= 100f;
-                    Terminal.Report($"[{percent:0}%] (2/2) Analysing end inflections...");
+                    Terminal.Instance.Report($"[{percent:0}%] (2/2) Analysing end inflections...");
                 }
 
                 // Audio file validity check
@@ -182,13 +182,13 @@ namespace CVAS.FileSystem
 
             // Construct library
             Library ret = new(phrases.ToArray());
-            Terminal.EndReport($"Successfully analysed {filePaths.Length} files and loaded {ret.Phrases.Length} phrases.");
+            Terminal.Instance.EndReport($"Successfully analysed {filePaths.Length} files and loaded {ret.Phrases.Length} phrases.");
 
             // Build cache
             LibraryCacheFile.Deconstruct(ret).SaveTo(SysPath.Combine(Path!, LibraryCacheFile.DefaultPath)); // Path will never be null
-            Terminal.BeginMessage();
-            Terminal.Message("Cache built. The next load will be much quicker!");
-            Terminal.EndMessage();
+            Terminal.Instance.BeginMessage();
+            Terminal.Instance.Message("Cache built. The next load will be much quicker!");
+            Terminal.Instance.EndMessage();
 
             return ret;
         }

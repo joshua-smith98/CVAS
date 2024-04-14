@@ -29,7 +29,7 @@ try
     else // if args has some thing(s), but not -c
     {
         // Silence Terminal, initialise command-line and read from args
-        Terminal.IsSilent = true;
+        Terminal.Instance.IsSilent = true;
         CmdLnContext.Init();
         CmdLnContext.Instance.ReadFromAndRun(args);
     }
@@ -38,17 +38,17 @@ try
 catch(Exception e)
 {
     // Print unknown error message for misc exceptions
-    Terminal.IsSilent = false; // just in case
+    Terminal.Instance.IsSilent = false; // just in case
 
-    Terminal.ForceBeginMessage();
-    Terminal.Message($"A fatal error has occurred, of type: {e.GetType()}", ConsoleColor.Red);
-    Terminal.Message();
-    Terminal.Message($"\"{e.Message}\"", ConsoleColor.Red);
-    Terminal.Message($"{e.StackTrace}", ConsoleColor.Red);
-    Terminal.Message();
-    Terminal.Message("Please take a screenshot of this, and create an issue on github.", ConsoleColor.Red);
-    Terminal.EndMessage();
+    Terminal.Instance.ForceBeginMessage();
+    Terminal.Instance.Message($"A fatal error has occurred, of type: {e.GetType()}", ConsoleColor.Red);
+    Terminal.Instance.Message();
+    Terminal.Instance.Message($"\"{e.Message}\"", ConsoleColor.Red);
+    Terminal.Instance.Message($"{e.StackTrace}", ConsoleColor.Red);
+    Terminal.Instance.Message();
+    Terminal.Instance.Message("Please take a screenshot of this, and create an issue on github.", ConsoleColor.Red);
+    Terminal.Instance.EndMessage();
 
-    Terminal.AwaitKey("Press any key to close the application...");
+    Terminal.Instance.AwaitKey("Press any key to close the application...");
 }
 #endif

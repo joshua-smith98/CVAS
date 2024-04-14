@@ -31,6 +31,7 @@
         public void Dispose()
         {
             Console.CursorVisible = true; // Make terminal cursor visible again when disposed (seems to affect linux but not windows)
+            GC.SuppressFinalize(this);
         }
         
         public static Terminal Init()

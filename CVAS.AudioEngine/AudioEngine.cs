@@ -230,6 +230,7 @@ namespace CVAS.AudioEngineNS
             Bass.BASS_ChannelFree(engineMixerHandle);
             Bass.BASS_Free();
             instance = null;
+            GC.SuppressFinalize(this);
         }
     }
 }

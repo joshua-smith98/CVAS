@@ -1,9 +1,7 @@
 ﻿namespace CVAS.AudioEngineNS
 {
-    public abstract class AudioClip : IDisposable
+    public abstract class AudioClip
     {
         internal abstract int GetStreamHandle();
-
-        public virtual void Dispose() => GC.SuppressFinalize(this);
     }
 }

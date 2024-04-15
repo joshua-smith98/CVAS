@@ -23,11 +23,9 @@ namespace CVAS.REPL
             if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException("No library is currently loaded.");
 
             // Clear current sentence
-            REPL.Instance.CurrentSentence?.Dispose();
             REPL.Instance.CurrentSentence = null;
 
             // Clear current library
-            REPL.Instance.CurrentLibrary.Dispose();
             REPL.Instance.CurrentLibrary = null;
             GC.Collect(); // To free up any memory used by the library
             Terminal.Instance.MessageSingle("Current library cleared.");

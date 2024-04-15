@@ -10,7 +10,7 @@ namespace CVAS.Core
     /// <summary>
     /// Represents a string, made up of a set of words and punctuation. Can also contain a linked <see cref="AudioClip"/>.
     /// </summary>
-    public partial class Phrase : IPhrase
+    public partial class Phrase
     {
         public string Str { get; }
         public string[] Words { get; }
@@ -137,13 +137,5 @@ namespace CVAS.Core
 
             return words.ToArray();
         }
-
-        public void Dispose()
-        {
-            inflections?.Dispose();
-            inflections = null!;
-            GC.SuppressFinalize(this);
-        }
-
     }
 }

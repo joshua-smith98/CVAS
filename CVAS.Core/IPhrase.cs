@@ -10,7 +10,7 @@ namespace CVAS.Core
     /// <summary>
     /// Interface representing a speakable phrase consisting of one or more words.
     /// </summary>
-    public interface IPhrase : IDisposable
+    public interface IPhrase
     {
         public string Str { get; }
         public string[] Words { get; }

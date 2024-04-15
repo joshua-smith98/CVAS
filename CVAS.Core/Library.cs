@@ -3,7 +3,7 @@
     /// <summary>
     /// A collection of <see cref="Phrase"/>s, including some default punctuation.
     /// </summary>
-    public partial class Library : IDisposable
+    public partial class Library
     {
         public Phrase[] Phrases => phrases.Concat(DefaultPhrases).ToArray(); // Always concatinate default phrases to our phrase list
         private List<Phrase> phrases = new(); // All Libraries include the special phrases by default
@@ -138,19 +138,6 @@
             }
 
             return subPhrase;
-        }
-
-        public void Dispose()
-        {
-            for (int i = 0; i < phrases.Count; i++)
-            {
-                phrases[i]?.Dispose();
-                phrases[i] = null!;
-            }
-
-            phrases = null!;
-
-            GC.SuppressFinalize(this);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace CVAS.WinAudioEngineNS
     /// A playable piece of audio from a file, that has been cached in memory.
     /// </summary>
     [Obsolete("No longer used in CVAS.AudioEngineWin, and unavailable in CVAS.AudioEngine. Use AudioFileStreaming instead.")]
-    public class AudioFileCached : AudioFile
+    public class AudioFileCached : AudioFile, IDisposable // Only AudioClip that inherits from IDisposeable
     {
         internal WaveFormat WaveFormat { get; } // We need this here in order to load the wavestream from memory
 
@@ -47,7 +47,7 @@ namespace CVAS.WinAudioEngineNS
             return new DisposingWaveProvider(new RawSourceWaveStream(newStream, WaveFormat));
         }
 
-        public override void Dispose()
+        public void Dispose()
         {
             masterCache?.Dispose();
             masterCache = null!;

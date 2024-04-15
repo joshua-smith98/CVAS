@@ -50,7 +50,6 @@ namespace CVAS.REPL
                 TryRenderSentence(sentence);
 
                 // Memorise sentence
-                REPL.Instance.CurrentSentence?.Dispose();
                 REPL.Instance.CurrentSentence = sentence;
                 Terminal.Instance.MessageSingle("Sentence was committed to memory.", ConsoleColor.Yellow);
             }

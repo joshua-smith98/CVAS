@@ -34,17 +34,5 @@ namespace CVAS.WinAudioEngineNS
             sampleProvider = new ConcatenatingSampleProvider(waveProviders.Select(x => x.ToSampleProvider()));
             return sampleProvider.ToWaveProvider();
         }
-
-        public override void Dispose()
-        {
-            for (int i = 0; i < audioClips.Length; i++)
-            {
-                audioClips[i]?.Dispose();
-                audioClips[i] = null!;
-            }
-
-            audioClips = null!;
-            GC.SuppressFinalize(this);
-        }
     }
 }

@@ -10,7 +10,7 @@ namespace CVAS.Core
     /// <summary>
     /// Represents a speakable sentence, made up of a sequence of <see cref="SpokenPhrase"/>s.
     /// </summary>
-    public class Sentence : IPhrase
+    public class Sentence
     {
         public string Str { get; }
         public string[] Words { get; }
@@ -34,18 +34,6 @@ namespace CVAS.Core
         public AudioClip GetAudioClip()
         {
             return new Playlist(SpokenPhrases.Select(x => x.GetAudioClip()).ToArray());
-        }
-
-        public void Dispose()
-        {
-            for (int i = 0; i < SpokenPhrases.Length; i++)
-            {
-                SpokenPhrases[i]?.Dispose();
-                SpokenPhrases[i] = null!;
-            }
-
-            SpokenPhrases = null!;
-            GC.SuppressFinalize(this);
         }
     }
 }

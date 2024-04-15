@@ -74,7 +74,7 @@ namespace CVAS.AudioEngineNS
         public static void PlayOnce(AudioClip audioClip)
         {
             // Check to see if we need to initialise BASS, and do so
-            if (IsInitialised)
+            if (!IsInitialised)
             {
                 // Initialise BASS
                 if (!Bass.BASS_Init(-1, 44100, 0, IntPtr.Zero))
@@ -130,7 +130,7 @@ namespace CVAS.AudioEngineNS
             Bass.BASS_ChannelFree(mixerHandle);
 
             // Free BASS if needed
-            if (IsInitialised) Bass.BASS_Free();
+            if (!IsInitialised) Bass.BASS_Free();
         }
 
         public static bool IsAudioFile(string path)
@@ -158,7 +158,7 @@ namespace CVAS.AudioEngineNS
         public static void Render(AudioClip audioClip, string path)
         {
             // Check to see if we need to initialise BASS and do so
-            if (IsInitialised)
+            if (!IsInitialised)
             {
                 // Initialise BASS
                 if (!Bass.BASS_Init(-1, 44100, 0, IntPtr.Zero))
@@ -193,7 +193,7 @@ namespace CVAS.AudioEngineNS
             encoderWAV.Dispose();
 
             // Free BASS if needed
-            if (IsInitialised) Bass.BASS_Free();
+            if (!IsInitialised) Bass.BASS_Free();
         }
 
         public void StopAll()

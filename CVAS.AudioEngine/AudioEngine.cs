@@ -123,7 +123,7 @@ namespace CVAS.AudioEngineNS
             Bass.BASS_ChannelPlay(mixerHandle, false);
 
             // Hang until stream stops
-            while(Bass.BASS_ChannelIsActive(audioClipHandle) is BASSActive.BASS_ACTIVE_PLAYING)
+            while(Bass.BASS_ChannelIsActive(mixerHandle) is BASSActive.BASS_ACTIVE_PLAYING)
                 Task.Delay(100); // Only check every 100ms
 
             // Free mixer

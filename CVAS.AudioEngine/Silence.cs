@@ -38,7 +38,7 @@ namespace CVAS.AudioEngineNS
             }
 
             // Get stream handle
-            int streamHandle = Bass.BASS_SampleGetChannel(sampleHandle, BASSFlag.BASS_SAMCHAN_STREAM | BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_STREAM_AUTOFREE);
+            int streamHandle = Bass.BASS_SampleGetChannel(sampleHandle, BASSFlag.BASS_SAMCHAN_STREAM | BASSFlag.BASS_STREAM_DECODE);
             if (streamHandle == 0)
             {
                 // No errors should be thrown here if the code is semantically correct, so we'll only use the default "unknown error" message.

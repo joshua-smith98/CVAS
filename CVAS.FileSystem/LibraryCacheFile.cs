@@ -1,9 +1,15 @@
-﻿using CVAS.AudioEngineNS;
-using CVAS.Core;
+﻿using CVAS.Core;
 using CVAS.TerminalNS;
 using System.Security.Cryptography;
 using System.Text;
 using SysPath = System.IO.Path;
+
+// Conditional AudioEngine (NAudio for Windows and BASS for other OS)
+#if Windows
+using CVAS.WinAudioEngineNS;
+#else
+using CVAS.AudioEngineNS;
+#endif
 
 namespace CVAS.FileSystem
 {

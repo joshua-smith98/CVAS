@@ -1,5 +1,4 @@
-﻿using CVAS.AudioEngineNS;
-using CVAS.Core;
+﻿using CVAS.Core;
 using CVAS.TerminalNS;
 
 namespace CVAS.REPL

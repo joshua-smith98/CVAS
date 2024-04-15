@@ -1,5 +1,11 @@
-﻿using CVAS.AudioEngineNS;
-using System.Collections;
+﻿using System.Collections;
+
+// Conditional AudioEngine (NAudio for Windows and BASS for other OS)
+#if Windows
+using CVAS.WinAudioEngineNS;
+#else
+using CVAS.AudioEngineNS;
+#endif
 
 namespace CVAS.Core
 {

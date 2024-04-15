@@ -1,7 +1,13 @@
-﻿using CVAS.AudioEngineNS;
-using CVAS.CommandLine;
+﻿using CVAS.CommandLine;
 using CVAS.REPL;
 using CVAS.TerminalNS;
+
+// Conditional AudioEngine (NAudio for Windows and BASS for other OS)
+#if Windows
+using CVAS.WinAudioEngineNS;
+#else
+using CVAS.AudioEngineNS;
+#endif
 
 // Main entry point
 // Always use Terminal

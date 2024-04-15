@@ -1,5 +1,11 @@
-﻿using CVAS.AudioEngineNS;
-using CVAS.TerminalNS;
+﻿using CVAS.TerminalNS;
+
+// Conditional AudioEngine (NAudio for Windows and BASS for other OS)
+#if Windows
+using CVAS.WinAudioEngineNS;
+#else
+using CVAS.AudioEngineNS;
+#endif
 
 namespace CVAS.REPL
 {

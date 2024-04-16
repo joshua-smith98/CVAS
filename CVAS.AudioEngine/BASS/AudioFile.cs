@@ -3,7 +3,7 @@
     /// <summary>
     /// Abstract class representing any playable piece of audio originating from a file.
     /// </summary>
-    public abstract class AudioFile : AudioClip
+    internal abstract class AudioFile : AudioClip, IAudioFile
     {
         public abstract string Path { get; }
     }

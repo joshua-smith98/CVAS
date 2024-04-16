@@ -6,7 +6,7 @@ namespace CVAS.AudioEngine.NAudio
     /// A playable piece of audio from a file, that has been cached in memory.
     /// </summary>
     [Obsolete("No longer used in CVAS.AudioEngineWin, and unavailable in CVAS.AudioEngine. Use AudioFileStreaming instead.")]
-    public class AudioFileCached : AudioFile, IDisposable // Only AudioClip that inherits from IDisposeable
+    internal class AudioFileCached : AudioFile, IDisposable // Only AudioClip that inherits from IDisposeable
     {
         internal WaveFormat WaveFormat { get; } // We need this here in order to load the wavestream from memory
 

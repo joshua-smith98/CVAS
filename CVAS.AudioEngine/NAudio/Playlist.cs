@@ -6,9 +6,9 @@ namespace CVAS.AudioEngine.NAudio
     /// <summary>
     /// An piece of playable audio made up of concatenated <see cref="AudioClip"/>s.
     /// </summary>
-    public class Playlist(params AudioClip[] audioClips) : AudioClip
+    internal class Playlist(params AudioClip[] audioClips) : AudioClip, IPlaylist
     {
-        public AudioClip[] AudioClips => audioClips;
+        public IAudioClip[] AudioClips => audioClips;
 
         internal override IWaveProvider ToWaveProvider()
         {
@@ -18,7 +18,7 @@ namespace CVAS.AudioEngine.NAudio
             for (int i = 0; i < AudioClips.Length; i++)
             {
                 // Initialise waveProvider
-                IWaveProvider waveProvider = AudioClips[i].ToWaveProvider();
+                IWaveProvider waveProvider = audioClips[i].ToWaveProvider();
 
                 // Check for resampling
                 if (!waveProvider.WaveFormat.Equals(AudioEngine.WaveFormat))

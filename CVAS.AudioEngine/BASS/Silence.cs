@@ -6,7 +6,7 @@ namespace CVAS.AudioEngine.BASS
     /// <summary>
     /// A playable piece of silent audio, with a given length in milliseconds.
     /// </summary>
-    public class Silence(int milliseconds) : AudioClip
+    internal class Silence(int milliseconds) : AudioClip, ISilence
     {
         public int Milliseconds => milliseconds;
 

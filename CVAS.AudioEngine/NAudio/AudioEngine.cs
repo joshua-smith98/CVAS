@@ -6,9 +6,9 @@ namespace CVAS.AudioEngine.NAudio
     /// <summary>
     /// Governs all audio mixing, rendering and playback. Non-constructable - call <see cref="Init()"/> and use the static <see cref="AudioEngine.Instance"/> to access.
     /// </summary>
-    public class AudioEngine : IDisposable
+    internal class AudioEngine : IAudioEngine
     {
-        public static AudioEngine Instance
+        public static IAudioEngine Instance
         {
             get
             {
@@ -17,7 +17,9 @@ namespace CVAS.AudioEngine.NAudio
             }
         }
         private static AudioEngine? instance;
-        
+
+        public static bool IsInitialised => instance is not null;
+
         internal static readonly WaveFormat WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2); // TODO: Implement changing WaveFormat
 
         private WaveOutEvent waveOutEvent;
@@ -49,8 +51,10 @@ namespace CVAS.AudioEngine.NAudio
         /// Plays a single <see cref="AudioClip"/> once. For use when <see cref="Instance"/> hasn't been initialised.
         /// </summary>
         /// <param name="audioClip"></param>
-        public static void PlayOnce(AudioClip audioClip)
+        public static void PlayOnce(IAudioClip iaudioClip)
         {
+            var audioClip = (AudioClip)iaudioClip; // Assume this is the right type, since it shouldn't be different while on the same OS
+
             // Initialise new WaveOutEvent and play
             WaveOutEvent waveOutEvent = new();
             waveOutEvent.Init(audioClip.ToWaveProvider());
@@ -83,8 +87,10 @@ namespace CVAS.AudioEngine.NAudio
         /// Plays the given <see cref="AudioClip"/>, with automatic resampling.
         /// </summary>
         /// <param name="audioClip"></param>
-        public void Play(AudioClip audioClip)
+        public void Play(IAudioClip iaudioClip)
         {
+            var audioClip = (AudioClip)iaudioClip; // Assume this is the right type, since it shouldn't be different while on the same OS
+
             MediaFoundationResampler resampler = new(audioClip.ToWaveProvider(), WaveFormat);
             sampleProvider.AddMixerInput(resampler);
         }
@@ -94,8 +100,10 @@ namespace CVAS.AudioEngine.NAudio
         /// </summary>
         /// <param name="audioClip"></param>
         /// <param name="path"></param>
-        public static void Render(AudioClip audioClip, string path)
+        public static void Render(IAudioClip iaudioClip, string path)
         {
+            var audioClip = (AudioClip)iaudioClip; // Assume this is the right type, since it shouldn't be different while on the same OS
+
             // Write wave file
             WaveFileWriter.CreateWaveFile16(path, audioClip.ToWaveProvider().ToSampleProvider());
         }

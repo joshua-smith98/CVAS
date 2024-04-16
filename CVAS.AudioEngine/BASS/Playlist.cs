@@ -6,10 +6,10 @@ namespace CVAS.AudioEngine.BASS
     /// <summary>
     /// An piece of playable audio made up of concatenated <see cref="AudioClip"/>s.
     /// </summary>
-    public class Playlist(params AudioClip[] audioClips) : AudioClip
+    internal class Playlist(params AudioClip[] audioClips) : AudioClip, IPlaylist
     {
 
-        public AudioClip[] AudioClips => audioClips;
+        public IAudioClip[] AudioClips => audioClips;
 
         internal override int GetStreamHandle()
         {
@@ -38,7 +38,7 @@ namespace CVAS.AudioEngine.BASS
             }
 
             // Add audioClips to mixer
-            foreach (AudioClip audioClip in AudioClips)
+            foreach (AudioClip audioClip in audioClips)
                 BassMix.BASS_Mixer_StreamAddChannel(mixerHandle, audioClip.GetStreamHandle(), BASSFlag.BASS_MIXER_CHAN_DOWNMIX);
 
             // Return handle

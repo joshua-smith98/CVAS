@@ -7,9 +7,9 @@ namespace CVAS.AudioEngine.BASS
     /// <summary>
     /// Governs all audio mixing, rendering and playback. Non-constructable - use the static <see cref="Instance"/> to access.
     /// </summary>
-    public class AudioEngine : IDisposable
+    internal class AudioEngine : IAudioEngine
     {
-        public static AudioEngine Instance
+        public static IAudioEngine Instance
         {
             get
             {
@@ -83,8 +83,10 @@ namespace CVAS.AudioEngine.BASS
         /// </summary>
         /// <param name="audioClip"></param>
         /// <exception cref="AudioEngineException"></exception>
-        public static void PlayOnce(AudioClip audioClip)
+        public static void PlayOnce(IAudioClip iAudioClip)
         {
+            var audioClip = (AudioClip)iAudioClip; // Assume this is the right type, since it shouldn't be different while on the same OS
+
             // Check to see if we need to initialise BASS, and do so
             if (!IsInitialised)
             {
@@ -172,8 +174,10 @@ namespace CVAS.AudioEngine.BASS
         /// Plays the given <see cref="AudioClip"/>, with automatic resampling.
         /// </summary>
         /// <param name="audioClip"></param>
-        public void Play(AudioClip audioClip)
+        public void Play(IAudioClip iaudioClip)
         {
+            var audioClip = (AudioClip)iaudioClip; // Assume this is the right type, since it shouldn't be different while on the same OS
+
             BassMix.BASS_Mixer_StreamAddChannel(engineMixerHandle, audioClip.GetStreamHandle(), BASSFlag.BASS_DEFAULT);
         }
 
@@ -183,8 +187,10 @@ namespace CVAS.AudioEngine.BASS
         /// <param name="audioClip"></param>
         /// <param name="path"></param>
         /// <exception cref="AudioEngineException"/>
-        public static void Render(AudioClip audioClip, string path)
+        public static void Render(IAudioClip iaudioClip, string path)
         {
+            var audioClip = (AudioClip)iaudioClip; // Assume this is the right type, since it shouldn't be different while on the same OS
+
             // Check to see if we need to initialise BASS and do so
             if (!IsInitialised)
             {

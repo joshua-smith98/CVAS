@@ -2,8 +2,14 @@
 
 namespace CVAS.AudioEngineNS
 {
+    /// <summary>
+    /// A playable piece of audio from a file, that is streamed directly from the disk.
+    /// </summary>
     public class AudioFileStreaming(string path) : AudioFile
     {
+        /// <summary>
+        /// Path to the originating file.
+        /// </summary>
         public override string Path => path;
 
         internal override int GetStreamHandle()

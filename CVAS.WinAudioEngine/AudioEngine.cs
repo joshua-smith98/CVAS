@@ -4,7 +4,7 @@ using NAudio.Wave.SampleProviders;
 namespace CVAS.WinAudioEngineNS
 {
     /// <summary>
-    /// Governs all audio mixing, rendering and playback. Non-constructable - use the static <see cref="AudioEngine.Instance"/> to access.
+    /// Governs all audio mixing, rendering and playback. Non-constructable - call <see cref="Init()"/> and use the static <see cref="AudioEngine.Instance"/> to access.
     /// </summary>
     public class AudioEngine : IDisposable
     {
@@ -34,6 +34,10 @@ namespace CVAS.WinAudioEngineNS
             waveOutEvent.Play();
         }
 
+        /// <summary>
+        /// Initialises <see cref="Instance"/>. Throws an exception if this is called more than once.
+        /// </summary>
+        /// <exception cref="Exception"></exception>
         public static void Init()
         {
             // Check if already initialised
@@ -41,6 +45,10 @@ namespace CVAS.WinAudioEngineNS
             instance = new AudioEngine();
         }
 
+        /// <summary>
+        /// Plays a single <see cref="AudioClip"/> once. For use when <see cref="Instance"/> hasn't been initialised.
+        /// </summary>
+        /// <param name="audioClip"></param>
         public static void PlayOnce(AudioClip audioClip)
         {
             // Initialise new WaveOutEvent and play
@@ -54,6 +62,12 @@ namespace CVAS.WinAudioEngineNS
             waveOutEvent.Dispose();
         }
 
+        /// <summary>
+        /// Returns true if the file at the given path is an audio file, false otherwise.
+        /// Also returns false if the path is invalid or the file doesn't exist.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static bool IsAudioFile(string path)
         {
             try

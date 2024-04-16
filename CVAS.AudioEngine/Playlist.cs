@@ -3,8 +3,12 @@ using Un4seen.Bass.AddOn.Mix;
 
 namespace CVAS.AudioEngineNS
 {
+    /// <summary>
+    /// An piece of playable audio made up of concatenated <see cref="AudioClip"/>s.
+    /// </summary>
     public class Playlist(params AudioClip[] audioClips) : AudioClip
     {
+        
         public AudioClip[] AudioClips => audioClips;
 
         internal override int GetStreamHandle()

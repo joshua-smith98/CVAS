@@ -1,5 +1,8 @@
 ﻿namespace CVAS.WinAudioEngineNS
 {
+    /// <summary>
+    /// Represents any exception thrown in relation to the audio engine.
+    /// </summary>
+    /// <param name="message"></param>
     public class AudioEngineException(string message) : Exception(message);
-    // Unused in CVAS.WinAudioEngine, but required for compatibility with CVAS.AudioEngine
 }

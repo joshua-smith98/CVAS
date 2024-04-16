@@ -4,6 +4,9 @@ using Un4seen.Bass.Misc;
 
 namespace CVAS.AudioEngineNS
 {
+    /// <summary>
+    /// Governs all audio mixing, rendering and playback. Non-constructable - use the static <see cref="AudioEngine.Instance"/> to access.
+    /// </summary>
     public class AudioEngine : IDisposable
     {
         public static AudioEngine Instance
@@ -64,6 +67,10 @@ namespace CVAS.AudioEngineNS
             Bass.BASS_ChannelPlay(engineMixerHandle, false);
         }
 
+        /// <summary>
+        /// Initialises <see cref="Instance"/>. Throws an exception if this is called more than once.
+        /// </summary>
+        /// <exception cref="Exception"></exception>
         public static void Init()
         {
             // Check if already initialised
@@ -71,6 +78,11 @@ namespace CVAS.AudioEngineNS
             instance = new AudioEngine();
         }
 
+        /// <summary>
+        /// Plays an <see cref="AudioClip"/> once. For use when <see cref="Instance"/> has not been initialised.
+        /// </summary>
+        /// <param name="audioClip"></param>
+        /// <exception cref="AudioEngineException"></exception>
         public static void PlayOnce(AudioClip audioClip)
         {
             // Check to see if we need to initialise BASS, and do so
@@ -133,6 +145,12 @@ namespace CVAS.AudioEngineNS
             if (!IsInitialised) Bass.BASS_Free();
         }
 
+        /// <summary>
+        /// Returns true if the file at the given path is an audio file, false otherwise.
+        /// Also returns false if the path is invalid or the file doesn't exist.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static bool IsAudioFile(string path)
         {
             // Check for bass init (we'll need it to load the file)
@@ -150,11 +168,21 @@ namespace CVAS.AudioEngineNS
             return true;
         }
 
+        /// <summary>
+        /// Plays the given <see cref="AudioClip"/>, with automatic resampling.
+        /// </summary>
+        /// <param name="audioClip"></param>
         public void Play(AudioClip audioClip)
         {
             BassMix.BASS_Mixer_StreamAddChannel(engineMixerHandle, audioClip.GetStreamHandle(), BASSFlag.BASS_DEFAULT);
         }
 
+        /// <summary>
+        /// Renders an <see cref="AudioClip"/> to a new file at the given path. Assumes the directory exists, and overwrites any existing file.
+        /// </summary>
+        /// <param name="audioClip"></param>
+        /// <param name="path"></param>
+        /// <exception cref="AudioEngineException"/>
         public static void Render(AudioClip audioClip, string path)
         {
             // Check to see if we need to initialise BASS and do so
@@ -196,6 +224,9 @@ namespace CVAS.AudioEngineNS
             if (!IsInitialised) Bass.BASS_Free();
         }
 
+        /// <summary>
+        /// Stops all audio playback.
+        /// </summary>
         public void StopAll()
         {
             // Stop global mixer

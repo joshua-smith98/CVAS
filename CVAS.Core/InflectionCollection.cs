@@ -1,11 +1,5 @@
 ﻿using System.Collections;
-
-// Conditional AudioEngine (NAudio for Windows and BASS for other OS)
-#if Windows
-using CVAS.WinAudioEngineNS;
-#else
-using CVAS.AudioEngineNS;
-#endif
+using CVAS.AudioEngine;
 
 namespace CVAS.Core
 {
@@ -26,7 +20,7 @@ namespace CVAS.Core
         /// <param name="type"></param>
         /// <returns></returns>
         /// <exception cref="KeyNotFoundException"></exception>
-        public AudioClip this[InflectionType type]
+        public IAudioClip this[InflectionType type]
         {
             get
             {

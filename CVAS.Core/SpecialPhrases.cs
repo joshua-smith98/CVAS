@@ -1,9 +1,4 @@
-﻿// Conditional AudioEngine (NAudio for Windows and BASS for other OS)
-#if Windows
-using CVAS.WinAudioEngineNS;
-#else
-using CVAS.AudioEngineNS;
-#endif
+﻿using CVAS.AudioEngine;
 
 namespace CVAS.Core
 {
@@ -28,9 +23,9 @@ namespace CVAS.Core
         public static readonly Phrase[] DefaultPhrases =
         [
             // Special phrases/punctuation - default to all Libraries
-            new Phrase(Phrase.SpecialPhrases["VERTICAL_LINE"].ToString(), new Silence(0)), // '|' - delay of 0ms
-            new Phrase(Phrase.SpecialPhrases["COMMA"].ToString(), new Silence(100)), // ','  - delay of 100ms
-            new Phrase(Phrase.SpecialPhrases["PERIOD"].ToString(), new Silence(250)) // '.' - delay of 250ms
+            new Phrase(Phrase.SpecialPhrases["VERTICAL_LINE"].ToString(), ISilence.New(0)), // '|' - delay of 0ms
+            new Phrase(Phrase.SpecialPhrases["COMMA"].ToString(), ISilence.New(100)), // ','  - delay of 100ms
+            new Phrase(Phrase.SpecialPhrases["PERIOD"].ToString(), ISilence.New(250)) // '.' - delay of 250ms
         ];
     }
 }

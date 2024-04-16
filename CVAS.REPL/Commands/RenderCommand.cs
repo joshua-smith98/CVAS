@@ -1,12 +1,6 @@
 ﻿using CVAS.Core;
+using CVAS.AudioEngine;
 using CVAS.TerminalNS;
-
-// Conditional AudioEngine (NAudio for Windows and BASS for other OS)
-#if Windows
-using CVAS.WinAudioEngineNS;
-#else
-using CVAS.AudioEngineNS;
-#endif
 
 namespace CVAS.REPL
 {
@@ -85,7 +79,7 @@ namespace CVAS.REPL
             }
 
             // Render file
-            AudioEngine.Render(sentence.GetAudioClip(), path);
+            IAudioEngine.Render(sentence.GetAudioClip(), path);
             Terminal.Instance.MessageSingle($"Rendered to: {path}");
         }
     }

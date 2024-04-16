@@ -1,9 +1,4 @@
-﻿// Conditional AudioEngine (NAudio for Windows and BASS for other OS)
-#if Windows
-using CVAS.WinAudioEngineNS;
-#else
-using CVAS.AudioEngineNS;
-#endif
+﻿using CVAS.AudioEngine;
 
 namespace CVAS.Core
 {
@@ -20,9 +15,9 @@ namespace CVAS.Core
         /// </summary>
         public InflectionType Inflection { get; }
 
-        private AudioClip audioClip;
+        private IAudioClip audioClip;
 
-        internal SpokenPhrase(string str, string[] words, AudioClip audioClip, InflectionType inflection)
+        internal SpokenPhrase(string str, string[] words, IAudioClip audioClip, InflectionType inflection)
         {
             Str = str;
             Words = words;
@@ -34,7 +29,7 @@ namespace CVAS.Core
         /// Gets the associated <see cref="AudioClip"/> for this SpokenPhrase.
         /// </summary>
         /// <returns></returns>
-        public AudioClip GetAudioClip() => audioClip;
+        public IAudioClip GetAudioClip() => audioClip;
 
         /// <summary>
         /// Determines whether this <see cref="SpokenPhrase"/> is one of the special phrases used for punctuation.

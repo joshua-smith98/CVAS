@@ -1,11 +1,5 @@
-﻿using CVAS.TerminalNS;
-
-// Conditional AudioEngine (NAudio for Windows and BASS for other OS)
-#if Windows
-using CVAS.WinAudioEngineNS;
-#else
-using CVAS.AudioEngineNS;
-#endif
+﻿using CVAS.AudioEngine;
+using CVAS.TerminalNS;
 
 namespace CVAS.REPL
 {
@@ -39,7 +33,7 @@ namespace CVAS.REPL
                 if (REPL.Instance.CurrentSentence is null) throw new ContextNotValidException($"No sentence is currently memorised, please provide one.");
 
                 // Play memorised sentence
-                AudioEngine.Instance.Play(REPL.Instance.CurrentSentence.GetAudioClip());
+                IAudioEngine.Instance.Play(REPL.Instance.CurrentSentence.GetAudioClip());
             }
             else
             {
@@ -47,7 +41,7 @@ namespace CVAS.REPL
                 var sentence_str = (string)Arguments[0].Value!;
                 var sentence = REPL.Instance.CurrentLibrary.GetSentence(sentence_str);
 
-                AudioEngine.Instance.Play(sentence.GetAudioClip());
+                IAudioEngine.Instance.Play(sentence.GetAudioClip());
 
                 // Memorise sentence
                 REPL.Instance.CurrentSentence = sentence;

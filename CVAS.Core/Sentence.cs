@@ -1,9 +1,4 @@
-﻿// Conditional AudioEngine (NAudio for Windows and BASS for other OS)
-#if Windows
-using CVAS.WinAudioEngineNS;
-#else
-using CVAS.AudioEngineNS;
-#endif
+﻿using CVAS.AudioEngine;
 
 namespace CVAS.Core
 {
@@ -31,9 +26,9 @@ namespace CVAS.Core
         /// Gets a playable <see cref="AudioClip"/> for this sentence.
         /// </summary>
         /// <returns>Note: always returns <see cref="Playlist"/> as <see cref="AudioClip"/>.</returns>
-        public AudioClip GetAudioClip()
+        public IAudioClip GetAudioClip()
         {
-            return new Playlist(SpokenPhrases.Select(x => x.GetAudioClip()).ToArray());
+            return IPlaylist.New(SpokenPhrases.Select(x => x.GetAudioClip()).ToArray());
         }
     }
 }

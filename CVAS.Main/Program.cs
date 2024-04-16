@@ -1,13 +1,7 @@
-﻿using CVAS.CommandLine;
+﻿using CVAS.AudioEngine;
+using CVAS.CommandLine;
 using CVAS.REPL;
 using CVAS.TerminalNS;
-
-// Conditional AudioEngine (NAudio for Windows and BASS for other OS)
-#if Windows
-using CVAS.WinAudioEngineNS;
-#else
-using CVAS.AudioEngineNS;
-#endif
 
 // Main entry point
 // Always use Terminal
@@ -21,7 +15,7 @@ try
     if (args.Length == 0) // No args | default app
     {
         // Since the REPL is the only usable interface, we will set it as the default for now
-        AudioEngine.Init();
+        IAudioEngine.Init();
         REPL.Init();
         REPL.Instance.Start();
 
@@ -30,7 +24,7 @@ try
     else if (args[0] == "-c")
     {
         // Initialise audio engine
-        AudioEngine.Init();
+        IAudioEngine.Init();
 
         // Initialise and start REPL;
         REPL.Init();

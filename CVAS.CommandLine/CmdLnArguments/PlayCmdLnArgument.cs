@@ -1,9 +1,4 @@
-﻿// Conditional AudioEngine (NAudio for Windows and BASS for other OS)
-#if Windows
-using CVAS.WinAudioEngineNS;
-#else
-using CVAS.AudioEngineNS;
-#endif
+﻿using CVAS.AudioEngine;
 
 namespace CVAS.CommandLine
 {
@@ -33,7 +28,7 @@ namespace CVAS.CommandLine
                 if (CmdLnContext.Instance.Sentence is null) throw new CmdLnContextNotValidException("Tried to play, but no sentence was given!");
 
                 // Play sentence
-                AudioEngine.PlayOnce(CmdLnContext.Instance.Sentence.GetAudioClip());
+                IAudioEngine.PlayOnce(CmdLnContext.Instance.Sentence.GetAudioClip());
             };
 
             // Return trimmed args

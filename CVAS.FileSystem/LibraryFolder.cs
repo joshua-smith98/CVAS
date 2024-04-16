@@ -1,13 +1,7 @@
 ﻿using CVAS.Core;
+using CVAS.AudioEngine;
 using CVAS.TerminalNS;
 using SysPath = System.IO.Path;
-
-// Conditional AudioEngine (NAudio for Windows and BASS for other OS)
-#if Windows
-using CVAS.WinAudioEngineNS;
-#else
-using CVAS.AudioEngineNS;
-#endif
 
 namespace CVAS.FileSystem
 {
@@ -90,7 +84,7 @@ namespace CVAS.FileSystem
                 }
 
                 // Only add the file if it is an audio file, otherwise ignore it
-                if (AudioEngine.IsAudioFile(files[i])) audioFileNames.Add(SysPath.GetFileName(files[i]));
+                if (IAudioEngine.IsAudioFile(files[i])) audioFileNames.Add(SysPath.GetFileName(files[i]));
             }
             Terminal.Instance.EndReport($"Successfully found {audioFileNames.Count} audio files.");
 
@@ -137,7 +131,7 @@ namespace CVAS.FileSystem
                 }
 
                 // Don't need to do a validity check, because we already did that while loading AudioFileNames
-                AudioClip audioClip_middle = new AudioFileStreaming(files_middles[i]);
+                IAudioClip audioClip_middle = IAudioFileStreaming.New(files_middles[i]);
 
                 // Phrase.str is file name without extension
                 string str = SysPath.GetFileNameWithoutExtension(files_middles[i]);
@@ -150,7 +144,7 @@ namespace CVAS.FileSystem
                     );
 
                 // Load ending inflection if it exists, otherwise load null
-                AudioClip? audioClip_end = files_ends.Contains(file_end) ? new AudioFileStreaming(file_end) : null;
+                IAudioClip? audioClip_end = files_ends.Contains(file_end) ? IAudioFileStreaming.New(file_end) : null;
 
                 // Construct new phrases and add to list
                 if (audioClip_end is not null)
@@ -172,11 +166,11 @@ namespace CVAS.FileSystem
                 }
 
                 // Audio file validity check
-                AudioClip audioClip_end;
+                IAudioClip audioClip_end;
 
                 try
                 {
-                    audioClip_end = new AudioFileStreaming(files_ends[i]);
+                    audioClip_end = IAudioFileStreaming.New(files_ends[i]);
                 }
                 catch { continue; }
 

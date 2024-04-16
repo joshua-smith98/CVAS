@@ -1,18 +1,13 @@
-﻿// Conditional AudioEngine (NAudio for Windows and BASS for other OS)
-#if Windows
-using CVAS.WinAudioEngineNS;
-#else
-using CVAS.AudioEngineNS;
-#endif
+﻿using CVAS.AudioEngine;
 
 namespace CVAS.Core
 {
     /// <summary>
     /// Represents a single inflection, including its type and relevant <see cref="WinAudioEngineNS.AudioClip"/>.
     /// </summary>
-    public class Inflection(InflectionType inflectionType, AudioClip audioClip)
+    public class Inflection(InflectionType inflectionType, IAudioClip audioClip)
     {
         public InflectionType InflectionType => inflectionType;
-        public AudioClip AudioClip => audioClip;
+        public IAudioClip AudioClip => audioClip;
     }
 }

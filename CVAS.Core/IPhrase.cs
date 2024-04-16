@@ -1,9 +1,4 @@
-﻿// Conditional AudioEngine (NAudio for Windows and BASS for other OS)
-#if Windows
-using CVAS.WinAudioEngineNS;
-#else
-using CVAS.AudioEngineNS;
-#endif
+﻿using CVAS.AudioEngine;
 
 namespace CVAS.Core
 {
@@ -19,6 +14,6 @@ namespace CVAS.Core
         /// Gets the default <see cref="AudioClip"/> associated with this phrase.
         /// </summary>
         /// <returns></returns>
-        public AudioClip GetAudioClip();
+        public IAudioClip GetAudioClip();
     }
 }

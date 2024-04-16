@@ -1,9 +1,4 @@
-﻿// Conditional AudioEngine (NAudio for Windows and BASS for other OS)
-#if Windows
-using CVAS.WinAudioEngineNS;
-#else
-using CVAS.AudioEngineNS;
-#endif
+﻿using CVAS.AudioEngine;
 
 namespace CVAS.Core
 {
@@ -35,7 +30,7 @@ namespace CVAS.Core
         /// Constructs a new phrase with a single associated <see cref="AudioClip"/>, with <see cref="InflectionType.End"/>.
         /// </summary>
         /// <param name="str"></param>
-        public Phrase(string str, AudioClip audioClip)
+        public Phrase(string str, IAudioClip audioClip)
         {
             Str = str;
             Words = GetWords(str);
@@ -64,7 +59,7 @@ namespace CVAS.Core
         /// Gets the default <see cref="AudioClip"/> for this phrase, or silence.
         /// </summary>
         /// <returns><see cref="InflectionType.End"/> if available, otherwise <see cref="InflectionType.Middle"/>. If there is no associated <see cref="AudioClip"/>, this returns <see cref="Silence"/>.</returns>
-        public AudioClip GetAudioClip()
+        public IAudioClip GetAudioClip()
         {
             if (inflections.Select(x => x.InflectionType).Contains(InflectionType.End))
             {
@@ -74,7 +69,7 @@ namespace CVAS.Core
             {
                 return inflections[InflectionType.Middle];
             }
-            else return new Silence(0);
+            else return ISilence.New(0);
         }
 
         /// <summary>
@@ -82,7 +77,7 @@ namespace CVAS.Core
         /// </summary>
         /// <param name="inflection"></param>
         /// <returns></returns>
-        public AudioClip GetAudioClip(InflectionType inflection)
+        public IAudioClip GetAudioClip(InflectionType inflection)
         {
             if (inflections.Select(x => x.InflectionType).Contains(inflection))
             {

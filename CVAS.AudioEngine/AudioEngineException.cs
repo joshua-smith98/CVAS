@@ -1,4 +1,4 @@
-﻿namespace CVAS.AudioEngine.NAudio
+﻿namespace CVAS.AudioEngine
 {
     /// <summary>
     /// Represents any exception thrown in relation to the audio engine.

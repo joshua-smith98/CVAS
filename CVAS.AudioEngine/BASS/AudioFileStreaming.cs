@@ -1,6 +1,6 @@
 ﻿using Un4seen.Bass;
 
-namespace CVAS.AudioEngineNS
+namespace CVAS.AudioEngine.BASS
 {
     /// <summary>
     /// A playable piece of audio from a file, that is streamed directly from the disk.
@@ -16,7 +16,7 @@ namespace CVAS.AudioEngineNS
         {
             // Try to open file
             int streamHandle = Bass.BASS_StreamCreateFile(path, 0, 0, BASSFlag.BASS_STREAM_DECODE);
-            
+
             // Handle errors -> maybe expand upon this in future?
             if (streamHandle == 0)
             {

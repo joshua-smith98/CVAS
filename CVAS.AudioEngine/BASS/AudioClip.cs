@@ -1,4 +1,4 @@
-﻿namespace CVAS.AudioEngineNS
+﻿namespace CVAS.AudioEngine.BASS
 {
     /// <summary>
     /// Abstract class representing any playable piece of audio.

@@ -1,14 +1,14 @@
 ﻿using Un4seen.Bass;
 using Un4seen.Bass.AddOn.Mix;
 
-namespace CVAS.AudioEngineNS
+namespace CVAS.AudioEngine.BASS
 {
     /// <summary>
     /// An piece of playable audio made up of concatenated <see cref="AudioClip"/>s.
     /// </summary>
     public class Playlist(params AudioClip[] audioClips) : AudioClip
     {
-        
+
         public AudioClip[] AudioClips => audioClips;
 
         internal override int GetStreamHandle()
@@ -21,7 +21,7 @@ namespace CVAS.AudioEngineNS
                 BASSFlag.BASS_MIXER_QUEUE |
                 BASSFlag.BASS_STREAM_DECODE
                 );
-             
+
             if (mixerHandle == 0)
             {
                 // Handle errors

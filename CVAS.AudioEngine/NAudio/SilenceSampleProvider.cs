@@ -1,6 +1,6 @@
 ﻿using NAudio.Wave;
 
-namespace CVAS.WinAudioEngineNS
+namespace CVAS.AudioEngine.NAudio
 {
     /// <summary>
     /// A sample provider that provides a given number of milliseconds of silence. Only playable once.

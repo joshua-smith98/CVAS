@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NAudio" Version="2.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Bass.Net">
       <HintPath>..\Bass24.Net\Bass.Net.dll</HintPath>
     </Reference>

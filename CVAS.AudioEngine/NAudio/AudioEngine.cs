@@ -1,7 +1,7 @@
 ﻿using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 
-namespace CVAS.WinAudioEngineNS
+namespace CVAS.AudioEngine.NAudio
 {
     /// <summary>
     /// Governs all audio mixing, rendering and playback. Non-constructable - call <see cref="Init()"/> and use the static <see cref="AudioEngine.Instance"/> to access.

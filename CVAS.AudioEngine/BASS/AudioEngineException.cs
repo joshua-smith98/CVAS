@@ -1,4 +1,4 @@
-﻿namespace CVAS.WinAudioEngineNS
+﻿namespace CVAS.AudioEngine.BASS
 {
     /// <summary>
     /// Represents any exception thrown in relation to the audio engine.

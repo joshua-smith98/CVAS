@@ -1,6 +1,6 @@
 ﻿using NAudio.Wave;
 
-namespace CVAS.WinAudioEngineNS
+namespace CVAS.AudioEngine.NAudio
 {
     /// <summary>
     /// Abstract class representing any playable piece of audio.

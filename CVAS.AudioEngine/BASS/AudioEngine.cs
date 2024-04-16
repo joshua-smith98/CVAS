@@ -2,10 +2,10 @@
 using Un4seen.Bass.AddOn.Mix;
 using Un4seen.Bass.Misc;
 
-namespace CVAS.AudioEngineNS
+namespace CVAS.AudioEngine.BASS
 {
     /// <summary>
-    /// Governs all audio mixing, rendering and playback. Non-constructable - use the static <see cref="AudioEngine.Instance"/> to access.
+    /// Governs all audio mixing, rendering and playback. Non-constructable - use the static <see cref="Instance"/> to access.
     /// </summary>
     public class AudioEngine : IDisposable
     {
@@ -25,7 +25,7 @@ namespace CVAS.AudioEngineNS
         private AudioEngine()
         {
             // Try to initialise BASS
-            if (!Bass.BASS_Init(-1, 44100, 0, IntPtr.Zero))
+            if (!Bass.BASS_Init(-1, 44100, 0, nint.Zero))
             {
                 var bassError = Bass.BASS_ErrorGetCode();
                 switch (bassError)
@@ -89,7 +89,7 @@ namespace CVAS.AudioEngineNS
             if (!IsInitialised)
             {
                 // Initialise BASS
-                if (!Bass.BASS_Init(-1, 44100, 0, IntPtr.Zero))
+                if (!Bass.BASS_Init(-1, 44100, 0, nint.Zero))
                 {
                     // Handle errors
                     var bassError = Bass.BASS_ErrorGetCode();
@@ -135,7 +135,7 @@ namespace CVAS.AudioEngineNS
             Bass.BASS_ChannelPlay(mixerHandle, false);
 
             // Hang until stream stops
-            while(Bass.BASS_ChannelIsActive(mixerHandle) is BASSActive.BASS_ACTIVE_PLAYING)
+            while (Bass.BASS_ChannelIsActive(mixerHandle) is BASSActive.BASS_ACTIVE_PLAYING)
                 Task.Delay(100); // Only check every 100ms
 
             // Free mixer
@@ -155,7 +155,7 @@ namespace CVAS.AudioEngineNS
         {
             // Check for bass init (we'll need it to load the file)
             var bassActive = Bass.BASS_IsStarted() != 0;
-            if (!bassActive) Bass.BASS_Init(-1, 44100, 0, IntPtr.Zero);
+            if (!bassActive) Bass.BASS_Init(-1, 44100, 0, nint.Zero);
 
             // Attempt to load audio file from path
             int streamHandle = Bass.BASS_StreamCreateFile(path, 0, 0, BASSFlag.BASS_DEFAULT);
@@ -189,7 +189,7 @@ namespace CVAS.AudioEngineNS
             if (!IsInitialised)
             {
                 // Initialise BASS
-                if (!Bass.BASS_Init(-1, 44100, 0, IntPtr.Zero))
+                if (!Bass.BASS_Init(-1, 44100, 0, nint.Zero))
                 {
                     // Handle errors
                     var bassError = Bass.BASS_ErrorGetCode();
@@ -208,15 +208,15 @@ namespace CVAS.AudioEngineNS
             }
 
             var audioClipStream = audioClip.GetStreamHandle();
-            
+
             EncoderWAV encoderWAV = new EncoderWAV(audioClipStream)
             {
                 InputFile = null,
                 OutputFile = path,
             };
-            encoderWAV.Start(null, IntPtr.Zero, false);
+            encoderWAV.Start(null, nint.Zero, false);
             Utils.DecodeAllData(audioClipStream, false);
-            while(Bass.BASS_ChannelIsActive(audioClipStream) is BASSActive.BASS_ACTIVE_PLAYING) { } // TODO make this async to avoid hanging GUI in future
+            while (Bass.BASS_ChannelIsActive(audioClipStream) is BASSActive.BASS_ACTIVE_PLAYING) { } // TODO make this async to avoid hanging GUI in future
             encoderWAV.Stop();
             encoderWAV.Dispose();
 

@@ -1,6 +1,6 @@
 ﻿using NAudio.Wave;
 
-namespace CVAS.WinAudioEngineNS
+namespace CVAS.AudioEngine.NAudio
 {
     /// <summary>
     /// A playable piece of audio from a file, that has been cached in memory.

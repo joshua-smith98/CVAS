@@ -4,11 +4,11 @@ using NAudio.Wave.SampleProviders;
 namespace CVAS.AudioEngine.NAudio
 {
     /// <summary>
-    /// Governs all audio mixing, rendering and playback. Non-constructable - call <see cref="Init()"/> and use the static <see cref="AudioEngine.Instance"/> to access.
+    /// Governs all audio mixing, rendering and playback. Non-constructable - call <see cref="InitImpl()"/> and use the static <see cref="AudioEngine.InstanceImpl"/> to access.
     /// </summary>
     internal class AudioEngine : IAudioEngine
     {
-        public static IAudioEngine Instance
+        public static IAudioEngine InstanceImpl
         {
             get
             {
@@ -18,7 +18,7 @@ namespace CVAS.AudioEngine.NAudio
         }
         private static AudioEngine? instance;
 
-        public static bool IsInitialised => instance is not null;
+        public static bool IsInitialisedImpl => instance is not null;
 
         internal static readonly WaveFormat WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2); // TODO: Implement changing WaveFormat
 
@@ -37,10 +37,10 @@ namespace CVAS.AudioEngine.NAudio
         }
 
         /// <summary>
-        /// Initialises <see cref="Instance"/>. Throws an exception if this is called more than once.
+        /// Initialises <see cref="InstanceImpl"/>. Throws an exception if this is called more than once.
         /// </summary>
         /// <exception cref="AudioEngineException"></exception>
-        public static void Init()
+        public static void InitImpl()
         {
             // Check if already initialised
             if (instance is not null) throw new AudioEngineException("AudioEngine cannot be initialised twice!");
@@ -48,10 +48,10 @@ namespace CVAS.AudioEngine.NAudio
         }
 
         /// <summary>
-        /// Plays a single <see cref="AudioClip"/> once. For use when <see cref="Instance"/> hasn't been initialised.
+        /// Plays a single <see cref="AudioClip"/> once. For use when <see cref="InstanceImpl"/> hasn't been initialised.
         /// </summary>
         /// <param name="audioClip"></param>
-        public static void PlayOnce(IAudioClip iaudioClip)
+        public static void PlayOnceImpl(IAudioClip iaudioClip)
         {
             var audioClip = (AudioClip)iaudioClip; // Assume this is the right type, since it shouldn't be different while on the same OS
 
@@ -72,7 +72,7 @@ namespace CVAS.AudioEngine.NAudio
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static bool IsAudioFile(string path)
+        public static bool IsAudioFileImpl(string path)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace CVAS.AudioEngine.NAudio
         /// </summary>
         /// <param name="audioClip"></param>
         /// <param name="path"></param>
-        public static void Render(IAudioClip iaudioClip, string path)
+        public static void RenderImpl(IAudioClip iaudioClip, string path)
         {
             var audioClip = (AudioClip)iaudioClip; // Assume this is the right type, since it shouldn't be different while on the same OS
 

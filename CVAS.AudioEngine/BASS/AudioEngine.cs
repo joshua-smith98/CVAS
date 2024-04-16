@@ -5,11 +5,11 @@ using Un4seen.Bass.Misc;
 namespace CVAS.AudioEngine.BASS
 {
     /// <summary>
-    /// Governs all audio mixing, rendering and playback. Non-constructable - use the static <see cref="Instance"/> to access.
+    /// Governs all audio mixing, rendering and playback. Non-constructable - use the static <see cref="InstanceImpl"/> to access.
     /// </summary>
     internal class AudioEngine : IAudioEngine
     {
-        public static IAudioEngine Instance
+        public static IAudioEngine InstanceImpl
         {
             get
             {
@@ -18,7 +18,7 @@ namespace CVAS.AudioEngine.BASS
             }
         }
         private static AudioEngine? instance;
-        public static bool IsInitialised => instance is not null;
+        public static bool IsInitialisedImpl => instance is not null;
 
         private int engineMixerHandle;
 
@@ -68,10 +68,10 @@ namespace CVAS.AudioEngine.BASS
         }
 
         /// <summary>
-        /// Initialises <see cref="Instance"/>. Throws an exception if this is called more than once.
+        /// Initialises <see cref="InstanceImpl"/>. Throws an exception if this is called more than once.
         /// </summary>
         /// <exception cref="AudioEngineException"></exception>
-        public static void Init()
+        public static void InitImpl()
         {
             // Check if already initialised
             if (instance is not null) throw new AudioEngineException("AudioEngine cannot be initialised twice!");
@@ -79,16 +79,16 @@ namespace CVAS.AudioEngine.BASS
         }
 
         /// <summary>
-        /// Plays an <see cref="AudioClip"/> once. For use when <see cref="Instance"/> has not been initialised.
+        /// Plays an <see cref="AudioClip"/> once. For use when <see cref="InstanceImpl"/> has not been initialised.
         /// </summary>
         /// <param name="audioClip"></param>
         /// <exception cref="AudioEngineException"></exception>
-        public static void PlayOnce(IAudioClip iAudioClip)
+        public static void PlayOnceImpl(IAudioClip iAudioClip)
         {
             var audioClip = (AudioClip)iAudioClip; // Assume this is the right type, since it shouldn't be different while on the same OS
 
             // Check to see if we need to initialise BASS, and do so
-            if (!IsInitialised)
+            if (!IsInitialisedImpl)
             {
                 // Initialise BASS
                 if (!Bass.BASS_Init(-1, 44100, 0, nint.Zero))
@@ -144,7 +144,7 @@ namespace CVAS.AudioEngine.BASS
             Bass.BASS_ChannelFree(mixerHandle);
 
             // Free BASS if needed
-            if (!IsInitialised) Bass.BASS_Free();
+            if (!IsInitialisedImpl) Bass.BASS_Free();
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace CVAS.AudioEngine.BASS
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static bool IsAudioFile(string path)
+        public static bool IsAudioFileImpl(string path)
         {
             // Check for bass init (we'll need it to load the file)
             var bassActive = Bass.BASS_IsStarted() != 0;
@@ -187,12 +187,12 @@ namespace CVAS.AudioEngine.BASS
         /// <param name="audioClip"></param>
         /// <param name="path"></param>
         /// <exception cref="AudioEngineException"/>
-        public static void Render(IAudioClip iaudioClip, string path)
+        public static void RenderImpl(IAudioClip iaudioClip, string path)
         {
             var audioClip = (AudioClip)iaudioClip; // Assume this is the right type, since it shouldn't be different while on the same OS
 
             // Check to see if we need to initialise BASS and do so
-            if (!IsInitialised)
+            if (!IsInitialisedImpl)
             {
                 // Initialise BASS
                 if (!Bass.BASS_Init(-1, 44100, 0, nint.Zero))
@@ -227,7 +227,7 @@ namespace CVAS.AudioEngine.BASS
             encoderWAV.Dispose();
 
             // Free BASS if needed
-            if (!IsInitialised) Bass.BASS_Free();
+            if (!IsInitialisedImpl) Bass.BASS_Free();
         }
 
         /// <summary>

@@ -8,7 +8,7 @@ namespace CVAS.AudioEngine
     /// <typeparam name="T"></typeparam>
     internal interface IAudioEngine<T> : IAudioEngine where T : IAudioClip
     {
-        internal static abstract new IAudioEngine Instance { get; }
+        internal static abstract new IAudioEngine<T> Instance { get; }
         internal static abstract new bool IsInitialised { get; }
 
         internal static abstract new void Init();

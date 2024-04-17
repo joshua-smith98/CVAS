@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="LinuxConsoleReadLineFix">
+      <HintPath>..\LinuxTerminalFix\LinuxConsoleReadLineFix.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

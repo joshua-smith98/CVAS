@@ -3,8 +3,9 @@
 namespace CVAS.AudioEngine.BASS
 {
     /// <summary>
-    /// A playable piece of audio from a file, that is streamed directly from the disk.
+    /// BASS implementation of <see cref="IAudioFileStreaming"/>.
     /// </summary>
+    /// <param name="path"></param>
     internal class AudioFileStreaming(string path) : AudioFile, IAudioFileStreaming
     {
         /// <summary>

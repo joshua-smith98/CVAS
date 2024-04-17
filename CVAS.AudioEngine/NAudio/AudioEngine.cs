@@ -4,7 +4,7 @@ using NAudio.Wave.SampleProviders;
 namespace CVAS.AudioEngine.NAudio
 {
     /// <summary>
-    /// Governs all audio mixing, rendering and playback. Non-constructable - call <see cref="Init()"/> and use the static <see cref="AudioEngine.InstanceImpl"/> to access.
+    /// NAudio implementation of <see cref="IAudioEngine"/>.
     /// </summary>
     internal class AudioEngine : IAudioEngine<AudioClip>
     {

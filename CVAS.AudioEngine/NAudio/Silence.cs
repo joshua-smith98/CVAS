@@ -3,7 +3,7 @@
 namespace CVAS.AudioEngine.NAudio
 {
     /// <summary>
-    /// A playable piece of silent audio, with a given length in milliseconds.
+    /// NAudio implementation of <see cref="ISilence"/>.
     /// </summary>
     internal class Silence(int milliseconds) : AudioClip, ISilence
     {

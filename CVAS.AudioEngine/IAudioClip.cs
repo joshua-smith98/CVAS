@@ -1,4 +1,7 @@
 ﻿namespace CVAS.AudioEngine
 {
-    public interface IAudioClip;
+    /// <summary>
+    /// Represents any playable piece of audio.
+    /// </summary>
+    public interface IAudioClip; // smol intiface
 }

@@ -5,7 +5,7 @@ using Un4seen.Bass.Misc;
 namespace CVAS.AudioEngine.BASS
 {
     /// <summary>
-    /// Governs all audio mixing, rendering and playback. Non-constructable - use the static <see cref="Instance"/> to access.
+    /// BASS implementation of <see cref="IAudioEngine"/>.
     /// </summary>
     internal class AudioEngine : IAudioEngine<AudioClip>
     {

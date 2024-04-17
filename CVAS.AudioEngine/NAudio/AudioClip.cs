@@ -3,7 +3,7 @@
 namespace CVAS.AudioEngine.NAudio
 {
     /// <summary>
-    /// Abstract class representing any playable piece of audio.
+    /// NAudio implementation of <see cref="IAudioClip"/>.
     /// </summary>
     internal abstract class AudioClip : IAudioClip
     {

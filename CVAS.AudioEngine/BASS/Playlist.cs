@@ -4,7 +4,7 @@ using Un4seen.Bass.AddOn.Mix;
 namespace CVAS.AudioEngine.BASS
 {
     /// <summary>
-    /// An piece of playable audio made up of concatenated <see cref="AudioClip"/>s.
+    /// BASS implementation of <see cref="IPlaylist"/>.
     /// </summary>
     internal class Playlist(params AudioClip[] audioClips) : AudioClip, IPlaylist
     {

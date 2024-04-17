@@ -4,7 +4,7 @@ using Un4seen.Bass;
 namespace CVAS.AudioEngine.BASS
 {
     /// <summary>
-    /// A playable piece of silent audio, with a given length in milliseconds.
+    /// BASS implementation of <see cref="ISilence"/>.
     /// </summary>
     internal class Silence(int milliseconds) : AudioClip, ISilence
     {

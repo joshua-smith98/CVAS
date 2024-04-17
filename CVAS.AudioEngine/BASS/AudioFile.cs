@@ -1,7 +1,7 @@
 ﻿namespace CVAS.AudioEngine.BASS
 {
     /// <summary>
-    /// Abstract class representing any playable piece of audio originating from a file.
+    /// BASS implementation of <see cref="IAudioFile"/>.
     /// </summary>
     internal abstract class AudioFile : AudioClip, IAudioFile
     {

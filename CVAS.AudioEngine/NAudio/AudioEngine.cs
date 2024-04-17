@@ -4,11 +4,11 @@ using NAudio.Wave.SampleProviders;
 namespace CVAS.AudioEngine.NAudio
 {
     /// <summary>
-    /// Governs all audio mixing, rendering and playback. Non-constructable - call <see cref="InitImpl()"/> and use the static <see cref="AudioEngine.InstanceImpl"/> to access.
+    /// Governs all audio mixing, rendering and playback. Non-constructable - call <see cref="Init()"/> and use the static <see cref="AudioEngine.InstanceImpl"/> to access.
     /// </summary>
-    internal class AudioEngine : IAudioEngine
+    internal class AudioEngine : IAudioEngine<AudioClip>
     {
-        public static IAudioEngine InstanceImpl
+        public static IAudioEngine Instance
         {
             get
             {
@@ -18,7 +18,7 @@ namespace CVAS.AudioEngine.NAudio
         }
         private static AudioEngine? instance;
 
-        public static bool IsInitialisedImpl => instance is not null;
+        public static bool IsInitialised => instance is not null;
 
         internal static readonly WaveFormat WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2); // TODO: Implement changing WaveFormat
 
@@ -40,7 +40,7 @@ namespace CVAS.AudioEngine.NAudio
         /// Initialises <see cref="InstanceImpl"/>. Throws an exception if this is called more than once.
         /// </summary>
         /// <exception cref="AudioEngineException"></exception>
-        public static void InitImpl()
+        public static void Init()
         {
             // Check if already initialised
             if (instance is not null) throw new AudioEngineException("AudioEngine cannot be initialised twice!");
@@ -48,13 +48,11 @@ namespace CVAS.AudioEngine.NAudio
         }
 
         /// <summary>
-        /// Plays a single <see cref="AudioClip"/> once. For use when <see cref="InstanceImpl"/> hasn't been initialised.
+        /// Plays a single <see cref="AudioClip"/> once. For use when <see cref="Instance"/> hasn't been initialised.
         /// </summary>
         /// <param name="audioClip"></param>
-        public static void PlayOnceImpl(IAudioClip iaudioClip)
+        public static void PlayOnce(AudioClip audioClip)
         {
-            var audioClip = (AudioClip)iaudioClip; // Assume this is the right type, since it shouldn't be different while on the same OS
-
             // Initialise new WaveOutEvent and play
             WaveOutEvent waveOutEvent = new();
             waveOutEvent.Init(audioClip.ToWaveProvider());
@@ -72,7 +70,7 @@ namespace CVAS.AudioEngine.NAudio
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static bool IsAudioFileImpl(string path)
+        public static bool IsAudioFile(string path)
         {
             try
             {
@@ -87,10 +85,8 @@ namespace CVAS.AudioEngine.NAudio
         /// Plays the given <see cref="AudioClip"/>, with automatic resampling.
         /// </summary>
         /// <param name="audioClip"></param>
-        public void Play(IAudioClip iaudioClip)
+        public void Play(AudioClip audioClip)
         {
-            var audioClip = (AudioClip)iaudioClip; // Assume this is the right type, since it shouldn't be different while on the same OS
-
             MediaFoundationResampler resampler = new(audioClip.ToWaveProvider(), WaveFormat);
             sampleProvider.AddMixerInput(resampler);
         }
@@ -100,10 +96,8 @@ namespace CVAS.AudioEngine.NAudio
         /// </summary>
         /// <param name="audioClip"></param>
         /// <param name="path"></param>
-        public static void RenderImpl(IAudioClip iaudioClip, string path)
+        public static void Render(AudioClip audioClip, string path)
         {
-            var audioClip = (AudioClip)iaudioClip; // Assume this is the right type, since it shouldn't be different while on the same OS
-
             // Write wave file
             WaveFileWriter.CreateWaveFile16(path, audioClip.ToWaveProvider().ToSampleProvider());
         }

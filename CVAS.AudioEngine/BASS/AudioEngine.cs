@@ -5,11 +5,11 @@ using Un4seen.Bass.Misc;
 namespace CVAS.AudioEngine.BASS
 {
     /// <summary>
-    /// Governs all audio mixing, rendering and playback. Non-constructable - use the static <see cref="InstanceImpl"/> to access.
+    /// Governs all audio mixing, rendering and playback. Non-constructable - use the static <see cref="Instance"/> to access.
     /// </summary>
-    internal class AudioEngine : IAudioEngine
+    internal class AudioEngine : IAudioEngine<AudioClip>
     {
-        public static IAudioEngine InstanceImpl
+        public static IAudioEngine Instance
         {
             get
             {
@@ -18,7 +18,7 @@ namespace CVAS.AudioEngine.BASS
             }
         }
         private static AudioEngine? instance;
-        public static bool IsInitialisedImpl => instance is not null;
+        public static bool IsInitialised => instance is not null;
 
         private int engineMixerHandle;
 
@@ -68,10 +68,10 @@ namespace CVAS.AudioEngine.BASS
         }
 
         /// <summary>
-        /// Initialises <see cref="InstanceImpl"/>. Throws an exception if this is called more than once.
+        /// Initialises <see cref="Instance"/>. Throws an exception if this is called more than once.
         /// </summary>
         /// <exception cref="AudioEngineException"></exception>
-        public static void InitImpl()
+        public static void Init()
         {
             // Check if already initialised
             if (instance is not null) throw new AudioEngineException("AudioEngine cannot be initialised twice!");
@@ -79,16 +79,14 @@ namespace CVAS.AudioEngine.BASS
         }
 
         /// <summary>
-        /// Plays an <see cref="AudioClip"/> once. For use when <see cref="InstanceImpl"/> has not been initialised.
+        /// Plays an <see cref="AudioClip"/> once. For use when <see cref="Instance"/> has not been initialised.
         /// </summary>
         /// <param name="audioClip"></param>
         /// <exception cref="AudioEngineException"></exception>
-        public static void PlayOnceImpl(IAudioClip iAudioClip)
+        public static void PlayOnce(AudioClip audioClip)
         {
-            var audioClip = (AudioClip)iAudioClip; // Assume this is the right type, since it shouldn't be different while on the same OS
-
             // Check to see if we need to initialise BASS, and do so
-            if (!IsInitialisedImpl)
+            if (!IsInitialised)
             {
                 // Initialise BASS
                 if (!Bass.BASS_Init(-1, 44100, 0, nint.Zero))
@@ -144,7 +142,7 @@ namespace CVAS.AudioEngine.BASS
             Bass.BASS_ChannelFree(mixerHandle);
 
             // Free BASS if needed
-            if (!IsInitialisedImpl) Bass.BASS_Free();
+            if (!IsInitialised) Bass.BASS_Free();
         }
 
         /// <summary>
@@ -153,7 +151,7 @@ namespace CVAS.AudioEngine.BASS
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static bool IsAudioFileImpl(string path)
+        public static bool IsAudioFile(string path)
         {
             // Check for bass init (we'll need it to load the file)
             var bassActive = Bass.BASS_IsStarted() != 0;
@@ -174,10 +172,8 @@ namespace CVAS.AudioEngine.BASS
         /// Plays the given <see cref="AudioClip"/>, with automatic resampling.
         /// </summary>
         /// <param name="audioClip"></param>
-        public void Play(IAudioClip iaudioClip)
+        public void Play(AudioClip audioClip)
         {
-            var audioClip = (AudioClip)iaudioClip; // Assume this is the right type, since it shouldn't be different while on the same OS
-
             BassMix.BASS_Mixer_StreamAddChannel(engineMixerHandle, audioClip.GetStreamHandle(), BASSFlag.BASS_DEFAULT);
         }
 
@@ -187,12 +183,10 @@ namespace CVAS.AudioEngine.BASS
         /// <param name="audioClip"></param>
         /// <param name="path"></param>
         /// <exception cref="AudioEngineException"/>
-        public static void RenderImpl(IAudioClip iaudioClip, string path)
+        public static void Render(AudioClip audioClip, string path)
         {
-            var audioClip = (AudioClip)iaudioClip; // Assume this is the right type, since it shouldn't be different while on the same OS
-
             // Check to see if we need to initialise BASS and do so
-            if (!IsInitialisedImpl)
+            if (!IsInitialised)
             {
                 // Initialise BASS
                 if (!Bass.BASS_Init(-1, 44100, 0, nint.Zero))
@@ -227,7 +221,7 @@ namespace CVAS.AudioEngine.BASS
             encoderWAV.Dispose();
 
             // Free BASS if needed
-            if (!IsInitialisedImpl) Bass.BASS_Free();
+            if (!IsInitialised) Bass.BASS_Free();
         }
 
         /// <summary>

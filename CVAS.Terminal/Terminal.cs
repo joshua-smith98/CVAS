@@ -1,6 +1,4 @@
-﻿using LinuxConsoleReadLineFix;
-
-namespace CVAS.TerminalNS
+﻿namespace CVAS.TerminalNS
 {
     /// <summary>
     /// Simplified interface for printing information to the console.
@@ -66,7 +64,7 @@ namespace CVAS.TerminalNS
         {
             Console.Write(prompt);
             Console.CursorVisible = true;
-            string ret = LinuxTerminalFix.ReadLine()!;
+            string ret = Console.ReadLine()!;
             Console.CursorVisible = false;
             Console.WriteLine();
             return ret;

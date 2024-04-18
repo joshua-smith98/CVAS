@@ -3,20 +3,20 @@
 namespace CVAS.AudioEngine
 {
     /// <summary>
-    /// Specifies the structure of an <see cref="IAudioEngine"/> implementation, where <see cref="T"/> is the local implementation of <see cref="IAudioClip"/>.
+    /// Specifies the structure of an <see cref="IAudioEngine"/> implementation, where <see cref="TAudioClip"/> is the local implementation of <see cref="IAudioClip"/>.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    internal interface IAudioEngine<T> : IAudioEngine where T : IAudioClip
+    /// <typeparam name="TAudioClip"></typeparam>
+    internal interface IAudioEngine<TAudioClip> : IAudioEngine where TAudioClip : IAudioClip
     {
         internal static abstract new IAudioEngine Instance { get; }
         internal static abstract new bool IsInitialised { get; }
 
         internal static abstract new void Init();
         internal static abstract new bool IsAudioFile(string path);
-        internal static abstract void PlayOnce(T audioClip);
-        internal static abstract void Render(T audioClip, string path);
+        internal static abstract void PlayOnce(TAudioClip audioClip);
+        internal static abstract void Render(TAudioClip audioClip, string path);
 
-        public void Play(T audioClip);
+        public void Play(TAudioClip audioClip);
         public new void StopAll();
     }
     

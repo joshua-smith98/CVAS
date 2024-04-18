@@ -1,5 +1,5 @@
-﻿using CVAS.AudioEngineNS;
-using CVAS.Core;
+﻿using CVAS.Core;
+using CVAS.AudioEngine;
 using CVAS.TerminalNS;
 
 namespace CVAS.REPL
@@ -44,9 +44,8 @@ namespace CVAS.REPL
                 TryRenderSentence(sentence);
 
                 // Memorise sentence
-                REPL.Instance.CurrentSentence?.Dispose();
                 REPL.Instance.CurrentSentence = sentence;
-                Terminal.MessageSingle("Sentence was committed to memory.", ConsoleColor.Yellow);
+                Terminal.Instance.MessageSingle("Sentence was committed to memory.", ConsoleColor.Yellow);
             }
         }
 
@@ -65,23 +64,23 @@ namespace CVAS.REPL
             if (directoryName != "" && !Directory.Exists(path)) throw new DirectoryNotFoundException();
 
             // Warn user about non-wav files
-            if (!path.ToLower().EndsWith(".wav") && Terminal.GetUserApproval("Warning: specified path does not include '.wav' extension, this could cause the file to not be played properly.\nWould you like to automatically append '.wav' (y/n)?", ConsoleColor.Yellow))
+            if (!path.ToLower().EndsWith(".wav") && Terminal.Instance.GetUserApproval("Warning: specified path does not include '.wav' extension, this could cause the file to not be played properly.\nWould you like to automatically append '.wav' (y/n)?", ConsoleColor.Yellow))
             {
                 // Append extension
                 path += ".wav";
             }
 
             // Check for file exists and give option for overwriting
-            if (File.Exists(path) && !Terminal.GetUserApproval("File already exists! Overwrite (y/n)?", ConsoleColor.DarkYellow))
+            if (File.Exists(path) && !Terminal.Instance.GetUserApproval("File already exists! Overwrite (y/n)?", ConsoleColor.DarkYellow))
             {
                 // Cancel render on non-yes answer
-                Terminal.MessageSingle("Render cancelled by user.", ConsoleColor.Red);
+                Terminal.Instance.MessageSingle("Render cancelled by user.", ConsoleColor.Red);
                 return;
             }
 
             // Render file
-            AudioEngine.Render(sentence.GetAudioClip(), path);
-            Terminal.MessageSingle($"Rendered to: {path}");
+            IAudioEngine.Render(sentence.GetAudioClip(), path);
+            Terminal.Instance.MessageSingle($"Rendered to: {path}");
         }
     }
 }

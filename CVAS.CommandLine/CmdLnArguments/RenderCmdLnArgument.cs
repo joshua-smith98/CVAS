@@ -1,4 +1,4 @@
-﻿using CVAS.AudioEngineNS;
+﻿using CVAS.AudioEngine;
 
 namespace CVAS.CommandLine
 {
@@ -31,7 +31,7 @@ namespace CVAS.CommandLine
                 if (CmdLnContext.Instance.OutputPath is null) throw new CmdLnContextNotValidException("Tried to render a sentence, but no output file was provided!");
 
                 // Render sentence
-                AudioEngine.Render(CmdLnContext.Instance.Sentence.GetAudioClip(), CmdLnContext.Instance.OutputPath);
+                IAudioEngine.Render(CmdLnContext.Instance.Sentence.GetAudioClip(), CmdLnContext.Instance.OutputPath);
             };
 
             // return trimmed args

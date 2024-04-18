@@ -1,12 +1,7 @@
-﻿using NAudio.Wave;
-
-namespace CVAS.AudioEngineNS
+﻿namespace CVAS.AudioEngine
 {
     /// <summary>
-    /// Interface representing any playable piece of audio.
+    /// Represents any playable piece of audio.
     /// </summary>
-    public interface IAudioClip : IDisposable // Inherits IDisposable, because some subclasses need to be disposed
-    {
-        public IWaveProvider ToWaveProvider();
-    }
+    public interface IAudioClip; // smol intiface
 }

@@ -18,9 +18,11 @@ If you're looking for something cross-platform with a GUI, try this one - its qu
  - [x] Caching of Libraries for almost instant loading after first analysis
  - [x] Use CVAS via REPL or with Command-line Arguments
 
+## v0.6 - Terminal Support for Linux
+ - [ ] Use CVAS natively on Linux-based systems
+
 ## v1.0 - WPF GUI & Analysis Tools
  - [ ] **Fully Functional Windows WFP GUI**
- - [ ] ~~Cross-platform Terminal Support for Linux & MacOS~~ **(Still TBD)**
  - [ ] Import Libraries from a folder for quick and easy loading
  - [ ] Save Sentences for easy editing and playback
  - [ ] Analyse a set of Sentences to find the Phrases that are required to say them

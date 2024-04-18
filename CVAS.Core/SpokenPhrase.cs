@@ -1,11 +1,11 @@
-﻿using CVAS.AudioEngineNS;
+﻿using CVAS.AudioEngine;
 
 namespace CVAS.Core
 {
     /// <summary>
     /// Represents a speakable phrase positioned within a sentence, with a single associated <see cref="Core.InflectionType"/>.
     /// </summary>
-    public class SpokenPhrase : IPhrase
+    public class SpokenPhrase
     {
         public string Str { get; }
         public string[] Words { get; }
@@ -26,7 +26,7 @@ namespace CVAS.Core
         }
 
         /// <summary>
-        /// Gets the associated <see cref="IAudioClip"/> for this SpokenPhrase.
+        /// Gets the associated <see cref="AudioClip"/> for this SpokenPhrase.
         /// </summary>
         /// <returns></returns>
         public IAudioClip GetAudioClip() => audioClip;
@@ -45,12 +45,5 @@ namespace CVAS.Core
         /// </summary>
         /// <returns></returns>
         public bool IsEmptyPhrase() => Inflection is InflectionType.Null;
-
-        public void Dispose()
-        {
-            audioClip?.Dispose();
-            audioClip = null!;
-            GC.SuppressFinalize(this);
-        }
     }
 }

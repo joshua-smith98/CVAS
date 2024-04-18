@@ -1,12 +1,12 @@
-﻿using CVAS.AudioEngineNS;
-using System.Collections;
+﻿using System.Collections;
+using CVAS.AudioEngine;
 
 namespace CVAS.Core
 {
     /// <summary>
     /// A collection of <see cref="Inflection"/>s. Used in <see cref="Phrase"/>.
     /// </summary>
-    public class InflectionCollection : ICollection<Inflection>, IDisposable
+    public class InflectionCollection : ICollection<Inflection>
     {
         public int Count => inflections.Count;
 
@@ -15,7 +15,7 @@ namespace CVAS.Core
         private List<Inflection> inflections = [];
 
         /// <summary>
-        /// Gets the <see cref="IAudioClip"/> associated with the given <see cref="InflectionType"/>.
+        /// Gets the <see cref="AudioClip"/> associated with the given <see cref="InflectionType"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
@@ -72,18 +72,6 @@ namespace CVAS.Core
         IEnumerator IEnumerable.GetEnumerator()
         {
             return inflections.GetEnumerator();
-        }
-
-        public void Dispose()
-        {
-            for (int i = 0; i < inflections.Count; i++)
-            {
-                inflections[i]?.Dispose();
-                inflections[i] = null!;
-            }
-
-            inflections = null!;
-            GC.SuppressFinalize(this);
         }
     }
 }

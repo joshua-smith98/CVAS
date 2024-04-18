@@ -46,16 +46,16 @@ namespace CVAS.REPL
         private static void PrintCommandDetails(Command command)
         {
             // Print Str and Description
-            Terminal.BeginMessage();
-            Terminal.Message($"{command.Str}:");
-            Terminal.Message($"\t{command.Description}", ConsoleColor.Yellow);
+            Terminal.Instance.BeginMessage();
+            Terminal.Instance.Message($"{command.Str}:");
+            Terminal.Instance.Message($"\t{command.Description}", ConsoleColor.Yellow);
 
             // Print use cases
             foreach (string useCase in command.Usage)
             {
-                Terminal.Message($"\t>> {useCase}", ConsoleColor.DarkYellow);
+                Terminal.Instance.Message($"\t>> {useCase}", ConsoleColor.DarkYellow);
             }
-            Terminal.EndMessage();
+            Terminal.Instance.EndMessage();
         }
     }
 }

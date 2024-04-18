@@ -1,12 +1,13 @@
-﻿namespace CVAS.AudioEngineNS
+﻿namespace CVAS.AudioEngine
 {
     /// <summary>
-    /// Interface representing any playable piece of audio originating from a file.
+    /// Represents a piece of playable audio originating from an audio file.
     /// </summary>
     public interface IAudioFile : IAudioClip
     {
-        public string Path { get; }
-        // public long Offset { get; } For future use ? accessing embedded audio files
-        // public long Length { get; }
+        /// <summary>
+        /// Gets the path to the source audio file.
+        /// </summary>
+        public abstract string Path { get; }
     }
 }

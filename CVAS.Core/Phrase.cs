@@ -1,17 +1,17 @@
-﻿using CVAS.AudioEngineNS;
+﻿using CVAS.AudioEngine;
 
 namespace CVAS.Core
 {
     /// <summary>
-    /// Represents a string, made up of a set of words and punctuation. Can also contain a linked <see cref="IAudioClip"/>.
+    /// Represents a string, made up of a set of words and punctuation. Can also contain a linked <see cref="AudioClip"/>.
     /// </summary>
-    public partial class Phrase : IPhrase
+    public partial class Phrase
     {
         public string Str { get; }
         public string[] Words { get; }
 
         /// <summary>
-        /// The collection of <see cref="Inflection"/>s associated with this phrase, each containing an <see cref="IAudioClip"/>.
+        /// The collection of <see cref="Inflection"/>s associated with this phrase, each containing an <see cref="AudioClip"/>.
         /// </summary>
         public Inflection[] Inflections => inflections.ToArray();
         private InflectionCollection inflections = [];
@@ -27,7 +27,7 @@ namespace CVAS.Core
         }
 
         /// <summary>
-        /// Constructs a new phrase with a single associated <see cref="IAudioClip"/>, with <see cref="InflectionType.End"/>.
+        /// Constructs a new phrase with a single associated <see cref="AudioClip"/>, with <see cref="InflectionType.End"/>.
         /// </summary>
         /// <param name="str"></param>
         public Phrase(string str, IAudioClip audioClip)
@@ -56,9 +56,9 @@ namespace CVAS.Core
         public bool IsEmptyPhrase() => Inflections.Length == 0;
 
         /// <summary>
-        /// Gets the default <see cref="IAudioClip"/> for this phrase, or silence.
+        /// Gets the default <see cref="AudioClip"/> for this phrase, or silence.
         /// </summary>
-        /// <returns><see cref="InflectionType.End"/> if available, otherwise <see cref="InflectionType.Middle"/>. If there is no associated <see cref="IAudioClip"/>, this returns <see cref="Silence"/>.</returns>
+        /// <returns><see cref="InflectionType.End"/> if available, otherwise <see cref="InflectionType.Middle"/>. If there is no associated <see cref="AudioClip"/>, this returns <see cref="Silence"/>.</returns>
         public IAudioClip GetAudioClip()
         {
             if (inflections.Select(x => x.InflectionType).Contains(InflectionType.End))
@@ -69,11 +69,11 @@ namespace CVAS.Core
             {
                 return inflections[InflectionType.Middle];
             }
-            else return new Silence(0);
+            else return ISilence.New(0);
         }
 
         /// <summary>
-        /// Retrieves the <see cref="IAudioClip"/> with the specified <see cref="InflectionType"/>, or default.
+        /// Retrieves the <see cref="AudioClip"/> with the specified <see cref="InflectionType"/>, or default.
         /// </summary>
         /// <param name="inflection"></param>
         /// <returns></returns>
@@ -132,13 +132,5 @@ namespace CVAS.Core
 
             return words.ToArray();
         }
-
-        public void Dispose()
-        {
-            inflections?.Dispose();
-            inflections = null!;
-            GC.SuppressFinalize(this);
-        }
-
     }
 }

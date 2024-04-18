@@ -1,4 +1,4 @@
-﻿using CVAS.AudioEngineNS;
+﻿using CVAS.AudioEngine;
 
 namespace CVAS.REPL
 {
@@ -19,7 +19,7 @@ namespace CVAS.REPL
 
         protected override void VerifyArgsAndRun()
         {
-            AudioEngine.Instance.StopAll();
+            IAudioEngine.Instance.StopAll();
         }
     }
 }

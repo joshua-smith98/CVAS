@@ -1,5 +1,5 @@
-﻿using CVAS.AudioEngineNS;
-using CVAS.Core;
+﻿using CVAS.Core;
+using CVAS.AudioEngine;
 using CVAS.TerminalNS;
 using System.Security.Cryptography;
 using System.Text;
@@ -68,7 +68,7 @@ namespace CVAS.FileSystem
 
             // Terminal feedback
             // We'll just use a message here, since the process is far too quick to report progress.
-            Terminal.MessageSingle("Cache file found.", ConsoleColor.Yellow);
+            Terminal.Instance.MessageSingle("Cache file found.", ConsoleColor.Yellow);
 
             // Open File
             using (BinaryReader br = new(File.OpenRead(path)))
@@ -210,7 +210,7 @@ namespace CVAS.FileSystem
         /// <returns></returns>
         public Library Construct()
         {
-            Terminal.BeginReport("Building from cache...");
+            Terminal.Instance.BeginReport("Building from cache...");
             
             // Construct phrases
             List<Phrase> phrases = [];
@@ -220,7 +220,7 @@ namespace CVAS.FileSystem
                 if (i % 100 == 0)
                 {
                     float percent = ((float)i / PhraseTable.Length) * 100;
-                    Terminal.Report($"[{percent:0}%]");
+                    Terminal.Instance.Report($"[{percent:0}%]");
                 }
                 
                 bool unknownErrorNotified = false; // For the BEEG unknown error below
@@ -238,38 +238,38 @@ namespace CVAS.FileSystem
                     {
                         // Gets the path to the file, relative to this cache file's current directory.
                         // Path.GetDirectoryName() will never return null, as the cache file at 'path' will always been in a library folder
-                        audioClip = new AudioFileStreaming(SysPath.Combine(SysPath.GetDirectoryName(Path)!, inflectionRow.AudioFileName));
+                        audioClip = IAudioFileStreaming.New(SysPath.Combine(SysPath.GetDirectoryName(Path)!, inflectionRow.AudioFileName));
                     }
                     catch (DirectoryNotFoundException)
                     {
                         // Pause report
-                        Terminal.EndReport("--Build Paused--");
+                        Terminal.Instance.EndReport("--Build Paused--");
 
                         if (!unknownErrorNotified)
                         {
-                            Terminal.BeginMessage();
-                            Terminal.Message($"Couldn't load file: \"{inflectionRow.AudioFileName}\"", ConsoleColor.Red);
-                            Terminal.Message();
-                            Terminal.Message("This problem is known and occurs sometimes after moving or renaming a cached directory.");
-                            Terminal.Message();
-                            Terminal.Message("If you encounter this message, please open an issue on Github and include:");
-                            Terminal.Message("\t- The name of the folder this Library used to be in");
-                            Terminal.Message("\t- The name of the folder this Library is now in");
-                            Terminal.Message("Or if you haven't moved the folder, let me know as well. The more data I have, the closer I'll be to fixing this!");
-                            Terminal.Message();
-                            Terminal.Message("The library will continue to load, but this file will be ignored.", ConsoleColor.Yellow);
-                            Terminal.Message("You'll be notified of any further instances of this error.", ConsoleColor.Yellow);
-                            Terminal.EndMessage();
-                            Terminal.AwaitKey("Press any key to continue...");
+                            Terminal.Instance.BeginMessage();
+                            Terminal.Instance.Message($"Couldn't load file: \"{inflectionRow.AudioFileName}\"", ConsoleColor.Red);
+                            Terminal.Instance.Message();
+                            Terminal.Instance.Message("This problem is known and occurs sometimes after moving or renaming a cached directory.");
+                            Terminal.Instance.Message();
+                            Terminal.Instance.Message("If you encounter this message, please open an issue on Github and include:");
+                            Terminal.Instance.Message("\t- The name of the folder this Library used to be in");
+                            Terminal.Instance.Message("\t- The name of the folder this Library is now in");
+                            Terminal.Instance.Message("Or if you haven't moved the folder, let me know as well. The more data I have, the closer I'll be to fixing this!");
+                            Terminal.Instance.Message();
+                            Terminal.Instance.Message("The library will continue to load, but this file will be ignored.", ConsoleColor.Yellow);
+                            Terminal.Instance.Message("You'll be notified of any further instances of this error.", ConsoleColor.Yellow);
+                            Terminal.Instance.EndMessage();
+                            Terminal.Instance.AwaitKey("Press any key to continue...");
                             unknownErrorNotified = true;
                         }
                         else
                         {
-                            Terminal.MessageSingle($"Also couldn't load: {inflectionRow.AudioFileName}", ConsoleColor.Yellow);
+                            Terminal.Instance.MessageSingle($"Also couldn't load: {inflectionRow.AudioFileName}", ConsoleColor.Yellow);
                         }
 
                         // Resume report & continue
-                        Terminal.BeginReport("Continuing to build from cache...");
+                        Terminal.Instance.BeginReport("Continuing to build from cache...");
 
                         continue;
                     }
@@ -281,7 +281,7 @@ namespace CVAS.FileSystem
             }
 
             // Construct library and return
-            Terminal.EndReport($"Successfully loaded {phrases.Count} phrases and {phrases.Select(x => x.Inflections.Length).Sum()} audio files.");
+            Terminal.Instance.EndReport($"Successfully loaded {phrases.Count} phrases and {phrases.Select(x => x.Inflections.Length).Sum()} audio files.");
             return new Library(phrases.ToArray());
         }
 

@@ -8,6 +8,6 @@
         /// <summary>
         /// Gets the path to the source audio file.
         /// </summary>
-        public abstract string Path { get; }
+        public string Path { get; }
     }
 }

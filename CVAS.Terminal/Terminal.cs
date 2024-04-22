@@ -1,4 +1,6 @@
-﻿namespace CVAS.TerminalNS
+﻿using LinReadLine;
+
+namespace CVAS.TerminalNS
 {
     /// <summary>
     /// Simplified interface for printing information to the console.
@@ -64,7 +66,7 @@
         {
             Console.Write(prompt);
             Console.CursorVisible = true;
-            string ret = Console.ReadLine()!;
+            string ret = Lin.ReadLine()!;
             Console.CursorVisible = false;
             Console.WriteLine();
             return ret;

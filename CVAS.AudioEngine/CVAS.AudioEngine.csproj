@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <Reference Include="Bass.Net">
-      <HintPath>..\Bass24.Net\Bass.Net.dll</HintPath>
+      <HintPath>..\lib\Bass.Net.dll</HintPath>
     </Reference>
   </ItemGroup>
 

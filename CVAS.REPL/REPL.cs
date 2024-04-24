@@ -82,6 +82,10 @@ namespace CVAS.REPL
                 }
                 catch (REPLException e)
                 {
+                    // Don't print error message if user typed nothing
+                    if (e is CommandNotValidException && e.Message == "EMPTYSTR")
+                        continue;
+                    
                     Terminal.Instance.MessageSingle(e.Message, ConsoleColor.Red);
                 }
             }
@@ -105,7 +109,10 @@ namespace CVAS.REPL
                 catch (CommandNotValidException) { } // Case: the current command is not valid
             }
 
-            throw new CommandNotValidException($"Command '{str.Split().First()}' does not exist!"); // Case: no valid commands found
+            if (str == string.Empty)
+                throw new CommandNotValidException("EMPTYSTR"); // Throw special exception if the user doesn't provide any data -> we won't display a message
+            else
+                throw new CommandNotValidException($"Command '{str.Split().First()}' does not exist!"); // Case: no valid commands found
         }
     }
 }

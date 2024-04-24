@@ -86,8 +86,8 @@
                 // Case: phrase couldn't be found
                 if (subPhrase is null)
                 {
-                    // Case: the previous phrase also couldn't be found (i.e. a sequence of unfound phrases)
-                    if (subPhrases.Last().IsEmptyPhrase())
+                    // Case: a previous phrase exists and also couldn't be found (i.e. a sequence of unfound phrases)
+                    if (subPhrases.Count != 0 && subPhrases.Last().IsEmptyPhrase())
                     {
                         // Concatinate any sequences of unfound phrases
                         subPhrases[^1] = new Phrase($"{subPhrases[^1].Str} {tempWords[0]}");

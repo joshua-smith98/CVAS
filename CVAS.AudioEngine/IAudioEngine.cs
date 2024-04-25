@@ -9,9 +9,7 @@ namespace CVAS.AudioEngine
     internal interface IAudioEngine<TAudioClip> : IAudioEngine where TAudioClip : IAudioClip
     {
         internal static abstract new IAudioEngine Instance { get; }
-        internal static abstract new bool IsInitialised { get; }
 
-        internal static abstract new void Init();
         internal static abstract new bool IsAudioFile(string path);
         internal static abstract void PlayOnce(TAudioClip audioClip);
         internal static abstract void Render(TAudioClip audioClip, string path);
@@ -36,26 +34,6 @@ namespace CVAS.AudioEngine
             => RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
             ? NAudio.AudioEngine.Instance
             : BASS.AudioEngine.Instance;
-
-        /// <summary>
-        /// Gets <see cref="true"/> if the audio engine has been initialised, otherwise <see cref="false"/>.
-        /// </summary>
-        public static bool IsInitialised
-            => RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-            ? NAudio.AudioEngine.IsInitialised
-            : BASS.AudioEngine.IsInitialised;
-
-        /// <summary>
-        /// Initialises <see cref="Instance"/>. Throws an <see cref="AudioEngineException"/> if called more than once.
-        /// </summary>
-        /// <exception cref="AudioEngineException"/>
-        public static void Init()
-        {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                NAudio.AudioEngine.Init();
-            else
-                BASS.AudioEngine.Init();
-        }
 
         /// <summary>
         /// Plays the given <see cref="IAudioClip"/> once, For use when <see cref="Instance"/> has not been initialised.

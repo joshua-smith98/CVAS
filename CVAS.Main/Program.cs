@@ -4,8 +4,6 @@ using CVAS.REPL;
 using CVAS.TerminalNS;
 
 // Main entry point
-// Always use Terminal
-using var t = Terminal.Init();
 
 // Only catch unhandled exceptions on release
 #if !DEBUG
@@ -13,28 +11,13 @@ try
 {
 #endif
     if (args.Length == 0) // No args | default app
-    {
-        // Since the REPL is the only usable interface, we will set it as the default for now
-        IAudioEngine.Init();
-        REPL.Init();
         REPL.Instance.Start();
-
-        // Initialise XAML or WinForms ?
-    }
     else if (args[0] == "-c")
-    {
-        // Initialise audio engine
-        IAudioEngine.Init();
-
-        // Initialise and start REPL;
-        REPL.Init();
         REPL.Instance.Start();
-    }
     else // if args has some thing(s), but not -c
     {
         // Silence Terminal, initialise command-line and read from args
         Terminal.Instance.IsSilent = true;
-        CmdLnContext.Init();
         CmdLnContext.Instance.ReadFromAndRun(args);
     }
 #if !DEBUG

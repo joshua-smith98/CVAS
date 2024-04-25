@@ -16,7 +16,7 @@ namespace CVAS.CommandLine
         {
             get
             {
-                if (instance is null) throw new NullReferenceException();
+                instance ??= new CmdLnContext();
                 return instance;
             }
         }
@@ -44,17 +44,6 @@ namespace CVAS.CommandLine
         ];
 
         private CmdLnContext() { } // Non-constructable
-
-        /// <summary>
-        /// Initialises <see cref="CmdLnContext.Instance"/>. Throws a <see cref="CmdLnException"/> if called more than once.
-        /// </summary>
-        /// <exception cref="CmdLnException"></exception>
-        public static void Init()
-        {
-            // Check if already initialised
-            if (instance is not null) throw new CmdLnException("CmdLnContext cannot be initialised twice!");
-            instance = new CmdLnContext();
-        }
 
         /// <summary>
         /// Reads the given arguments and tries to run the attached action. Handles all <see cref="CmdLnException"/>s.

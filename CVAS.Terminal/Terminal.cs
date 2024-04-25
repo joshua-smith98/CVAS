@@ -12,8 +12,8 @@ namespace CVAS.TerminalNS
         {
             get
             {
-                if (instance is null) throw new NullReferenceException();
-                else return instance;
+                instance ??= new Terminal();
+                return instance;
             }
         }
         private static Terminal? instance;
@@ -34,17 +34,6 @@ namespace CVAS.TerminalNS
         {
             Console.CursorVisible = true; // Make terminal cursor visible again when disposed (seems to affect linux but not windows)
             GC.SuppressFinalize(this);
-        }
-        
-        public static Terminal Init()
-        {
-            if (instance is not null) throw new TerminalException("Terminal cannot be initialised twice!");
-            else
-            {
-                var ret = new Terminal();
-                instance = ret;
-                return ret;
-            }
         }
 
         /// <summary>

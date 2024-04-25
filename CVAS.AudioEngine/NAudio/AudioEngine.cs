@@ -12,13 +12,11 @@ namespace CVAS.AudioEngine.NAudio
         {
             get
             {
-                if (instance is null) throw new NullReferenceException();
-                else return instance;
+                instance ??= new AudioEngine();
+                return instance;
             }
         }
         private static AudioEngine? instance;
-
-        public static bool IsInitialised => instance is not null;
 
         internal static readonly WaveFormat WaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2); // TODO: Implement changing WaveFormat
 
@@ -34,17 +32,6 @@ namespace CVAS.AudioEngine.NAudio
             waveOutEvent = new WaveOutEvent();
             waveOutEvent.Init(sampleProvider);
             waveOutEvent.Play();
-        }
-
-        /// <summary>
-        /// Initialises <see cref="InstanceImpl"/>. Throws an exception if this is called more than once.
-        /// </summary>
-        /// <exception cref="AudioEngineException"></exception>
-        public static void Init()
-        {
-            // Check if already initialised
-            if (instance is not null) throw new AudioEngineException("AudioEngine cannot be initialised twice!");
-            instance = new AudioEngine();
         }
 
         /// <summary>

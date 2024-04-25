@@ -15,8 +15,8 @@ namespace CVAS.REPL
         {
             get
             {
-                if (instance is null) throw new NullReferenceException();
-                else return instance;
+                instance ??= new REPL();
+                return instance;
             }
         }
         private static REPL? instance;
@@ -48,13 +48,6 @@ namespace CVAS.REPL
         public bool IsRunning { get; internal set; } = false;
 
         private REPL() { } // Non-constructable
-
-        public static void Init()
-        {
-            // Check if already initialised
-            if (instance is not null) throw new Exception("REPL cannot be initialised twice!");
-            instance = new REPL();
-        }
 
         /// <summary>
         /// Begins the REPL loop. Set <see cref="IsRunning"/> = <see cref="false"/> to end.

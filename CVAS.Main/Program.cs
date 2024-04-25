@@ -9,7 +9,7 @@ using CVAS.TerminalNS;
 try
 {
 #endif
-if (args.Length == 0) REPL.Instance.Start(); // Start REPL when run with no args
+    if (args.Length == 0) REPL.Instance.Start(); // Start REPL when run with no args
     else
     {
         // Silence Terminal, initialise command-line and read from args

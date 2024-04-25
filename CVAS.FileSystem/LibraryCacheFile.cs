@@ -281,7 +281,7 @@ namespace CVAS.FileSystem
             }
 
             // Construct library and return
-            Terminal.Instance.EndReport($"Successfully loaded {phrases.Count} phrases and {phrases.Select(x => x.Inflections.Length).Sum()} audio files.");
+            Terminal.Instance.EndReport($"Successfully loaded {phrases.Select(x => x.Inflections.Length).Sum()} audio files and {phrases.Count} phrases.");
             return new Library(phrases.ToArray());
         }
 

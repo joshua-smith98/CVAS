@@ -182,7 +182,7 @@ namespace CVAS.FileSystem
 
             // Construct library
             Library ret = new(phrases.ToArray());
-            Terminal.Instance.EndReport($"Successfully analysed {filePaths.Length} files and loaded {ret.Phrases.Length} phrases.");
+            Terminal.Instance.EndReport($"Successfully analysed {filePaths.Length} audio files and loaded {ret.Phrases.Length} phrases.");
 
             // Build cache
             LibraryCacheFile.Deconstruct(ret).SaveTo(SysPath.Combine(Path!, LibraryCacheFile.DefaultPath)); // Path will never be null

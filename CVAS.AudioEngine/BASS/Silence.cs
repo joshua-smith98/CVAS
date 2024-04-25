@@ -10,7 +10,7 @@ namespace CVAS.AudioEngine.BASS
     {
         public int Milliseconds => milliseconds;
 
-        internal override int GetStreamHandle()
+        protected override int GetStreamHandleImpl()
         {
             // Get length in bytes
             var byteLength = (int)(milliseconds / 1000f * 44100 * 2); // 2 is the number of bytes per sample (16bit audio)

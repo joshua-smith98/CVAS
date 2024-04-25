@@ -11,7 +11,7 @@ namespace CVAS.AudioEngine.BASS
 
         public IAudioClip[] AudioClips => audioClips;
 
-        internal override int GetStreamHandle()
+        protected override int GetStreamHandleImpl()
         {
             // Create mixer
             int mixerHandle = BassMix.BASS_Mixer_StreamCreate(

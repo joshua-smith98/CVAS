@@ -13,7 +13,7 @@ namespace CVAS.AudioEngine.BASS
         /// </summary>
         public override string Path => path;
 
-        internal override int GetStreamHandle()
+        protected override int GetStreamHandleImpl()
         {
             // Try to open file
             int streamHandle = Bass.BASS_StreamCreateFile(path, 0, 0, BASSFlag.BASS_STREAM_DECODE);

@@ -11,14 +11,15 @@ using (Terminal.Instance) // Use terminal for duration of try/catch scope so tha
     try
     {
 #endif
+        // Case: no args -> Start CVAS REPL
         if (args.Length == 0)
         {
             using (IAudioEngine.Instance) // Use AudioEngine instance in the scope of the REPL
-                REPL.Instance.Start(); // Start REPL when run with no args
+                REPL.Instance.Start();
         }
+        // Case: args exist ->  Silence Terminal, initialise command-line and read from args
         else
         {
-            // Silence Terminal, initialise command-line and read from args
             Terminal.Instance.IsSilent = true;
             CmdLnContext.Instance.ReadFromAndRun(args);
         }

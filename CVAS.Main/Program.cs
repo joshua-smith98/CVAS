@@ -5,16 +5,12 @@ using CVAS.TerminalNS;
 
 // Main entry point
 
-// Only catch unhandled exceptions on release
-#if !DEBUG
+#if !DEBUG // Only catch unhandled exceptions on release
 try
 {
 #endif
-    if (args.Length == 0) // No args | default app
-        REPL.Instance.Start();
-    else if (args[0] == "-c")
-        REPL.Instance.Start();
-    else // if args has some thing(s), but not -c
+if (args.Length == 0) REPL.Instance.Start(); // Start REPL when run with no args
+    else
     {
         // Silence Terminal, initialise command-line and read from args
         Terminal.Instance.IsSilent = true;

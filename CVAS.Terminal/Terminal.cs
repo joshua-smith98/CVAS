@@ -66,11 +66,9 @@ namespace CVAS.TerminalNS
         /// </summary>
         public char AwaitKey()
         {
-            // Console.CursorVisible = true;
+            Console.CursorVisible = true;
             var keyinfo = Console.ReadKey();
-            // Console.CursorVisible = false;
-            Console.CursorLeft--;
-            Console.Write(" ");
+            Console.CursorVisible = false;
             Console.WriteLine();
             Console.WriteLine();
 

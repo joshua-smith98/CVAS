@@ -24,7 +24,6 @@ namespace CVAS.AudioEngine.BASS
                 Thread.Sleep(100);
             
             Bass.BASS_ChannelFree(streamHandle);
-            Console.WriteLine($"Freed stream: {streamHandle}");
         }
     }
 }

@@ -8,7 +8,7 @@ namespace CVAS.AudioEngine.BASS
     /// </summary>
     internal class Silence(int milliseconds) : AudioClip, ISilence
     {
-        public int Milliseconds => milliseconds;
+        public int Milliseconds => milliseconds == 0 ? 1 : milliseconds; // Don't allow a value of 0 -> BASS doesn't like it when you try to make an empty sample.
 
         internal override int GetStreamHandle()
         {

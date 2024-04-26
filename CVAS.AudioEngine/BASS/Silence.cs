@@ -8,15 +8,16 @@ namespace CVAS.AudioEngine.BASS
     /// </summary>
     internal class Silence(int milliseconds) : AudioClip, ISilence
     {
-        public int Milliseconds => milliseconds == 0 ? 1 : milliseconds; // Don't allow a value of 0 -> BASS doesn't like it when you try to make an empty sample.
+        public int Milliseconds => milliseconds;
 
         protected override int GetStreamHandleImpl()
         {
             // Get length in bytes
-            var byteLength = (int)(milliseconds / 1000f * 44100 * 2); // 2 is the number of bytes per sample (16bit audio)
+            var byteLength = (int)(milliseconds / 1000f * 44100 * 2); // 2 is the number of bytes per sample (16bit audio)\
+            byteLength = byteLength < 2 ? 2 : byteLength; // Don't allow a value below 2 - this appears to be the minimum length for a sample in BASS
 
             // Create sample
-            int sampleHandle = Bass.BASS_SampleCreate(byteLength, 44100, 1, 2, BASSFlag.BASS_DEFAULT); // Apparently '1' is not a valid value for max on linux!
+            int sampleHandle = Bass.BASS_SampleCreate(byteLength, 44100, 1, 1, BASSFlag.BASS_DEFAULT);
             if (sampleHandle == 0)
             {
                 // Handle errors

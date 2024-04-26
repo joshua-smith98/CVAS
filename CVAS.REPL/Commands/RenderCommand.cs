@@ -64,7 +64,7 @@ namespace CVAS.REPL
             if (directoryName != "" && !Directory.Exists(path)) throw new DirectoryNotFoundException();
 
             // Warn user about non-wav files
-            if (!path.ToLower().EndsWith(".wav") && Terminal.Instance.GetUserApproval("Warning: specified path does not include '.wav' extension, this could cause the file to not be played properly.\nWould you like to automatically append '.wav' (y/n)?", ConsoleColor.Yellow))
+            if (!path.ToLower().EndsWith(".wav") && Terminal.Instance.GetUserApproval("Warning: specified path does not include '.wav' extension, this could cause the file to not be played properly.\nWould you like to automatically append '.wav' (y/n)? ", ConsoleColor.Yellow))
             {
                 // Append extension
                 path += ".wav";

@@ -37,11 +37,11 @@
                 VerifyFrom(str);
                 return ReadFromImpl(str);
             }
-            catch(REPLException)
+            catch(REPLException e)
             {
                 Value = null;
                 
-                if (IsCompulsory) throw;
+                if (IsCompulsory || e is ArgumentValueNotValidException) throw;
                 else return str;
             }
         }

@@ -38,7 +38,7 @@ namespace CVAS.CommandLine
         /// <returns></returns>
         /// <exception cref="CmdLnArgNotValidException"></exception>
         /// <exception cref="Exception"></exception>
-        protected static string ReadStringFromAndTrim(ref string[] args)
+        protected string ReadStringFromAndTrim(ref string[] args)
         {
             // Read a string from args[], taking into account double quotes (")
             // Convert string[] back into a string
@@ -60,12 +60,16 @@ namespace CVAS.CommandLine
                         var trimmedStrArgs = strArgs[(i + 1)..].TrimStart();
                         if (trimmedStrArgs == string.Empty) args = []; // Handle case where string is empty: otherwise Split() will produce array with one element!
                         else args = trimmedStrArgs.Split();
+
+                        // Check that string we made contains something
+                        if (valueBuilder.ToString().Trim() == string.Empty) throw new CmdLnArgNotValidException($"Value provided for argument '{Str}' was empty.");
+
                         return valueBuilder.ToString();
                     }
 
                     valueBuilder.Append(strArgs[i]);
 
-                    if (i == strArgs.Length - 1) throw new CmdLnArgNotValidException($"Expected second set of double-quotes in argument!"); // TODO: make this message a bit more helpful
+                    if (i == strArgs.Length - 1) throw new CmdLnArgNotValidException($"Expected second set of double-quotes in argument: '{Str}'"); // TODO: make this message a bit more helpful
                 }
 
                 // We should never reach this place
@@ -77,6 +81,10 @@ namespace CVAS.CommandLine
                 // We'll just return the first element in args, and then trim args
                 var ret = args[0];
                 args = args[1..];
+
+                // Check that string contains something
+                if (ret.Trim() == string.Empty) throw new CmdLnArgNotValidException($"Value provided for argument '{Str}' was empty.");
+
                 return ret;
             }
         }

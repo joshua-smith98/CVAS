@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LinReadLine</name>
+    </assembly>
+    <members>
+        <member name="T:LinReadLine.Lin">
+            <summary>
+            Container for <see cref="M:LinReadLine.Lin.ReadLine"/>.
+            </summary>
+        </member>
+        <member name="M:LinReadLine.Lin.ReadLine">
+            <summary>
+            Reads a single user-typed line from the console, emulating Windows behaviour on Linux.<br/>
+            If used on an OS outside of Linux, simply returns the result of <see cref="M:System.Console.ReadLine"/>.
+            <br/><br/>
+            Note: Since <see cref="!:Console.CursorVisible.get"/> isn't available on Linux we can't save the cursor visibility when this method is called.<br/>
+            The cursor will be visible upon return. If you need to cursor to be invisible upon return, you must (unfortunately) set it yourself.
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

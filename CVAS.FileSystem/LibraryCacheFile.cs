@@ -76,10 +76,10 @@ namespace CVAS.FileSystem
                 #region Validity Checks
                 {
                     // Validity check: header
-                    if (!br.ReadChars(8).SequenceEqual("CVASLBCH".ToArray())) throw new InvalidFileFormatException();
+                    if (!br.ReadChars(8).SequenceEqual("CVASLBCH".ToArray())) throw new InvalidFileFormatException($"Invalid file header in LibraryCacheFile: {path}");
 
                     // Validity check: version number (current version is '1')
-                    if (br.ReadInt32() != Version) throw new InvalidFileVersionException();
+                    if (br.ReadInt32() != Version) throw new InvalidFileVersionException($"Invalid or out of date file version in LibraryCacheFile: {path}");
 
                     // Validity check: folder hash
                     // Path.GetDirectoryName() will never return null, as the cache file at 'path' will always been in a library folder
@@ -89,7 +89,7 @@ namespace CVAS.FileSystem
                         filenames_string += filename;
                     byte[] folderHash = MD5.HashData(Encoding.ASCII.GetBytes(filenames_string));
 
-                    if (!br.ReadBytes(16).SequenceEqual(folderHash)) throw new InvalidFileHashException();
+                    if (!br.ReadBytes(16).SequenceEqual(folderHash)) throw new InvalidFileHashException($"Invalid or out of date hash in LibraryCacheFile: {path}");
 
                     // Validity check: table integrity (iterate through tables and check EOF)
                     try
@@ -108,11 +108,11 @@ namespace CVAS.FileSystem
                     }
                     catch (EndOfStreamException) // Case: the table is shorter than expected
                     {
-                        throw new InvalidFileFormatException();
+                        throw new InvalidFileFormatException($"Invalid LibraryCacheFile format: {path}");
                     }
 
                     // Case: there is extra data in the file
-                    if (br.BaseStream.Position != br.BaseStream.Length) throw new InvalidFileFormatException(); 
+                    if (br.BaseStream.Position != br.BaseStream.Length) throw new InvalidFileFormatException($"Invalid LibraryCacheFile format: {path}"); 
                 }
                 #endregion
 

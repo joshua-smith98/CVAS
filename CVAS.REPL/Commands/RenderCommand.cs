@@ -26,13 +26,13 @@ namespace CVAS.REPL
         protected override void VerifyArgsAndRun()
         {
             // Validity check: CurrentLibrary must not be null
-            if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException("No library is currenty loaded.");
+            if (REPL.Instance.CurrentLibrary is null) throw new ContextNotFoundException("No library is currenty loaded.");
 
             // Case: Sentence not included in Args
             if (Arguments[1].Value is null)
             {
                 // Validity check: CurrentSentence must not be null
-                if (REPL.Instance.CurrentSentence is null) throw new ContextNotValidException("No sentence is current memorised, please provide one.");
+                if (REPL.Instance.CurrentSentence is null) throw new ContextNotFoundException("No sentence is current memorised, please provide one.");
 
                 // Render memorised sentence
                 TryRenderSentence(REPL.Instance.CurrentSentence);

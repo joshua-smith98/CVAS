@@ -42,18 +42,18 @@
         /// Verifies that the given string calls this command.
         /// </summary>
         /// <param name="str"></param>
-        /// <exception cref="CommandNotValidException"></exception>
+        /// <exception cref="CommandReadFailedException"></exception>
         private void VerifyStr(string str)
         {
             // Validity check: str must begin with "Str"
-            if (!str.StartsWith(Str)) throw new CommandNotValidException("Command does not match. This message should never be printed - if it was, open an issue on Github!");
+            if (!str.StartsWith(Str)) throw new CommandReadFailedException("Command does not match. This message should never be printed - if it was, open an issue on Github!");
         }
 
         /// <summary>
         /// Reads the arguments from the given string into this Command's <see cref="Arguments"/>.
         /// </summary>
         /// <param name="str"></param>
-        /// <exception cref="ArgumentNotValidException"></exception>
+        /// <exception cref="CommandRunFailedException"></exception>
         private void ReadArguments(string str)
         {
             // Try to read arguments
@@ -62,7 +62,7 @@
             foreach (Argument argument in Arguments) temp_str = argument.ReadFrom(temp_str); // If this fails, an ArgumentNotValidException will be thrown, then caught by the REPL class.
 
             // Validity check: str must be empty after all arguments are read
-            if (temp_str != "") throw new ArgumentNotValidException($"Expected end of command, found: '{temp_str}'!");
+            if (temp_str != "") throw new CommandRunFailedException($"Expected end of command, found: '{temp_str}'!");
         }
 
         /// <summary>

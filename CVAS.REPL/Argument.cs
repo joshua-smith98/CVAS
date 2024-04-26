@@ -29,7 +29,7 @@
         /// Validates, and attempts to read an argument from the given string. When successful, will also trim this argument from the given string.
         /// </summary>
         /// <param name="str"></param>
-        /// <exception cref="ArgumentNotValidException"/>
+        /// <exception cref="CommandRunFailedException"/>
         public string ReadFrom(string str)
         {
             try
@@ -41,7 +41,7 @@
             {
                 Value = null;
                 
-                if (IsCompulsory || e is ArgumentValueNotValidException) throw;
+                if (IsCompulsory || e is ArgumentReadFailedException) throw;
                 else return str;
             }
         }
@@ -50,10 +50,10 @@
         /// Verifies that this argument exists.
         /// </summary>
         /// <param name="str"></param>
-        /// <exception cref="ArgumentNotValidException"></exception>
+        /// <exception cref="CommandRunFailedException"></exception>
         private void VerifyFrom(string str)
         {
-            if (str == "") throw new ArgumentNotValidException($"Expected argument [{Name}], found nothing!");
+            if (str == "") throw new CommandRunFailedException($"Expected argument [{Name}], found nothing!");
         }
 
         /// <summary>

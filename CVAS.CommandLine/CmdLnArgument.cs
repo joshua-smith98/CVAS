@@ -62,14 +62,14 @@ namespace CVAS.CommandLine
                         else args = trimmedStrArgs.Split();
 
                         // Check that string we made contains something
-                        if (valueBuilder.ToString().Trim() == string.Empty) throw new CmdLnArgNotValidException($"Value provided for argument '{Str}' was empty.");
+                        if (valueBuilder.ToString().Trim() == string.Empty) throw new CmdLnArgNotValidException($"Value provided for argument '{Str}|{ShortStr}' was empty.");
 
                         return valueBuilder.ToString();
                     }
 
                     valueBuilder.Append(strArgs[i]);
 
-                    if (i == strArgs.Length - 1) throw new CmdLnArgNotValidException($"Expected second set of double-quotes in argument: '{Str}'"); // TODO: make this message a bit more helpful
+                    if (i == strArgs.Length - 1) throw new CmdLnArgNotValidException($"Expected second set of double-quotes in argument: '{Str}|{ShortStr}'");
                 }
 
                 // We should never reach this place
@@ -83,7 +83,7 @@ namespace CVAS.CommandLine
                 args = args[1..];
 
                 // Check that string contains something
-                if (ret.Trim() == string.Empty) throw new CmdLnArgNotValidException($"Value provided for argument '{Str}' was empty.");
+                if (ret.Trim() == string.Empty) throw new CmdLnArgNotValidException($"Value provided for argument '{Str}|{ShortStr}' was empty.");
 
                 return ret;
             }

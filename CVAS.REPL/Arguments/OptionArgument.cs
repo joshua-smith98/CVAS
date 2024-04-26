@@ -10,7 +10,7 @@
         protected override string ReadFromImpl(string str)
         {
             // Validity check: string must start with '-'
-            if (str[0] != '-') throw new ArgumentValueNotValidException($"[{Name}] is of type OptionArgument, and must begin with a hyphen (-).");
+            if (str[0] != '-') throw new ArgumentReadFailedException($"[{Name}] is of type OptionArgument, and must begin with a hyphen (-).");
 
             // Get option, and remove '-' from the beginning
             var option = str.Split().First()[1..];

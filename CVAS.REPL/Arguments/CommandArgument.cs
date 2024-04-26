@@ -13,7 +13,7 @@
         {
             // Validity check: str must start with a Command.Str
             var strFirst = str.Split().First();
-            if (!REPL.Instance.CommandInstances.Any(x => x.Str == strFirst)) throw new ArgumentValueNotValidException($"Command '{strFirst}' specified in argument [{Name}] does not exist!");
+            if (!REPL.Instance.CommandInstances.Any(x => x.Str == strFirst)) throw new ArgumentReadFailedException($"Command '{strFirst}' specified in argument [{Name}] does not exist!");
 
             // Store relevant Command
             Value = REPL.Instance.CommandInstances.Where(x => x.Str == strFirst).First();

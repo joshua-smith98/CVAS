@@ -24,13 +24,13 @@ namespace CVAS.REPL
         protected override void VerifyArgsAndRun()
         {
             // Validity check: CurrentLibrary must not be null
-            if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException("No library is currently loaded.");
+            if (REPL.Instance.CurrentLibrary is null) throw new ContextNotFoundException("No library is currently loaded.");
 
             // Case: sentence has not been given
             if (Arguments[0].Value is null)
             {
                 // Validity check: CurrentSentence must not be null
-                if (REPL.Instance.CurrentSentence is null) throw new ContextNotValidException($"No sentence is currently memorised, please provide one.");
+                if (REPL.Instance.CurrentSentence is null) throw new ContextNotFoundException($"No sentence is currently memorised, please provide one.");
 
                 // Play memorised sentence
                 IAudioEngine.Instance.Play(REPL.Instance.CurrentSentence.GetAudioClip());

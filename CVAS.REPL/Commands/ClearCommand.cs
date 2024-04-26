@@ -20,7 +20,7 @@ namespace CVAS.REPL
         protected override void VerifyArgsAndRun()
         {
             // Validity check: a library must be loaded
-            if (REPL.Instance.CurrentLibrary is null) throw new ContextNotValidException("No library is currently loaded.");
+            if (REPL.Instance.CurrentLibrary is null) throw new ContextNotFoundException("No library is currently loaded.");
 
             // Clear current sentence
             REPL.Instance.CurrentSentence = null;

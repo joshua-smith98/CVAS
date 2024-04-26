@@ -76,7 +76,7 @@ namespace CVAS.REPL
                 catch (REPLException e)
                 {
                     // Don't print error message if user typed nothing
-                    if (e is CommandNotValidException && e.Message == "EMPTYSTR")
+                    if (e is CommandReadFailedException && e.Message == "EMPTYSTR")
                         continue;
                     
                     Terminal.Instance.MessageSingle(e.Message, ConsoleColor.Red);
@@ -85,10 +85,10 @@ namespace CVAS.REPL
         }
 
         /// <summary>
-        /// Attempts to run the commands in the given string. Throws <see cref="CommandNotValidException"/> if str contains no valid commands.
+        /// Attempts to run the commands in the given string. Throws <see cref="CommandReadFailedException"/> if str contains no valid commands.
         /// </summary>
         /// <param name="str"></param>
-        /// <exception cref="CommandNotValidException"></exception>
+        /// <exception cref="CommandReadFailedException"></exception>
         internal void RunFrom(string str)
         {
             // Iterate over all commands and check validity
@@ -99,13 +99,13 @@ namespace CVAS.REPL
                     command.RunFrom(str);
                     return; // Case: a valid command is found
                 }
-                catch (CommandNotValidException) { } // Case: the current command is not valid
+                catch (CommandReadFailedException) { } // Case: the current command is not valid
             }
 
             if (str == string.Empty)
-                throw new CommandNotValidException("EMPTYSTR"); // Throw special exception if the user doesn't provide any data -> we won't display a message
+                throw new CommandReadFailedException("EMPTYSTR"); // Throw special exception if the user doesn't provide any data -> we won't display a message
             else
-                throw new CommandNotValidException($"Command '{str.Split().First()}' does not exist!"); // Case: no valid commands found
+                throw new CommandReadFailedException($"Command '{str.Split().First()}' does not exist!"); // Case: no valid commands found
         }
     }
 }

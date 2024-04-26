@@ -27,7 +27,7 @@ namespace CVAS.REPL
             var Path = (string)Arguments[0].Value!;
 
             // Validity check: path must point to a folder
-            if (!Directory.Exists(Path)) throw new ArgumentNotValidException($"Couldn't find directory: '{Path}'");
+            if (!Directory.Exists(Path)) throw new CommandRunFailedException($"Couldn't find directory: '{Path}'");
 
             // Try to load library into REPL context
             try
@@ -36,7 +36,7 @@ namespace CVAS.REPL
             }
             catch(FileSystemException e)
             {
-                throw new ArgumentNotValidException($"Failed to load library: {e.Message}"); // Throw exception upon failure (this should only ever be for an empty folder)
+                throw new CommandRunFailedException($"Failed to load library: {e.Message}"); // Throw exception upon failure (this should only ever be for an empty folder)
             }
         }
     }

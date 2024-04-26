@@ -23,11 +23,11 @@ namespace CVAS.REPL
 
                     valueBuilder.Append(str[i]);
 
-                    if (i == str.Length - 1) throw new ArgumentValueNotValidException($"Expected second set of double-quotes (\") in argument: [{Name}]"); // Validity check: str must contain a second set of double quotes
+                    if (i == str.Length - 1) throw new ArgumentReadFailedException($"Expected second set of double-quotes (\") in argument: [{Name}]"); // Validity check: str must contain a second set of double quotes
                 }
 
                 // Check that our built string actually contains something
-                if (valueBuilder.ToString().Trim() == string.Empty) throw new ArgumentValueNotValidException($"The value given for argument [{Name}] was empty.");
+                if (valueBuilder.ToString().Trim() == string.Empty) throw new ArgumentReadFailedException($"The value given for argument [{Name}] was empty.");
 
                 Value = valueBuilder.ToString();
 

@@ -71,7 +71,7 @@ namespace CVAS.REPL
             }
 
             // Check for file exists and give option for overwriting
-            if (File.Exists(path) && !Terminal.Instance.GetUserApproval("File already exists! Overwrite (y/n)?", ConsoleColor.DarkYellow))
+            if (File.Exists(path) && !Terminal.Instance.GetUserApproval("File already exists! Overwrite (y/n)? ", ConsoleColor.DarkYellow))
             {
                 // Cancel render on non-yes answer
                 Terminal.Instance.MessageSingle("Render cancelled by user.", ConsoleColor.Red);

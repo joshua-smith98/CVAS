@@ -86,6 +86,14 @@ namespace CVAS.FileSystem
                 // Only add the file if it is an audio file, otherwise ignore it
                 if (IAudioEngine.IsAudioFile(files[i])) audioFileNames.Add(SysPath.GetFileName(files[i]));
             }
+
+            // Case: no audio files found -> we don't want to load this!
+            if (audioFileNames.Count == 0)
+            {
+                Terminal.Instance.EndReport("Search failed."); // Make sure we end the report we're in
+                throw new InvalidFolderFormatException($"Folder contains no audio files.");
+            }
+
             Terminal.Instance.EndReport($"Successfully found {audioFileNames.Count} audio files.");
 
             return new LibraryFolder(path, audioFileNames.ToArray());

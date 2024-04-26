@@ -120,6 +120,10 @@ namespace CVAS.CommandLine
                 {
                     throw new CmdLnArgNotValidException($"Couldn't find directory: {LibraryPath}");
                 }
+                catch (FileSystemException e)
+                {
+                    throw new CmdLnArgNotValidException($"Failed to load library: {e.Message}"); // Check for error loading the library
+                }
             }
 
             // Try to get sentence

@@ -1,4 +1,5 @@
 ﻿using CVAS.FileSystem;
+using CVAS.TerminalNS;
 
 namespace CVAS.REPL
 {
@@ -28,8 +29,15 @@ namespace CVAS.REPL
             // Validity check: path must point to a folder
             if (!Directory.Exists(Path)) throw new ArgumentNotValidException($"Couldn't find directory: '{Path}'");
 
-            // Load library into REPL context
-            REPL.Instance.CurrentLibrary = LibraryFolder.LoadFrom(Path).Construct();
+            // Try to load library into REPL context
+            try
+            {
+                REPL.Instance.CurrentLibrary = LibraryFolder.LoadFrom(Path).Construct();
+            }
+            catch(FileSystemException e)
+            {
+                throw new ArgumentNotValidException($"Failed to load library: {e.Message}"); // Throw exception upon failure (this should only ever be for an empty folder)
+            }
         }
     }
 }
